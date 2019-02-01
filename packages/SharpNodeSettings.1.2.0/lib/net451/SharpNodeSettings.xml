@@ -1,0 +1,1815 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpNodeSettings</name>
+    </assembly>
+    <members>
+        <member name="T:SharpNodeSettings.Core.SharpNodeServer">
+            <summary>
+            节点配置类的服务器对象，包含了自动解析配置文件，自动启动设备，并创建一个数据访问器服务器
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Core.SharpNodeServer.#ctor">
+            <summary>
+            实例化一个对象，需要传入配置文件的路径，根据配置文件的信息即可创建一个节点服务器
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Core.SharpNodeServer.ServerStart(System.Int32)">
+            <summary>
+            启动服务器的后台存储
+            </summary>
+            <param name="port"></param>
+        </member>
+        <member name="P:SharpNodeSettings.Core.SharpNodeServer.WriteCustomerData">
+            <summary>
+            设备解析完成的值对应的额外的操作方法，传递的参数有设备值，变量名
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Core.SharpNodeServer.Token">
+            <summary>
+            当前系统的令牌
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Core.SharpNodeServer.LogNet">
+            <summary>
+            系统的日志信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Core.SharpNodeServer.LoadByXmlFile(System.String)">
+            <summary>
+            加载配置信息
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceCore">
+            <summary>
+            设备交互的核心类对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.#ctor">
+            <summary>
+            使用默认的无参构造方法
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.DeviceNodes">
+            <summary>
+            设备分布的信息点
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.Requests">
+            <summary>
+            所有的请求列表
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.ByteTransform">
+            <summary>
+            数据转换规则
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.ReadWriteDevice">
+            <summary>
+            当前的数据读写信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.WriteCustomerData">
+            <summary>
+            指示读取到数据后应该如何处理
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.ActiveTime">
+            <summary>
+            设备上次激活的时间节点，用来判断失效状态
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.UniqueId">
+            <summary>
+            唯一的识别码，方便异形客户端寻找对应的处理逻辑
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.Name">
+            <summary>
+            设备的名称
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.RequestSuccessCount">
+            <summary>
+            请求成功的次数统计
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.RequestFailedCount">
+            <summary>
+            请求失败的次数统计
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.TypeName">
+            <summary>
+            类型名称
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.IsError">
+            <summary>
+            指示设备是否正常的状态
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.JsonData">
+            <summary>
+            获取本设备所有的属性数据
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Device.DeviceCore.LogNet">
+            <summary>
+            获取或设置系统的状态
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.LoadRequest(System.Xml.Linq.XElement)">
+            <summary>
+            使用固定的节点加载数据信息
+            </summary>
+            <param name="element">数据请求的所有列表信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.StartRead">
+            <summary>
+            启动读取数据
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.QuitDevice">
+            <summary>
+            退出系统
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.SetAlineSession(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            设置为异形客户端对象
+            </summary>
+            <param name="alienSession">异形对象</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.GetDynamicValueByName(System.String)">
+            <summary>
+            通过节点值名称，获取本设备信息的值
+            </summary>
+            <param name="name">节点值名称</param>
+            <returns>动态值</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.GetJsonValueByName(System.String)">
+            <summary>
+            通过节点值名称，获取本设备信息的值
+            </summary>
+            <param name="name">节点值名称</param>
+            <returns>JSON值</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.GetStringValueByName(System.String)">
+            <summary>
+            通过节点值名称，获取本设备信息的值
+            </summary>
+            <param name="name">节点值名称</param>
+            <returns>动态值</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.IsCurrentDevice(System.String[])">
+            <summary>
+            判断当前的设备是否是传入的节点参数信息
+            </summary>
+            <param name="nodes">传入的节点参数信息</param>
+            <returns>是否是当前的设备</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.GetValueByName(System.String[])">
+            <summary>
+            获取本设备对象的值信息
+            </summary>
+            <param name="nodes">节点数据</param>
+            <returns>值信息数据</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceCore.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceMelsecMc">
+            <summary>
+            三菱的设备信息，包含了核心的连接对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceMelsecMc.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个三菱的设备对象，从配置信息创建
+            </summary>
+            <param name="element">配置信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceMelsecMc.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceMelsecMc.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceModbusTcp">
+            <summary>
+            Modbus-Tcp的设备信息，包含了核心的连接对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcp.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个Modbus-Tcp的设备对象，从配置信息创建
+            </summary>
+            <param name="element">配置信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcp.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcp.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceModbusTcpAlien">
+            <summary>
+            异形的Modbus-tcp的设备信息，包含了核心的连接对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcpAlien.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个异形的Modbus-tcp的设备对象，从配置信息创建
+            </summary>
+            <param name="element">配置信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcpAlien.SetAlineSession(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            设置为异形客户端对象
+            </summary>
+            <param name="alienSession">异形对象</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcpAlien.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceModbusTcpAlien.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceOmron">
+            <summary>
+            欧姆龙的设备信息，包含了核心的连接对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceOmron.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个欧姆龙的设备对象，从配置信息创建
+            </summary>
+            <param name="element">配置信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceOmron.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceOmron.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Device.DeviceSiemens">
+            <summary>
+            西门子的设备信息，包含了核心的连接对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceSiemens.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个西门子的设备对象，从配置信息创建
+            </summary>
+            <param name="element">配置信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceSiemens.BeforStart">
+            <summary>
+            在启动之前进行的操作信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Device.DeviceSiemens.AfterClose">
+            <summary>
+            在关闭的时候需要进行的操作
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Forms.FormAlienNode.AlienNode">
+            <summary>
+            异形服务器的节点
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormAlienNode.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormAlienNode.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormAlienNode.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormEmpty.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormEmpty.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormEmpty.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormMelsec3E.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormMelsec3E.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormMelsec3E.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormModbusServer.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusServer.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusServer.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormModbusTcp.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusTcp.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusTcp.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormModbusTcpAlien.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusTcpAlien.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormModbusTcpAlien.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormNodeClass.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormNodeClass.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormNodeClass.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormOmron.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormOmron.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormOmron.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormRegularNode.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRegularNode.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRegularNode.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormRegularItemNode.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRegularItemNode.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRegularItemNode.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Forms.FormRequest.DeviceRequest">
+            <summary>
+            单次的设备请求信息
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormRequest.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRequest.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormRequest.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Forms.FormSiemens.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormSiemens.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.Forms.FormSiemens.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeSetting.#ctor(System.String)">
+            <summary>
+            实例化一个节点配置器信息
+            </summary>
+            <param name="fileName">从文件加载</param>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeSetting.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            实例化一个节点配置器信息
+            </summary>
+            <param name="xmlSettings">从Xml文件加载信息</param>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeSetting.PaintLineAuxiliary(System.Drawing.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean,System.String,System.Drawing.Font,System.Drawing.StringFormat,SharpNodeSettings.Node.Regular.RegularItemNode)">
+            <summary>
+            绘制小框框的上下的辅助信息
+            </summary>
+            <param name="g">绘图资源</param>
+            <param name="paint_x">当前行绘制的X轴起点</param>
+            <param name="paint_y">当前行绘制的Y轴起点</param>
+            <param name="every_line_count">每一行的绘制的字节个数</param>
+            <param name="index">当前变量信息开始的字节索引</param>
+            <param name="byteLength">当前变量的所占的总字节长度</param>
+            <param name="isDowm">选择绘制字节下方的数据信息，还是字节上方的数据信息</param>
+            <param name="isSelect">当前的变量名是否被选中了</param>
+            <param name="info">当绘制下方数据时，是变量名信息，当绘制上方时，是类型文本</param>
+            <param name="font">字体</param>
+            <param name="stringFormat">绘制文本时候的格式化信息</param>
+            <param name="regularNode">当前变量的规则类型，用来传递类型的数据长度，字符串长度信息的</param>
+        </member>
+        <member name="P:SharpNodeSettings.View.FormNodeSetting.XmlSettings">
+            <summary>
+            当前配置窗口配置的信息
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.View.FormNodeSetting.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeSetting.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeSetting.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.View.FormNodeView.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeView.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormNodeView.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.View.FormSelectDevice.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormSelectDevice.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SharpNodeSettings.View.FormSelectDevice.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.DeviceNode">
+            <summary>
+            设备对象类，指明一个设备的所有信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.DeviceNode.#ctor">
+            <summary>
+            实例化一个构造对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.DeviceNode.DeviceType">
+            <summary>
+            设备的类别
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.DeviceNode.InstallationDate">
+            <summary>
+            安装的时间
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.DeviceNode.ConnectTimeOut">
+            <summary>
+            连接超时的时间，单位毫秒
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.DeviceNode.CreateTime">
+            <summary>
+            服务器的创建日期
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.DeviceNode.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.DeviceNode.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.DeviceNode.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.DeviceNone">
+            <summary>
+            空设备的节点
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.MelsecMcQna3E">
+            <summary>
+            三菱的Qna兼容3E帧协议的客户端
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.ModbusTcpClient">
+            <summary>
+            常规的Modbus-Tcp客户端
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.ModbusTcpAlien">
+            <summary>
+            异形的Modbus-Tcp客户端
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.Siemens">
+            <summary>
+            西门子的PLC设备
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.Omron">
+            <summary>
+            欧姆龙的PLC设备
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Device.DeviceNode.SimplifyNet">
+            <summary>
+            其他电脑的SimplifyNet服务器
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeEmpty">
+            <summary>
+            空设备，没有连接，不负责数据采集，只负责节点显示
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeEmpty.#ctor">
+            <summary>
+            实例化一个空的设备对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeEmpty.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeMelsecMc">
+            <summary>
+            实例化一个三菱MC协议的节点对象的设备
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeMelsecMc.#ctor">
+            <summary>
+            使用默认的参数实例化一个设备信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeMelsecMc.IpAddress">
+            <summary>
+            设备的Ip地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeMelsecMc.Port">
+            <summary>
+            设备的端口号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeMelsecMc.NetworkNumber">
+            <summary>
+            网络号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeMelsecMc.NetworkStationNumber">
+            <summary>
+            网络站号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeMelsecMc.IsBinary">
+            <summary>
+            是否是二进制通讯
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeMelsecMc.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeMelsecMc.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeMelsecMc.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeMelsecMc.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeModbusTcpAline">
+            <summary>
+            异形ModbusTcp的客户端节点，只能挂在Alien节点下，下面只能挂载异形modbus客户端
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpAline.#ctor">
+            <summary>
+            实例化一个异性的设备对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpAline.DTU">
+            <summary>
+            设备的唯一号码
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpAline.Station">
+            <summary>
+            设备的站号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpAline.IsAddressStartWithZero">
+            <summary>
+            起始地址是否从0开始
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpAline.DataFormat">
+            <summary>
+            字节分析时的数据格式
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpAline.IsStringReverse">
+            <summary>
+            字符串分析是否颠倒
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpAline.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpAline.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpAline.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpAline.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeModbusTcpClient">
+            <summary>
+            常规的Modbus-Tcp的客户端
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpClient.#ctor">
+            <summary>
+            实例化一个默认参数的对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.IpAddress">
+            <summary>
+            设备的Ip地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.Port">
+            <summary>
+            设备的端口号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.Station">
+            <summary>
+            客户端的站号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.IsAddressStartWithZero">
+            <summary>
+            起始地址是否从0开始
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.DataFormat">
+            <summary>
+            字节分析是否颠倒
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeModbusTcpClient.IsStringReverse">
+            <summary>
+            字符串分析是否颠倒
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpClient.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpClient.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpClient.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeModbusTcpClient.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeOmron">
+            <summary>
+            指示欧姆龙对象的设备节点信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeOmron.#ctor">
+            <summary>
+            使用默认的参数实例化一个设备信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeOmron.IpAddress">
+            <summary>
+            设备的Ip地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeOmron.Port">
+            <summary>
+            设备的端口号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeOmron.DA2">
+            <summary>
+            PLC单元号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeOmron.DA1">
+            <summary>
+            PLC的节点地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeOmron.SA1">
+            <summary>
+            上位机的节点地址
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeOmron.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeOmron.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeOmron.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeOmron.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSiemens.#ctor">
+            <summary>
+            使用默认的参数实例化一个设备信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSiemens.IpAddress">
+            <summary>
+            设备的Ip地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSiemens.Port">
+            <summary>
+            设备的端口号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSiemens.PlcType">
+            <summary>
+            选择的是什么类型的PLC
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSiemens.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSiemens.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSiemens.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSiemens.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Device.NodeSimplifyNet">
+            <summary>
+            SimplifyNet的设备信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSimplifyNet.#ctor">
+            <summary>
+            使用默认的参数实例化一个设备信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSimplifyNet.IpAddress">
+            <summary>
+            设备的Ip地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSimplifyNet.Port">
+            <summary>
+            设备的端口号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Device.NodeSimplifyNet.Token">
+            <summary>
+            Token网络令牌
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Device.NodeSimplifyNet.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.NodeBase.IXmlConvert">
+            <summary>
+            一个接口，表示该对象就有和Xml元素相互转换的能力
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.IXmlConvert.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.IXmlConvert.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="T:SharpNodeSettings.Node.NodeBase.NodeClass">
+            <summary>
+            节点信息，指示一个具体的分类，并且指定了所有节点的基类
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClass.Name">
+            <summary>
+            节点的名称，在节点上显示的
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClass.Description">
+            <summary>
+            描述信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClass.NodeType">
+            <summary>
+            节点的类型，标记其派生类不同的类型对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClass.NodeHead">
+            <summary>
+            节点的描述信息
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClass.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClass.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClass.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.NodeBase.NodeClassInfo">
+            <summary>
+            节点类相关的常用资源
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.NodeRoot">
+            <summary>
+            系统的根节点信息
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.NodeClass">
+            <summary>
+            普通的分类节点，允许再跟分类节点
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.DeviceNode">
+            <summary>
+            设备节点信息，下面只能跟请求节点信息
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.ServerNode">
+            <summary>
+            服务器类型Server的节点
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.RegularNode">
+            <summary>
+            解析规则的节点
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.DeviceRequest">
+            <summary>
+            设备的请求信息
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.NodeBase.NodeClassInfo.RegularItemNode">
+            <summary>
+            设备的解析规则的子节点
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem">
+            <summary>
+            单个节点的单个数据对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.#ctor">
+            <summary>
+            实例化一个默认的对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.#ctor(System.String,System.String)">
+            <summary>
+            实例化一个对象，需要指定当前的键值信息
+            </summary>
+            <param name="valueName">名称</param>
+            <param name="value">值</param>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.ValueName">
+            <summary>
+            数据名称
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.Value">
+            <summary>
+            数据值
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreatNodeeName(System.String)">
+            <summary>
+            创建一个显示的节点对象
+            </summary>
+            <param name="value">节点值</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateNodeDescription(System.String)">
+            <summary>
+            创建一个显示描述的键值对象
+            </summary>
+            <param name="description">描述信息</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateIpAddress(System.String)">
+            <summary>
+            创建一个显示的Ip地址的键值对象
+            </summary>
+            <param name="ip">Ip地址</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateIpPort(System.Int32)">
+            <summary>
+            创建一个显示端口信息的键值对象
+            </summary>
+            <param name="port">端口号</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateConnectTimeOut(System.Int32)">
+            <summary>
+            创建一个显示超时时间信息的键值对象
+            </summary>
+            <param name="timeout">超时时间，单位 ms</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateTime(System.DateTime)">
+            <summary>
+            创建一个显示创建时间信息的键值对象
+            </summary>
+            <param name="time">创建时间</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateStation(System.Int32)">
+            <summary>
+            创建一个显示站号信息的键值对象
+            </summary>
+            <param name="station">站号信息</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateInstallationPlace(System.String)">
+            <summary>
+            创建一个显示安装地点的键值对象
+            </summary>
+            <param name="place">安装地址信息</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateInstallationDate(System.DateTime)">
+            <summary>
+            创建一个显示安装日期的键值对象
+            </summary>
+            <param name="date">安装日期</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateUniqueId(System.String)">
+            <summary>
+            创建一个显示唯一标识的键值对象
+            </summary>
+            <param name="uniqueId">唯一信息</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateIsAddressStartWithZero(System.Boolean)">
+            <summary>
+            创建一个显示是否从0开始的键值对象
+            </summary>
+            <param name="value">是否值</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateDataFormat(System.Int32)">
+            <summary>
+            创建一个显示是数据格式的键值对象
+            </summary>
+            <param name="value">是否值</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreateIsStringReverse(System.Boolean)">
+            <summary>
+            创建一个显示是否字符串的键值对象
+            </summary>
+            <param name="value">是否值</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreatePlcMode(System.String)">
+            <summary>
+            创建一个显示PLC型号的键值对象
+            </summary>
+            <param name="plcMode">PLC的型号</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.NodeBase.NodeClassRenderItem.CreatePassword(System.String)">
+            <summary>
+            创建一个显示密码的键值对象
+            </summary>
+            <param name="password">密码</param>
+            <returns>键值对象</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Regular.RegularItemNode">
+            <summary>
+            程序解析规则的节点
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.#ctor">
+            <summary>
+            示例化一个默认的对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularItemNode.RegularCode">
+            <summary>
+            类型的代号，详细参见const数据
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularItemNode.TypeLength">
+            <summary>
+            类型的长度，对于string来说，就是字符串长度，其他的来说，就是数组长度
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularItemNode.Index">
+            <summary>
+            数据位于字节数据的索引，对于bool变量来说，就是按照位的索引
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.CompareTo(SharpNodeSettings.Node.Regular.RegularItemNode)">
+            <summary>
+            实现了比较的接口，可以用来方便的排序
+            </summary>
+            <param name="other">规则文件进行解析</param>
+            <returns>是否大小</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.GetStartedByteIndex">
+            <summary>
+            获取在字节流中的起始点
+            </summary>
+            <returns>起始位置</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.GetValue(System.Byte[],HslCommunication.Core.IByteTransform)">
+            <summary>
+            获取当前的数据信息实际值
+            </summary>
+            <param name="data"></param>
+            <param name="byteTransform"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.GetLengthByte">
+            <summary>
+            获取当前的解析规则的节点所占用的最长字节
+            </summary>
+            <returns>长度</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            从XElement加载数据
+            </summary>
+            <param name="element">Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.ToXmlElement">
+            <summary>
+            转化Xml存储文件
+            </summary>
+            <returns>Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularItemNode.ToString">
+            <summary>
+            获取本对象的字符串表示形式
+            </summary>
+            <returns>字符串</returns>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Regular.RegularNode">
+            <summary>
+            字节解析规则节点，该节点下挂载解析节点的子项
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularNode.#ctor">
+            <summary>
+            实例化一个默认的解析对象
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Regular.RegularNodeTypeItem">
+            <summary>
+            单个规则配置项相关的类型资源，比如配置了什么类型的数据，多少长之类的
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.#ctor">
+            <summary>
+            实例化一个默认的对象
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.#ctor(System.Int32,System.String,System.Drawing.Brush,System.Int32)">
+            <summary>
+            实例化信息
+            </summary>
+            <param name="code">代号</param>
+            <param name="text">文本</param>
+            <param name="backColor">背景色</param>
+            <param name="length">单位长度</param>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Code">
+            <summary>
+            类型的代号
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Text">
+            <summary>
+            类型的文本描述
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.BackColor">
+            <summary>
+            类型使用的背景色
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Length">
+            <summary>
+            类型的长度，仅仅是单个数据对象的长度
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.ToString">
+            <summary>
+            返回表示当前对象的字符串
+            </summary>
+            <returns>字符串信息</returns>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Bool">
+            <summary>
+            Bool数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Byte">
+            <summary>
+            Byte数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Int16">
+            <summary>
+            short数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.UInt16">
+            <summary>
+            ushort数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Int32">
+            <summary>
+            int数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.UInt32">
+            <summary>
+            uint数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Int64">
+            <summary>
+            long数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.UInt64">
+            <summary>
+            ulong数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Float">
+            <summary>
+            float数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.Double">
+            <summary>
+            double数据类型
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.StringAscii">
+            <summary>
+            string数据类型，ASCII编码
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.StringUnicode">
+            <summary>
+            string数据类型，Unicode编码
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Regular.RegularNodeTypeItem.StringUtf8">
+            <summary>
+            string数据类型，UTF8编码
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Request.DeviceRequest">
+            <summary>
+            通用的客户端模型，指示了一般的客户端模式下的，一次数据请求，一个客户端可以进行多次的数据请求
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Request.DeviceRequest.#ctor">
+            <summary>
+            实例化一个对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.Address">
+            <summary>
+            变量的地址
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.Length">
+            <summary>
+            读取的数据长度
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.CaptureInterval">
+            <summary>
+            本次请求的时间间隔，单位为毫秒
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.PraseRegularCode">
+            <summary>
+            本次请求解析字节数据的规则
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.LastActiveTime">
+            <summary>
+            上一次读取数据的时间节点
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.RegularNodes">
+            <summary>
+            本次请求所有关联的节点信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Request.DeviceRequest.WriteByteIndex">
+            <summary>
+            本次所请求的所有的字节数据在缓存中的位置
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Request.DeviceRequest.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Request.DeviceRequest.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Request.DeviceRequest.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Server.AlienServerNode.Password">
+            <summary>
+            密码，6位数，为空的话默认都是0x00
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.AlienServerNode.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.AlienServerNode.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.AlienServerNode.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.NodeModbusServer.#ctor">
+            <summary>
+            实例化一个Modbus服务器的节点对象
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Node.Server.ServerNode">
+            <summary>
+            服务器节点的基类，包含了端口号信息，服务器类型，服务器创建时间等基本的要素
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.ServerNode.#ctor">
+            <summary>
+            实例化一个默认的对象
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Server.ServerNode.Port">
+            <summary>
+            当前主站的端口号信息
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Server.ServerNode.CreateTime">
+            <summary>
+            服务器的创建日期
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Node.Server.ServerNode.ServerType">
+            <summary>
+            服务器的类别
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.ServerNode.ToXmlElement">
+            <summary>
+            对象解析为Xml元素，方便的存储
+            </summary>
+            <returns>包含节点信息的Xml元素</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.ServerNode.LoadByXmlElement(System.Xml.Linq.XElement)">
+            <summary>
+            对象从xml元素解析，初始化指定的数据
+            </summary>
+            <param name="element">包含节点信息的Xml元素</param>
+        </member>
+        <member name="M:SharpNodeSettings.Node.Server.ServerNode.GetNodeClassRenders">
+            <summary>
+            获取用于在数据表信息中显示的键值数据对信息
+            </summary>
+            <returns>键值数据对列表</returns>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Server.ServerNode.ModbusServer">
+            <summary>
+            Modbus服务器
+            </summary>
+        </member>
+        <member name="F:SharpNodeSettings.Node.Server.ServerNode.AlienServer">
+            <summary>
+            三菱的Qna兼容3E帧协议的客户端
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.abstr1">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.action_add_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.action_Cancel_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.arrow_open_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.ASCube_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Class_489">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.ClassIcon">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Enum_582">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.envelope_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Event_594">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Event_594_exp">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.ExtensionManager_vsix">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.FieldsHeader_12x">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.flag_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.FlagRed_16x">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.FlagSpace_16x">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.GenericVSEditor_9905">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.HotSpot_10548">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.HotSpot_10548_color">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.interface_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.library_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Method_636">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Module_648">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Monitor_Screen_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Operator_660">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.PencilAngled_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.PencilAngled_16xLG_color">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.Property_501">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.save_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.server_Local_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.star_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.usbcontroller">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.VirtualMachine_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.WindowsAzure_16xLG">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.WindowsAzure_16xLG_Cyan">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:SharpNodeSettings.Properties.Resources.xbox1Color_16x">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="T:SharpNodeSettings.Util">
+            <summary>
+            节点配置类的工具辅助类
+            </summary>
+        </member>
+        <member name="M:SharpNodeSettings.Util.GetWinformICon">
+            <summary>
+            子窗口的图标显示信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNodeSettings.Util.ParesRegular(System.Xml.Linq.XElement)">
+            <summary>
+            解析一个配置文件中的所有的规则解析，并返回一个词典信息
+            </summary>
+            <param name="nodeClass">配置文件的根信息</param>
+            <returns>词典</returns>
+        </member>
+        <member name="M:SharpNodeSettings.Util.CreateFromXElement(System.Xml.Linq.XElement)">
+            <summary>
+            通过真实配置的设备信息，来创建一个真实的设备，如果类型不存在，将返回null
+            </summary>
+            <param name="device">设备的配置信息</param>
+            <returns>真实的设备对象</returns>
+        </member>
+    </members>
+</doc>

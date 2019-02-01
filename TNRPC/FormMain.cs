@@ -14,6 +14,7 @@ using System.IO.Ports;
 using HslCommunication.Serial;
 using HslCommunication.BasicFramework;
 using HslCommunication.Core;
+using MySql.Data.MySqlClient;
 
 namespace TNRPC
 {
@@ -45,17 +46,47 @@ namespace TNRPC
             }
         }
 
+        private enum PROCESS
+        {
+            CDWD,//充电温度
+            GZWD //干燥温度
+        }
+
         private void Transceiver(Object com)
         {
             string[] parameters = com.ToString().Split(',');
+            //根据参数判断是什么工艺参数
+            string process = null;
+            string paramID = null;
+            string equipmentTypeID = null;
+            switch (parameters[0])
+            {
+                case "COM4":
+                case "COM5":
+                case "COM6":
+                case "COM7":
+                case "COM8":
+                    process = PROCESS.CDWD.ToString();
+                    paramID = "50001";
+                    equipmentTypeID = "3";
+                    break;
+                case "COM9":
+                    process = PROCESS.GZWD.ToString();
+                    paramID = "40001";
+                    equipmentTypeID = "4";
+                    break;
+            }
+
             SerialPort serialPort = new SerialPort();
             serialPort.PortName = parameters[0];
             serialPort.BaudRate = Convert.ToInt32(parameters[1]);
             serialPort.DataBits = Convert.ToInt32(parameters[2]);
             serialPort.Parity = (Parity)Convert.ToInt32(parameters[3]);
             serialPort.StopBits = (StopBits)Convert.ToInt32(parameters[4]);
+
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
+
             while (true)
             {
                 //保证循环不退出
@@ -67,26 +98,26 @@ namespace TNRPC
                     }
                     for (int i = 1; i <= num; i++)
                     {
+                        //设备ID，数据库中设置好的数值
+                        int equipmentID = startNo + i;
+
                         /////////////////////////////////////////发送数据（modbusRTU协议）
                         string orderWithoutCrc = string.Format("{0:X2}", i) + "0310010001";
                         byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
                         serialPort.Write(bufferS, 0, bufferS.Length);
                         //将发送的数据显示在窗体相应的位置
-                        switch (parameters[0])
+                        if (process.Equals(PROCESS.CDWD.ToString()))
                         {
-                            case "COM4":
-                            case "COM5":
-                            case "COM6":
-                            case "COM7":
-                            case "COM8":
-                                SetText("textBox16", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                                break;
-                            case "COM9":
-                                SetText("textBox14", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                                break;
+                            SetText("textBox16", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                         }
+                        if (process.Equals(PROCESS.GZWD.ToString()))
+                        {
+                            SetText("textBox14", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                        }
+
                         //////////////////////////////////////////等待数据
                         Thread.Sleep(500);
+
                         /////////////////////////////////////////接收数据。
                         byte[] bufferR = null;
                         if (serialPort.BytesToRead > 0)
@@ -95,22 +126,17 @@ namespace TNRPC
                             serialPort.Read(bufferR, 0, bufferR.Length);
                         }
                         //将接收的数据显示在窗体相应的位置，没有回应数据显示N/A。
-                        switch (parameters[0])
+                        if (process.Equals(PROCESS.CDWD.ToString()))
                         {
-                            case "COM4":
-                            case "COM5":
-                            case "COM6":
-                            case "COM7":
-                            case "COM8":
-                                SetText("textBox15", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                                break;
-                            case "COM9":
-                                SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                                break;
+                            SetText("textBox15", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                         }
+                        if (process.Equals(PROCESS.GZWD.ToString()))
+                        {
+                            SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                        }
+
                         //////////////////////////////////////数据解析，在界面上显示结果，并存储到数据库
                         string showResult = null;//界面显示的结果
-                        ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
                         if (bufferR is null)
                         {
                             showResult = "N/A";//设备不可用
@@ -121,12 +147,44 @@ namespace TNRPC
                         }
                         else
                         {
-                            showResult = ((float)transform.TransInt16(bufferR, 3) / 10).ToString() + "℃";
-                            //保存到数据库
+                            //解析数据
+                            ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
+                            float data = (float)transform.TransInt16(bufferR, 3) / 10;
+                            showResult = data + "℃";//显示温度值
 
+                            //保存到数据库
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString))
+                            {
+                                //打开数据库连接
+                                conn.Open();
+
+                                //判断当前值是否超上限或超下限
+                                string status = "2";//2表示在范围之内
+                                using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn))
+                                {
+                                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                                    {
+                                        if (reader.Read())
+                                        {
+                                            if (data > reader.GetFloat("max"))
+                                            {
+                                                status = "3";
+                                            }
+                                            else if (data < reader.GetFloat("min"))
+                                            {
+                                                status = "1";
+                                            }
+                                        }
+                                    }
+
+                                    //准备插入一条数据
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
                         }
                         //设置界面
-                        SetText("label" + (startNo + i ), showResult);
+                        SetText("label" + equipmentID, showResult);
                     }
                     //间隔5分钟采集一次数据
                     Thread.Sleep(300000);

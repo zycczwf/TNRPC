@@ -98,93 +98,100 @@ namespace TNRPC
                     }
                     for (int i = 1; i <= num; i++)
                     {
-                        //设备ID，数据库中设置好的数值
-                        int equipmentID = startNo + i;
+                        try
+                        {
+                            //设备ID，数据库中设置好的数值
+                            int equipmentID = startNo + i;
 
-                        /////////////////////////////////////////发送数据（modbusRTU协议）
-                        string orderWithoutCrc = string.Format("{0:X2}", i) + "0310010001";
-                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                        serialPort.Write(bufferS, 0, bufferS.Length);
-                        //将发送的数据显示在窗体相应的位置
-                        if (process.Equals(PROCESS.CDWD.ToString()))
-                        {
-                            SetText("textBox16", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                        }
-                        if (process.Equals(PROCESS.GZWD.ToString()))
-                        {
-                            SetText("textBox14", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                        }
-
-                        //////////////////////////////////////////等待数据
-                        Thread.Sleep(500);
-
-                        /////////////////////////////////////////接收数据。
-                        byte[] bufferR = null;
-                        if (serialPort.BytesToRead > 0)
-                        {
-                            bufferR = new byte[serialPort.BytesToRead];
-                            serialPort.Read(bufferR, 0, bufferR.Length);
-                        }
-                        //将接收的数据显示在窗体相应的位置，没有回应数据显示N/A。
-                        if (process.Equals(PROCESS.CDWD.ToString()))
-                        {
-                            SetText("textBox15", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                        }
-                        if (process.Equals(PROCESS.GZWD.ToString()))
-                        {
-                            SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                        }
-
-                        //////////////////////////////////////数据解析，在界面上显示结果，并存储到数据库
-                        string showResult = null;//界面显示的结果
-                        if (bufferR is null)
-                        {
-                            showResult = "N/A";//设备不可用
-                        }
-                        else if (!SoftCRC16.CheckCRC16(bufferR))
-                        {
-                            showResult = "ERROR";//返回数据错误
-                        }
-                        else
-                        {
-                            //解析数据
-                            ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
-                            float data = (float)transform.TransInt16(bufferR, 3) / 10;
-                            showResult = data + "℃";//显示温度值
-
-                            //保存到数据库
-                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString))
+                            /////////////////////////////////////////发送数据（modbusRTU协议）
+                            string orderWithoutCrc = string.Format("{0:X2}", i) + "0310010001";
+                            byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                            serialPort.Write(bufferS, 0, bufferS.Length);
+                            //将发送的数据显示在窗体相应的位置
+                            if (process.Equals(PROCESS.CDWD.ToString()))
                             {
-                                //打开数据库连接
-                                conn.Open();
+                                SetText("textBox16", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                            }
+                            if (process.Equals(PROCESS.GZWD.ToString()))
+                            {
+                                SetText("textBox14", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                            }
 
-                                //判断当前值是否超上限或超下限
-                                string status = "2";//2表示在范围之内
-                                using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn))
+                            //////////////////////////////////////////等待数据
+                            Thread.Sleep(500);
+
+                            /////////////////////////////////////////接收数据。
+                            byte[] bufferR = null;
+                            if (serialPort.BytesToRead > 0)
+                            {
+                                bufferR = new byte[serialPort.BytesToRead];
+                                serialPort.Read(bufferR, 0, bufferR.Length);
+                            }
+                            //将接收的数据显示在窗体相应的位置，没有回应数据显示N/A。
+                            if (process.Equals(PROCESS.CDWD.ToString()))
+                            {
+                                SetText("textBox15", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                            }
+                            if (process.Equals(PROCESS.GZWD.ToString()))
+                            {
+                                SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                            }
+
+                            //////////////////////////////////////数据解析，在界面上显示结果，并存储到数据库
+                            string showResult = null;//界面显示的结果
+                            if (bufferR is null)
+                            {
+                                showResult = "N/A";//设备不可用
+                            }
+                            else if (!SoftCRC16.CheckCRC16(bufferR))
+                            {
+                                showResult = "ERROR";//返回数据错误
+                            }
+                            else
+                            {
+                                //解析数据
+                                ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
+                                float data = (float)transform.TransInt16(bufferR, 3) / 10;
+                                showResult = data + "℃";//显示温度值
+
+                                //保存到数据库
+                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString))
                                 {
-                                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                                    //打开数据库连接
+                                    conn.Open();
+
+                                    //判断当前值是否超上限或超下限
+                                    string status = "2";//2表示在范围之内
+                                    using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn))
                                     {
-                                        if (reader.Read())
+                                        using (MySqlDataReader reader = cmd.ExecuteReader())
                                         {
-                                            if (data > reader.GetFloat("max"))
+                                            if (reader.Read())
                                             {
-                                                status = "3";
-                                            }
-                                            else if (data < reader.GetFloat("min"))
-                                            {
-                                                status = "1";
+                                                if (data > reader.GetFloat("max"))
+                                                {
+                                                    status = "3";
+                                                }
+                                                else if (data < reader.GetFloat("min"))
+                                                {
+                                                    status = "1";
+                                                }
                                             }
                                         }
-                                    }
 
-                                    //准备插入一条数据
-                                    cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
-                                    cmd.ExecuteNonQuery();
+                                        //准备插入一条数据
+                                        cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
+                                        cmd.ExecuteNonQuery();
+                                    }
                                 }
                             }
+                            //设置界面
+                            SetText("label" + equipmentID, showResult);
                         }
-                        //设置界面
-                        SetText("label" + equipmentID, showResult);
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
                     //间隔5分钟采集一次数据
                     Thread.Sleep(300000);

@@ -152,36 +152,44 @@ namespace TNRPC
                                 //解析数据
                                 ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
                                 float data = (float)transform.TransInt16(bufferR, 3) / 10;
-                                showResult = data + "℃";//显示温度值
-
-                                //保存到数据库
-                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString))
+                                //水温值超出正常范围
+                                if (data>100 || data<0)
                                 {
-                                    //打开数据库连接
-                                    conn.Open();
+                                    showResult = "ERROR";
+                                }
+                                else
+                                {
+                                    showResult = data.ToString("f1") + "℃";//显示温度值
 
-                                    //判断当前值是否超上限或超下限
-                                    string status = "2";//2表示在范围之内
-                                    using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn))
+                                    //保存到数据库
+                                    using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString))
                                     {
-                                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                                        //打开数据库连接
+                                        conn.Open();
+
+                                        //判断当前值是否超上限或超下限
+                                        string status = "2";//2表示在范围之内
+                                        using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn))
                                         {
-                                            if (reader.Read())
+                                            using (MySqlDataReader reader = cmd.ExecuteReader())
                                             {
-                                                if (data > reader.GetFloat("max"))
+                                                if (reader.Read())
                                                 {
-                                                    status = "3";
-                                                }
-                                                else if (data < reader.GetFloat("min"))
-                                                {
-                                                    status = "1";
+                                                    if (data > reader.GetFloat("max"))
+                                                    {
+                                                        status = "3";
+                                                    }
+                                                    else if (data < reader.GetFloat("min"))
+                                                    {
+                                                        status = "1";
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        //准备插入一条数据
-                                        cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
-                                        cmd.ExecuteNonQuery();
+                                            //准备插入一条数据
+                                            cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
+                                            cmd.ExecuteNonQuery();
+                                        }
                                     }
                                 }
                             }

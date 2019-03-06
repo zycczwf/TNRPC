@@ -153,7 +153,7 @@
             this.label381077 = new System.Windows.Forms.Label();
             this.label381076 = new System.Windows.Forms.Label();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
-            this.label371075 = new System.Windows.Forms.Label();
+            this.label381075 = new System.Windows.Forms.Label();
             this.label381074 = new System.Windows.Forms.Label();
             this.label381073 = new System.Windows.Forms.Label();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
@@ -1658,7 +1658,7 @@
             // 
             // groupBox26
             // 
-            this.groupBox26.Controls.Add(this.label371075);
+            this.groupBox26.Controls.Add(this.label381075);
             this.groupBox26.Controls.Add(this.label381074);
             this.groupBox26.Controls.Add(this.label381073);
             this.groupBox26.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1669,15 +1669,15 @@
             this.groupBox26.TabStop = false;
             this.groupBox26.Text = "25";
             // 
-            // label371075
+            // label381075
             // 
-            this.label371075.AutoSize = true;
-            this.label371075.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label371075.Location = new System.Drawing.Point(3, 26);
-            this.label371075.Name = "label371075";
-            this.label371075.Size = new System.Drawing.Size(23, 12);
-            this.label371075.TabIndex = 5;
-            this.label371075.Text = "N/A";
+            this.label381075.AutoSize = true;
+            this.label381075.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label381075.Location = new System.Drawing.Point(3, 26);
+            this.label381075.Name = "label381075";
+            this.label381075.Size = new System.Drawing.Size(23, 12);
+            this.label381075.TabIndex = 5;
+            this.label381075.Text = "N/A";
             // 
             // label381074
             // 
@@ -3023,7 +3023,7 @@
         private System.Windows.Forms.Label label381078;
         private System.Windows.Forms.Label label381077;
         private System.Windows.Forms.Label label381076;
-        private System.Windows.Forms.Label label371075;
+        private System.Windows.Forms.Label label381075;
         private System.Windows.Forms.Label label381074;
         private System.Windows.Forms.Label label381073;
         private System.Windows.Forms.Label label381072;

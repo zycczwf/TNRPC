@@ -393,7 +393,7 @@
             this.groupBox56.Controls.Add(this.textBox1);
             this.groupBox56.Location = new System.Drawing.Point(6, 172);
             this.groupBox56.Name = "groupBox56";
-            this.groupBox56.Size = new System.Drawing.Size(574, 161);
+            this.groupBox56.Size = new System.Drawing.Size(558, 161);
             this.groupBox56.TabIndex = 2;
             this.groupBox56.TabStop = false;
             this.groupBox56.Text = "供电";
@@ -418,15 +418,17 @@
             // 
             // textBox2
             // 
+            this.textBox2.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox2.Location = new System.Drawing.Point(284, 29);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(285, 123);
+            this.textBox2.Size = new System.Drawing.Size(267, 123);
             this.textBox2.TabIndex = 17;
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox1.Location = new System.Drawing.Point(6, 29);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -449,6 +451,7 @@
             // 
             // textBox13
             // 
+            this.textBox13.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox13.Location = new System.Drawing.Point(284, 29);
             this.textBox13.Multiline = true;
             this.textBox13.Name = "textBox13";
@@ -467,6 +470,7 @@
             // 
             // textBox14
             // 
+            this.textBox14.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox14.Location = new System.Drawing.Point(6, 29);
             this.textBox14.Multiline = true;
             this.textBox14.Name = "textBox14";
@@ -498,6 +502,7 @@
             // 
             // textBox15
             // 
+            this.textBox15.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox15.Location = new System.Drawing.Point(285, 29);
             this.textBox15.Multiline = true;
             this.textBox15.Name = "textBox15";
@@ -507,6 +512,7 @@
             // 
             // textBox16
             // 
+            this.textBox16.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox16.Location = new System.Drawing.Point(6, 29);
             this.textBox16.Multiline = true;
             this.textBox16.Name = "textBox16";
@@ -569,7 +575,7 @@
             // 
             // label390009
             // 
-            this.label390009.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390009.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390009.Location = new System.Drawing.Point(25, 30);
             this.label390009.Name = "label390009";
             this.label390009.Size = new System.Drawing.Size(75, 21);
@@ -589,7 +595,7 @@
             // 
             // label390007
             // 
-            this.label390007.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390007.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390007.Location = new System.Drawing.Point(20, 30);
             this.label390007.Name = "label390007";
             this.label390007.Size = new System.Drawing.Size(80, 21);
@@ -609,7 +615,7 @@
             // 
             // label390008
             // 
-            this.label390008.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390008.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390008.Location = new System.Drawing.Point(26, 30);
             this.label390008.Name = "label390008";
             this.label390008.Size = new System.Drawing.Size(74, 21);
@@ -640,7 +646,7 @@
             // 
             // label390006
             // 
-            this.label390006.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390006.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390006.Location = new System.Drawing.Point(28, 30);
             this.label390006.Name = "label390006";
             this.label390006.Size = new System.Drawing.Size(72, 21);
@@ -660,7 +666,7 @@
             // 
             // label390005
             // 
-            this.label390005.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390005.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390005.Location = new System.Drawing.Point(29, 30);
             this.label390005.Name = "label390005";
             this.label390005.Size = new System.Drawing.Size(71, 21);
@@ -680,7 +686,7 @@
             // 
             // label390004
             // 
-            this.label390004.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390004.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390004.Location = new System.Drawing.Point(23, 30);
             this.label390004.Name = "label390004";
             this.label390004.Size = new System.Drawing.Size(77, 21);
@@ -711,7 +717,7 @@
             // 
             // label390003
             // 
-            this.label390003.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390003.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390003.Location = new System.Drawing.Point(25, 30);
             this.label390003.Name = "label390003";
             this.label390003.Size = new System.Drawing.Size(75, 21);
@@ -731,7 +737,7 @@
             // 
             // label390002
             // 
-            this.label390002.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390002.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390002.Location = new System.Drawing.Point(26, 30);
             this.label390002.Name = "label390002";
             this.label390002.Size = new System.Drawing.Size(74, 21);
@@ -751,7 +757,7 @@
             // 
             // label390001
             // 
-            this.label390001.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label390001.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label390001.Location = new System.Drawing.Point(20, 30);
             this.label390001.Name = "label390001";
             this.label390001.Size = new System.Drawing.Size(80, 21);
@@ -2950,20 +2956,20 @@
             // label370202wg
             // 
             this.label370202wg.AutoSize = true;
-            this.label370202wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label370202wg.Location = new System.Drawing.Point(1, 67);
             this.label370202wg.Name = "label370202wg";
-            this.label370202wg.Size = new System.Drawing.Size(26, 12);
+            this.label370202wg.Size = new System.Drawing.Size(23, 12);
             this.label370202wg.TabIndex = 1;
             this.label370202wg.Text = "N/A";
             // 
             // label370202yg
             // 
             this.label370202yg.AutoSize = true;
-            this.label370202yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label370202yg.Location = new System.Drawing.Point(2, 32);
             this.label370202yg.Name = "label370202yg";
-            this.label370202yg.Size = new System.Drawing.Size(26, 12);
+            this.label370202yg.Size = new System.Drawing.Size(23, 12);
             this.label370202yg.TabIndex = 0;
             this.label370202yg.Text = "N/A";
             // 
@@ -2981,20 +2987,20 @@
             // label370201wg
             // 
             this.label370201wg.AutoSize = true;
-            this.label370201wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label370201wg.Location = new System.Drawing.Point(1, 67);
             this.label370201wg.Name = "label370201wg";
-            this.label370201wg.Size = new System.Drawing.Size(26, 12);
+            this.label370201wg.Size = new System.Drawing.Size(23, 12);
             this.label370201wg.TabIndex = 1;
             this.label370201wg.Text = "N/A";
             // 
             // label370201yg
             // 
             this.label370201yg.AutoSize = true;
-            this.label370201yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label370201yg.Location = new System.Drawing.Point(2, 32);
             this.label370201yg.Name = "label370201yg";
-            this.label370201yg.Size = new System.Drawing.Size(26, 12);
+            this.label370201yg.Size = new System.Drawing.Size(23, 12);
             this.label370201yg.TabIndex = 0;
             this.label370201yg.Text = "N/A";
             // 

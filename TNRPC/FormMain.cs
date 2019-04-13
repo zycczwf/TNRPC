@@ -86,6 +86,8 @@ namespace TNRPC {
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
 
+            Random rm = new Random();
+
             while (true) {
                 //保证循环不退出
                 try {
@@ -173,8 +175,8 @@ namespace TNRPC {
                             Console.WriteLine(e.Message);
                         }
                     }
-                    //间隔5分钟采集一次数据
-                    Thread.Sleep(300000);
+                    //间隔5分钟左右采集一次数据
+                    Thread.Sleep(270000+rm.Next(60000));
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
@@ -194,98 +196,54 @@ namespace TNRPC {
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
 
+            string[] order = { "03004a0002", "03004c0002" };
+            string[] postfix = { "yg", "wg" };
+            string[] paramID = { "60001", "60002" };
+            Random rm = new Random();
             while (true) {
-                //保证循环不退出
                 try {
                     if (!serialPort.IsOpen) {
                         serialPort.Open();
                     }
                     for (int i = 1; i <= num; i++) {
                         try {
-                            //设备ID，数据库中设置好的数值
                             int equipmentID = startNo + i;
-                            //查询有功电度
-                            string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
-                            byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            serialPort.Write(bufferS, 0, bufferS.Length);
-                            //将发送的数据显示在窗体相应的位置
-                            SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                            //等待数据
-                            Thread.Sleep(500);
-                            //接收数据
-                            byte[] bufferR = null;
-                            if (serialPort.BytesToRead > 0) {
-                                bufferR = new byte[serialPort.BytesToRead];
-                                serialPort.Read(bufferR, 0, bufferR.Length);
-                            }
-                            //将接收的数据显示在窗体相应的位置，没有回应数据显示N/A。
-                            SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                            string showResult = null;//界面显示的结果
-                            if (bufferR is null) {
-                                showResult = "N/A";//设备不可用
-                            } else if (!SoftCRC16.CheckCRC16(bufferR)) {
-                                showResult = "ERROR";//返回数据错误
-                            } else {
-                                //解析数据
-                                ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
-                                transform.DataFormat = DataFormat.BADC;//低位在前
-                                double data = (double)transform.TransUInt32(bufferR, 3)/(double)10.0;
-                                showResult = data.ToString("0.0");//显示有功电度
-                                //保存到数据库
-                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
-                                    conn.Open();
-                                    using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','60001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','10012')", conn)) {
-                                        cmd.ExecuteNonQuery();
+                            for (int m = 0; m <= 1; m++) {
+                                string orderWithoutCrc = string.Format("{0:X2}", i) + order[m];
+                                byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                                serialPort.Write(bufferS, 0, bufferS.Length);
+                                SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                Thread.Sleep(500);
+                                byte[] bufferR = null;
+                                if (serialPort.BytesToRead > 0) {
+                                    bufferR = new byte[serialPort.BytesToRead];
+                                    serialPort.Read(bufferR, 0, bufferR.Length);
+                                }
+                                SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                string showResult = null;
+                                if (bufferR is null) {
+                                    showResult = "N/A";
+                                } else if (!SoftCRC16.CheckCRC16(bufferR)) {
+                                    showResult = "ERROR";
+                                } else {
+                                    ReverseBytesTransform transform = new ReverseBytesTransform();
+                                    transform.DataFormat = DataFormat.BADC;
+                                    double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
+                                    showResult = data.ToString("0.0");
+                                    using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                        conn.Open();
+                                        using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','"+ paramID[m] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','10012')", conn)) {
+                                            cmd.ExecuteNonQuery();
+                                        }
                                     }
                                 }
+                                SetText("label" + equipmentID + postfix[m] , showResult);
                             }
-                            //设置界面
-                            SetText("label" + equipmentID+"yg", showResult);
-
-                            //查询无功电度
-                            orderWithoutCrc = string.Format("{0:X2}", i) + "03004c0002";
-                            bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            serialPort.Write(bufferS, 0, bufferS.Length);
-                            //将发送的数据显示在窗体相应的位置
-                            SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                            //等待数据
-                            Thread.Sleep(500);
-                            //接收数据。
-                            bufferR = null;
-                            if (serialPort.BytesToRead > 0) {
-                                bufferR = new byte[serialPort.BytesToRead];
-                                serialPort.Read(bufferR, 0, bufferR.Length);
-                            }
-                            //将接收的数据显示在窗体相应的位置，没有回应数据显示N/A。
-                            SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                            //数据解析，在界面上显示结果，并存储到数据库
-                            showResult = null;//界面显示的结果
-                            if (bufferR is null) {
-                                showResult = "N/A";//设备不可用
-                            } else if (!SoftCRC16.CheckCRC16(bufferR)) {
-                                showResult = "ERROR";//返回数据错误
-                            } else {
-                                //解析数据
-                                ReverseBytesTransform transform = new ReverseBytesTransform();//数据转换工具
-                                transform.DataFormat = DataFormat.BADC;
-                                double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
-                                showResult = data.ToString("0.0");//显示无功电度
-                                //保存到数据库
-                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
-                                    conn.Open();
-                                    using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','60002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','10012')", conn)) {
-                                        cmd.ExecuteNonQuery();
-                                    }
-                                }
-                            }
-                            //设置界面
-                            SetText("label" + equipmentID+"wg", showResult);
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
                         }
                     }
-                    //间隔5分钟采集一次数据
-                    Thread.Sleep(300000);
+                    Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }

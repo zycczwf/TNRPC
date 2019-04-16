@@ -270,16 +270,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.groupBox59 = new System.Windows.Forms.GroupBox();
-            this.label370202wg = new System.Windows.Forms.Label();
-            this.label370202yg = new System.Windows.Forms.Label();
+            this.label370202f = new System.Windows.Forms.Label();
+            this.label370202j = new System.Windows.Forms.Label();
             this.groupBox58 = new System.Windows.Forms.GroupBox();
-            this.label370201wg = new System.Windows.Forms.Label();
-            this.label370201yg = new System.Windows.Forms.Label();
+            this.label370201f = new System.Windows.Forms.Label();
+            this.label370201j = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.label370201g = new System.Windows.Forms.Label();
+            this.label370201p = new System.Windows.Forms.Label();
+            this.label370202g = new System.Windows.Forms.Label();
+            this.label370202p = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.groupBox56.SuspendLayout();
@@ -2944,65 +2956,77 @@
             // 
             // groupBox59
             // 
-            this.groupBox59.Controls.Add(this.label370202wg);
-            this.groupBox59.Controls.Add(this.label370202yg);
+            this.groupBox59.Controls.Add(this.label18);
+            this.groupBox59.Controls.Add(this.label19);
+            this.groupBox59.Controls.Add(this.label20);
+            this.groupBox59.Controls.Add(this.label21);
+            this.groupBox59.Controls.Add(this.label370202g);
+            this.groupBox59.Controls.Add(this.label370202p);
+            this.groupBox59.Controls.Add(this.label370202f);
+            this.groupBox59.Controls.Add(this.label370202j);
             this.groupBox59.Location = new System.Drawing.Point(190, 3);
             this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(84, 86);
+            this.groupBox59.Size = new System.Drawing.Size(86, 86);
             this.groupBox59.TabIndex = 3;
             this.groupBox59.TabStop = false;
             this.groupBox59.Text = "2#低总";
             // 
-            // label370202wg
+            // label370202f
             // 
-            this.label370202wg.AutoSize = true;
-            this.label370202wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label370202wg.Location = new System.Drawing.Point(1, 67);
-            this.label370202wg.Name = "label370202wg";
-            this.label370202wg.Size = new System.Drawing.Size(23, 12);
-            this.label370202wg.TabIndex = 1;
-            this.label370202wg.Text = "N/A";
+            this.label370202f.AutoSize = true;
+            this.label370202f.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202f.Location = new System.Drawing.Point(22, 38);
+            this.label370202f.Name = "label370202f";
+            this.label370202f.Size = new System.Drawing.Size(23, 12);
+            this.label370202f.TabIndex = 1;
+            this.label370202f.Text = "N/A";
             // 
-            // label370202yg
+            // label370202j
             // 
-            this.label370202yg.AutoSize = true;
-            this.label370202yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label370202yg.Location = new System.Drawing.Point(2, 32);
-            this.label370202yg.Name = "label370202yg";
-            this.label370202yg.Size = new System.Drawing.Size(23, 12);
-            this.label370202yg.TabIndex = 0;
-            this.label370202yg.Text = "N/A";
+            this.label370202j.AutoSize = true;
+            this.label370202j.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202j.Location = new System.Drawing.Point(22, 22);
+            this.label370202j.Name = "label370202j";
+            this.label370202j.Size = new System.Drawing.Size(23, 12);
+            this.label370202j.TabIndex = 0;
+            this.label370202j.Text = "N/A";
             // 
             // groupBox58
             // 
-            this.groupBox58.Controls.Add(this.label370201wg);
-            this.groupBox58.Controls.Add(this.label370201yg);
+            this.groupBox58.Controls.Add(this.label10);
+            this.groupBox58.Controls.Add(this.label11);
+            this.groupBox58.Controls.Add(this.label12);
+            this.groupBox58.Controls.Add(this.label17);
+            this.groupBox58.Controls.Add(this.label370201g);
+            this.groupBox58.Controls.Add(this.label370201p);
+            this.groupBox58.Controls.Add(this.label370201f);
+            this.groupBox58.Controls.Add(this.label370201j);
             this.groupBox58.Location = new System.Drawing.Point(100, 3);
             this.groupBox58.Name = "groupBox58";
-            this.groupBox58.Size = new System.Drawing.Size(84, 86);
+            this.groupBox58.Size = new System.Drawing.Size(86, 86);
             this.groupBox58.TabIndex = 2;
             this.groupBox58.TabStop = false;
             this.groupBox58.Text = "1#低总";
             // 
-            // label370201wg
+            // label370201f
             // 
-            this.label370201wg.AutoSize = true;
-            this.label370201wg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label370201wg.Location = new System.Drawing.Point(1, 67);
-            this.label370201wg.Name = "label370201wg";
-            this.label370201wg.Size = new System.Drawing.Size(23, 12);
-            this.label370201wg.TabIndex = 1;
-            this.label370201wg.Text = "N/A";
+            this.label370201f.AutoSize = true;
+            this.label370201f.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201f.Location = new System.Drawing.Point(20, 38);
+            this.label370201f.Name = "label370201f";
+            this.label370201f.Size = new System.Drawing.Size(23, 12);
+            this.label370201f.TabIndex = 1;
+            this.label370201f.Text = "N/A";
             // 
-            // label370201yg
+            // label370201j
             // 
-            this.label370201yg.AutoSize = true;
-            this.label370201yg.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label370201yg.Location = new System.Drawing.Point(2, 32);
-            this.label370201yg.Name = "label370201yg";
-            this.label370201yg.Size = new System.Drawing.Size(23, 12);
-            this.label370201yg.TabIndex = 0;
-            this.label370201yg.Text = "N/A";
+            this.label370201j.AutoSize = true;
+            this.label370201j.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201j.Location = new System.Drawing.Point(20, 22);
+            this.label370201j.Name = "label370201j";
+            this.label370201j.Size = new System.Drawing.Size(23, 12);
+            this.label370201j.TabIndex = 0;
+            this.label370201j.Text = "N/A";
             // 
             // label2
             // 
@@ -3046,6 +3070,126 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // label370201g
+            // 
+            this.label370201g.AutoSize = true;
+            this.label370201g.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201g.Location = new System.Drawing.Point(20, 71);
+            this.label370201g.Name = "label370201g";
+            this.label370201g.Size = new System.Drawing.Size(23, 12);
+            this.label370201g.TabIndex = 3;
+            this.label370201g.Text = "N/A";
+            // 
+            // label370201p
+            // 
+            this.label370201p.AutoSize = true;
+            this.label370201p.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370201p.Location = new System.Drawing.Point(20, 55);
+            this.label370201p.Name = "label370201p";
+            this.label370201p.Size = new System.Drawing.Size(23, 12);
+            this.label370201p.TabIndex = 2;
+            this.label370201p.Text = "N/A";
+            // 
+            // label370202g
+            // 
+            this.label370202g.AutoSize = true;
+            this.label370202g.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202g.Location = new System.Drawing.Point(22, 69);
+            this.label370202g.Name = "label370202g";
+            this.label370202g.Size = new System.Drawing.Size(23, 12);
+            this.label370202g.TabIndex = 3;
+            this.label370202g.Text = "N/A";
+            // 
+            // label370202p
+            // 
+            this.label370202p.AutoSize = true;
+            this.label370202p.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370202p.Location = new System.Drawing.Point(22, 53);
+            this.label370202p.Name = "label370202p";
+            this.label370202p.Size = new System.Drawing.Size(23, 12);
+            this.label370202p.TabIndex = 2;
+            this.label370202p.Text = "N/A";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(1, 71);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(17, 12);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "谷";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(1, 55);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(17, 12);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "平";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(1, 38);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(17, 12);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "峰";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(1, 22);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 12);
+            this.label17.TabIndex = 4;
+            this.label17.Text = "尖";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(2, 69);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(17, 12);
+            this.label18.TabIndex = 7;
+            this.label18.Text = "谷";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.Location = new System.Drawing.Point(2, 53);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(17, 12);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "平";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(2, 38);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(17, 12);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "峰";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label21.Location = new System.Drawing.Point(2, 22);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(17, 12);
+            this.label21.TabIndex = 4;
+            this.label21.Text = "尖";
             // 
             // FormMain
             // 
@@ -3448,10 +3592,22 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox58;
-        private System.Windows.Forms.Label label370201wg;
-        private System.Windows.Forms.Label label370201yg;
+        private System.Windows.Forms.Label label370201f;
+        private System.Windows.Forms.Label label370201j;
         private System.Windows.Forms.GroupBox groupBox59;
-        private System.Windows.Forms.Label label370202wg;
-        private System.Windows.Forms.Label label370202yg;
+        private System.Windows.Forms.Label label370202f;
+        private System.Windows.Forms.Label label370202j;
+        private System.Windows.Forms.Label label370202g;
+        private System.Windows.Forms.Label label370202p;
+        private System.Windows.Forms.Label label370201g;
+        private System.Windows.Forms.Label label370201p;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label17;
     }
 }

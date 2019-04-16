@@ -37,7 +37,7 @@ namespace TNRPC {
             if (used != null && used.Length > 0) {
                 string[] coms = used.Split(',');
                 foreach (string com in coms) {
-                    Thread worker = new Thread(new ParameterizedThreadStart(DianDu));
+                    Thread worker = new Thread(new ParameterizedThreadStart(JFPG));
                     //随主线程退出而退出
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
@@ -176,7 +176,7 @@ namespace TNRPC {
                         }
                     }
                     //间隔5分钟左右采集一次数据
-                    Thread.Sleep(270000+rm.Next(60000));
+                    Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
@@ -232,18 +232,134 @@ namespace TNRPC {
                                     showResult = data.ToString("0.0");
                                     using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                         conn.Open();
-                                        using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','"+ paramID[m] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','10012')", conn)) {
+                                        using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID[m] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','10012')", conn)) {
                                             cmd.ExecuteNonQuery();
                                         }
                                     }
                                 }
-                                SetText("label" + equipmentID + postfix[m] , showResult);
+                                SetText("label" + equipmentID + postfix[m], showResult);
                             }
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
                         }
                     }
                     Thread.Sleep(270000 + rm.Next(60000));
+                } catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        //统计每天尖峰平谷有功电量
+        private void JFPG(Object com) {
+            string[] parameters = com.ToString().Split(',');
+            SerialPort serialPort = new SerialPort();
+            serialPort.PortName = parameters[0];
+            serialPort.BaudRate = Convert.ToInt32(parameters[1]);
+            serialPort.DataBits = Convert.ToInt32(parameters[2]);
+            serialPort.Parity = (Parity)Convert.ToInt32(parameters[3]);
+            serialPort.StopBits = (StopBits)Convert.ToInt32(parameters[4]);
+
+            int startNo = Convert.ToInt32(parameters[5]);
+            int num = Convert.ToInt32(parameters[6]);
+
+            //查询时间及查询数据
+            string[] queryTimes = { "0:00", "8:00", "12:00", "18:00", "22:00" };
+            double[][] queryData = { new double[num], new double[num], new double[num], new double[num], new double[num], new double[num] };
+
+            while (true) {
+                try {
+                    if (!serialPort.IsOpen) {
+                        serialPort.Open();
+                    }
+                    //当前系统时间
+                    string now = DateTime.Now.ToShortTimeString();
+                    int index = Array.IndexOf(queryTimes, now);
+                    if (index > -1) {
+                        for (int i = 1; i <= num; i++) {
+                            int equipmentID = startNo + i;
+                            string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
+                            byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+
+                            //查询仪表数据，共7次机会
+                            for (int j = 0; j < 7; j++) {
+                                try {
+                                    serialPort.Write(bufferS, 0, bufferS.Length);
+                                    SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                    Thread.Sleep(500);
+                                    byte[] bufferR = null;
+                                    if (serialPort.BytesToRead > 0) {
+                                        bufferR = new byte[serialPort.BytesToRead];
+                                        serialPort.Read(bufferR, 0, bufferR.Length);
+                                    }
+                                    SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                    if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
+                                        Thread.Sleep(10000);
+                                        continue;
+                                    } else {
+                                        ReverseBytesTransform transform = new ReverseBytesTransform();
+                                        transform.DataFormat = DataFormat.BADC;
+                                        double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
+                                        queryData[index][i - 1] = data;
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    Console.WriteLine(e.Message);
+                                }
+                            }
+
+                            //每天00:00数据更新
+                            if (index == 0) {
+                                double jian = queryData[4][i - 1] - queryData[3][i - 1];
+                                double feng = queryData[2][i - 1] - queryData[1][i - 1];
+                                double ping = queryData[3][i - 1] - queryData[2][i - 1] + queryData[0][i - 1] - queryData[4][i - 1];
+                                double gu = queryData[1][i - 1] - queryData[5][i - 1];
+                                queryData[5][i - 1] = queryData[0][i - 1];
+                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                    conn.Open();
+                                    using (MySqlCommand cmd = new MySqlCommand()) {
+                                        cmd.Connection = conn;
+                                        if (jian > 0 && jian < 1000000.0) {
+                                            cmd.CommandText = "insert into tb_equipmentparamrecord_10012(id, equipmentid, paramID, recordTime, value, recorder, equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '60003', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jian.ToString("0.0") + "', '仪表采集', '10012')";
+                                            cmd.ExecuteNonQuery();
+                                            SetText("label" + equipmentID + "j", jian.ToString("0.0"));
+                                        } else {
+                                            SetText("label" + equipmentID + "j", "N/A");
+                                        }
+
+                                        if (feng > 0 && feng < 1000000.0) {
+                                            cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','60004','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + feng.ToString("0.0") + "','仪表采集','10012')";
+                                            cmd.ExecuteNonQuery();
+                                            SetText("label" + equipmentID + "f", feng.ToString("0.0"));
+                                        } else {
+                                            SetText("label" + equipmentID + "f", "N/A");
+                                        }
+
+                                        if (ping > 0 && ping < 1000000.0) {
+                                            cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','60005','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + ping.ToString("0.0") + "','仪表采集','10012')";
+                                            cmd.ExecuteNonQuery();
+                                            SetText("label" + equipmentID + "p", ping.ToString("0.0"));
+                                        } else {
+                                            SetText("label" + equipmentID + "p", "N/A");
+                                        }
+
+                                        if (gu > 0 && gu < 1000000.0) {
+                                            cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','60006','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + gu.ToString("0.0") + "','仪表采集','10012')";
+                                            cmd.ExecuteNonQuery();
+                                            SetText("label" + equipmentID + "g", gu.ToString("0.0"));
+                                        } else {
+                                            SetText("label" + equipmentID + "g", "N/A");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //睡一觉
+                        Thread.Sleep(5000000);
+                    } else {
+                        //眯一会儿
+                        Thread.Sleep(50000);
+                    }
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }

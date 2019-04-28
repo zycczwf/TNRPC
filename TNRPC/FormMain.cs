@@ -52,6 +52,7 @@ namespace TNRPC {
 
         //温度
         private void WenDu(Object com) {
+            Thread.Sleep(300000);
             string[] parameters = com.ToString().Split(',');
             //根据参数判断是什么工艺参数
             string process = null;
@@ -173,18 +174,21 @@ namespace TNRPC {
                             SetText("label" + equipmentID, showResult);
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
+                            Thread.Sleep(10000);
                         }
                     }
                     //间隔5分钟左右采集一次数据
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
+                    Thread.Sleep(10000);
                 }
             }
         }
 
         //电度
         private void DianDu(Object com) {
+            Thread.Sleep(300000);
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort();
             serialPort.PortName = parameters[0];
@@ -241,17 +245,20 @@ namespace TNRPC {
                             }
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
+                            Thread.Sleep(10000);
                         }
                     }
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
+                    Thread.Sleep(10000);
                 }
             }
         }
 
         //统计每天尖峰平谷有功电量
         private void JFPG(Object com) {
+            Thread.Sleep(300000);
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort();
             serialPort.PortName = parameters[0];
@@ -305,6 +312,7 @@ namespace TNRPC {
                                     }
                                 } catch (Exception e) {
                                     Console.WriteLine(e.Message);
+                                    Thread.Sleep(10000);
                                 }
                             }
 
@@ -362,6 +370,7 @@ namespace TNRPC {
                     }
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
+                    Thread.Sleep(10000);
                 }
             }
         }

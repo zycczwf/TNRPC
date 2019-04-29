@@ -7,9 +7,14 @@ using HslCommunication.Serial;
 using HslCommunication.BasicFramework;
 using HslCommunication.Core;
 using MySql.Data.MySqlClient;
+using log4net;
 
 namespace TNRPC {
     public partial class FormMain : Form {
+
+        ILog log = log4net.LogManager.GetLogger("testApp.Logging");
+        Random rm = new Random(1);
+
         public FormMain() {
             InitializeComponent();
         }
@@ -30,6 +35,7 @@ namespace TNRPC {
                     //随主线程退出而退出
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
+                    log.Info(DateTime.Now.ToString() + ":start WenDu thread" + com);
                 }
             }
             //电度
@@ -41,6 +47,7 @@ namespace TNRPC {
                     //随主线程退出而退出
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
+                    log.Info(DateTime.Now.ToString() + ":start JFPG thread" + com);
                 }
             }
         }
@@ -52,7 +59,7 @@ namespace TNRPC {
 
         //温度
         private void WenDu(Object com) {
-            Thread.Sleep(300000);
+            Thread.Sleep(110000);
             string[] parameters = com.ToString().Split(',');
             //根据参数判断是什么工艺参数
             string process = null;
@@ -86,8 +93,6 @@ namespace TNRPC {
 
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
-
-            Random rm = new Random();
 
             while (true) {
                 //保证循环不退出
@@ -173,14 +178,14 @@ namespace TNRPC {
                             //设置界面
                             SetText("label" + equipmentID, showResult);
                         } catch (Exception e) {
-                            Console.WriteLine(e.Message);
+                            log.Error(DateTime.Now.ToString() + e.Message);
                             Thread.Sleep(10000);
                         }
                     }
                     //间隔5分钟左右采集一次数据
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
-                    Console.WriteLine(e.Message);
+                    log.Error(DateTime.Now.ToString() + e.Message);
                     Thread.Sleep(10000);
                 }
             }
@@ -188,7 +193,7 @@ namespace TNRPC {
 
         //电度
         private void DianDu(Object com) {
-            Thread.Sleep(300000);
+            Thread.Sleep(120000);
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort();
             serialPort.PortName = parameters[0];
@@ -203,7 +208,7 @@ namespace TNRPC {
             string[] order = { "03004a0002", "03004c0002" };
             string[] postfix = { "yg", "wg" };
             string[] paramID = { "60001", "60002" };
-            Random rm = new Random();
+
             while (true) {
                 try {
                     if (!serialPort.IsOpen) {
@@ -244,13 +249,13 @@ namespace TNRPC {
                                 SetText("label" + equipmentID + postfix[m], showResult);
                             }
                         } catch (Exception e) {
-                            Console.WriteLine(e.Message);
+                            log.Error(DateTime.Now.ToString() + e.Message);
                             Thread.Sleep(10000);
                         }
                     }
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
-                    Console.WriteLine(e.Message);
+                    log.Error(DateTime.Now.ToString() + e.Message);
                     Thread.Sleep(10000);
                 }
             }
@@ -258,7 +263,7 @@ namespace TNRPC {
 
         //统计每天尖峰平谷有功电量
         private void JFPG(Object com) {
-            Thread.Sleep(300000);
+            Thread.Sleep(130000);
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort();
             serialPort.PortName = parameters[0];
@@ -311,7 +316,7 @@ namespace TNRPC {
                                         break;
                                     }
                                 } catch (Exception e) {
-                                    Console.WriteLine(e.Message);
+                                    log.Error(DateTime.Now.ToString() + e.Message);
                                     Thread.Sleep(10000);
                                 }
                             }
@@ -369,7 +374,7 @@ namespace TNRPC {
                         Thread.Sleep(50000);
                     }
                 } catch (Exception e) {
-                    Console.WriteLine(e.Message);
+                    log.Error(DateTime.Now.ToString() + e.Message);
                     Thread.Sleep(10000);
                 }
             }

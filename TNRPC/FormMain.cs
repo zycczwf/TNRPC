@@ -8,6 +8,7 @@ using HslCommunication.BasicFramework;
 using HslCommunication.Core;
 using MySql.Data.MySqlClient;
 using log4net;
+using NDde.Client;
 
 namespace TNRPC {
     public partial class FormMain : Form {
@@ -35,7 +36,7 @@ namespace TNRPC {
                     //随主线程退出而退出
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
-                    log.Info(DateTime.Now.ToString() + ":start WenDu thread" + com);
+                    log.Info(DateTime.Now.ToString() + "_start WenDu thread_" + com);
                 }
             }
             //电度
@@ -47,7 +48,24 @@ namespace TNRPC {
                     //随主线程退出而退出
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
-                    log.Info(DateTime.Now.ToString() + ":start JFPG thread" + com);
+                    log.Info(DateTime.Now.ToString() + "_start JFPG thread_" + com);
+                }
+            }
+            //固化室
+            used = ConfigurationManager.AppSettings["GUHUA"];
+            if (used != null && used.Length > 0) {
+                string[] plcs = used.Split(',');
+                foreach (string plc in plcs) {
+                    DdeClient client = new DdeClient("PROSERVR", plc + ".PLC1");
+                    try {
+                        client.Connect();
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
+                    }
+                    client.Advise += SBGH;
+                    client.StartAdvise("wendu", 1, true, 60000);
+                    client.StartAdvise("shidu", 1, true, 60000);
+                    log.Info(DateTime.Now.ToString() + "_start SBGH thread_" + plc);
                 }
             }
         }
@@ -66,18 +84,18 @@ namespace TNRPC {
             string paramID = null;//tb_parameterinfo
             string equipmentTypeID = null;//tb_equipmenttype
             switch (parameters[0]) {
-                case "COM4":
-                case "COM5":
-                case "COM6":
-                case "COM7":
-                case "COM8":
+                case "COM104":
+                case "COM105":
+                case "COM106":
+                case "COM107":
+                case "COM108":
                     process = PROCESS.CDWD.ToString();
                     paramID = "50001";
                     equipmentTypeID = "3";
                     break;
-                case "COM9":
-                case "COM10":
-                case "COM11":
+                case "COM109":
+                case "COM110":
+                case "COM111":
                     process = PROCESS.GZWD.ToString();
                     paramID = "40001";
                     equipmentTypeID = "4";
@@ -259,6 +277,37 @@ namespace TNRPC {
                     Thread.Sleep(10000);
                 }
             }
+        }
+
+        //固化
+        private void SBGH(object sender, DdeAdviseEventArgs args) {
+            string topic = ((DdeClient)sender).Topic;
+            string plc = topic.Substring(0, topic.IndexOf("."));
+            string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+            string strData = args.Text.Substring(0, args.Text.IndexOf("\r"));
+            Console.WriteLine(strData);
+            //double douData = Convert.ToDouble(strData) / 10.0;
+            //            if (args.Item.Equals("wendu")) {
+            //
+            //              SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+            //            SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+            //          SetText("label" + parameters[0] + "wd", swendu);
+            //    } else {
+            //      string sshidu = args.Text.Substring(0, args.Text.IndexOf("\r"));
+            //    SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+            //  SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+            //SetText("label" + parameters[0] + "sd", sshidu);
+            // }
+
+            //            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+            //                conn.Open();
+            //                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[1] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + wendu + "','仪表采集','10016')", conn)) {
+            //                    cmd.ExecuteNonQuery();
+            //                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[1] + "','70002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + shidu + "','仪表采集','10016')";
+            //                   cmd.ExecuteNonQuery();
+            //               }
+            //          }
+
         }
 
         //统计每天尖峰平谷有功电量

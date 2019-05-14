@@ -1,0 +1,28 @@
+[Header] 2019-05-09 08:25:18,011 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadCD_C_1
+2019-05-09 08:25:18,049 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadCD_C_2
+2019-05-09 08:25:18,055 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadCD_C_3
+2019-05-09 08:25:18,057 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadCD_C_4
+2019-05-09 08:25:18,059 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadCD_C_5
+2019-05-09 08:25:18,065 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start WenDu threadZP_11
+2019-05-09 08:25:18,065 [1] INFO  testApp.Logging [(null)]  - 2019-05-09 8:25:18:start JFPG threadCDBQN
+[Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] 2019-05-10 15:30:26,980 [1] INFO  testApp.Logging [(null)]  - 2019-05-10 15:30:26:start GuHua thread9_1
+[Footer] [Header] [Footer] [Header] [Footer] [Header] 2019-05-12 09:47:12,450 [1] INFO  testApp.Logging [(null)]  - 2019-05-12 9:47:12_start GuHua thread_9_1
+[Header] 2019-05-12 10:02:59,642 [1] INFO  testApp.Logging [(null)]  - 2019-05-12 10:02:59_start GuHua thread_9_1
+[Footer] [Header] 2019-05-12 10:05:45,025 [1] INFO  testApp.Logging [(null)]  - 2019-05-12 10:05:45_start GuHua thread_9_1
+[Footer] [Header] 2019-05-12 10:19:29,313 [1] INFO  testApp.Logging [(null)]  - 2019-05-12 10:19:29_start GuHua thread_9_1
+[Footer] [Header] 2019-05-12 10:25:12,369 [1] INFO  testApp.Logging [(null)]  - 2019-05-12 10:25:12_start GuHua thread_9_1
+[Footer] [Header] 2019-05-14 08:46:51,674 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 8:46:51_start GuHua thread_9_1
+[Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] 2019-05-14 13:48:37,319 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 13:48:37_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 13:52:22,461 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 13:52:22_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:08:45,983 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:08:45_start SBGH thread_sbgh9_1
+[Header] 2019-05-14 14:09:39,271 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:09:39_start SBGH thread_sbgh9_1
+[Header] 2019-05-14 14:10:56,055 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:10:56_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:13:26,395 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:13:26_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:14:24,587 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:14:24_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:19:10,196 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:19:10_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:21:16,186 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:21:16_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:22:48,649 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:22:48_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:23:46,402 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:23:46_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:25:08,630 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:25:08_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-14 14:28:36,404 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:28:36_start SBGH thread_sbgh9_1
+[Header] 2019-05-14 14:32:47,813 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:32:47_start SBGH thread_sbgh9_1

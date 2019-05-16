@@ -54,19 +54,11 @@ namespace TNRPC {
             //固化室
             used = ConfigurationManager.AppSettings["GUHUA"];
             if (used != null && used.Length > 0) {
-                string[] plcs = used.Split(',');
-                foreach (string plc in plcs) {
-                    DdeClient client = new DdeClient("PROSERVR", plc + ".PLC1");
-                    try {
-                        client.Connect();
-                    } catch (Exception ee) {
-                        log.Error(DateTime.Now.ToString() + ee.Message);
-                    }
-                    client.Advise += SBGH;
-                    client.StartAdvise("wendu", 1, true, 60000);
-                    client.StartAdvise("shidu", 1, true, 60000);
-                    log.Info(DateTime.Now.ToString() + "_start SBGH thread_" + plc);
-                }
+                Thread worker = new Thread(new ParameterizedThreadStart(GH));
+                //随主线程退出而退出
+                worker.IsBackground = true;
+                worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start GH thread.");
             }
         }
 
@@ -279,35 +271,77 @@ namespace TNRPC {
             }
         }
 
-        //固化
+        //固化(数据有变化，自动上报)
         private void SBGH(object sender, DdeAdviseEventArgs args) {
             string topic = ((DdeClient)sender).Topic;
             string plc = topic.Substring(0, topic.IndexOf("."));
             string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
             string strData = args.Text.Substring(0, args.Text.IndexOf("\r"));
-            Console.WriteLine(strData);
-            //double douData = Convert.ToDouble(strData) / 10.0;
-            //            if (args.Item.Equals("wendu")) {
-            //
-            //              SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
-            //            SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
-            //          SetText("label" + parameters[0] + "wd", swendu);
-            //    } else {
-            //      string sshidu = args.Text.Substring(0, args.Text.IndexOf("\r"));
-            //    SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
-            //  SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
-            //SetText("label" + parameters[0] + "sd", sshidu);
-            // }
+            double douData = Convert.ToDouble(strData) / 10.0;
+            strData = Convert.ToString(douData);
+            string paramType = "70001";
+            if (args.Item.Equals("wendu")) {
+                SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                SetText("label" + parameters[0] + "wd", strData);
+            } else {
+                string sshidu = args.Text.Substring(0, args.Text.IndexOf("\r"));
+                SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+                SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                SetText("label" + parameters[0] + "sd", strData);
+                paramType = "70002";
+            }
+            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','"+ paramType + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + strData + "','仪表采集','10016')", conn)) {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
-            //            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
-            //                conn.Open();
-            //                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[1] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + wendu + "','仪表采集','10016')", conn)) {
-            //                    cmd.ExecuteNonQuery();
-            //                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[1] + "','70002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + shidu + "','仪表采集','10016')";
-            //                   cmd.ExecuteNonQuery();
-            //               }
-            //          }
-
+        //固化
+        private void GH(Object com) {
+            string[] plcs = com.ToString().Split(',');
+            while (true) {
+                try {
+                    foreach (string plc in plcs) {
+                        DdeClient client = new DdeClient("PROSERVR", plc + ".PLC1");
+                        try {
+                            client.Connect();
+                        } catch (Exception ee) {
+                            log.Error(DateTime.Now.ToString() + ee.Message);
+                        }
+                        //client.Advise += SBGH;
+                        //client.StartAdvise("wendu", 1, true, 600000000);
+                        //client.StartAdvise("shidu", 1, true, 600000000);
+                        string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+                        string strWendu = client.Request("wendu", 60000);
+                        string strShidu = client.Request("shidu", 60000);
+                        strWendu = strWendu.Substring(0, strWendu.IndexOf("\r"));
+                        strShidu = strShidu.Substring(0, strShidu.IndexOf("\r"));
+                        strWendu = Convert.ToString(Convert.ToDouble(strWendu) / 10.0);
+                        strShidu = Convert.ToString(Convert.ToDouble(strShidu) / 10.0);
+                        SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                        SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                        SetText("label" + parameters[0] + "wd", strWendu);
+                        SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+                        SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                        SetText("label" + parameters[0] + "sd", strShidu);
+                        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                            conn.Open();
+                            using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + strWendu + "','仪表采集','10016')", conn)) {
+                                cmd.ExecuteNonQuery();
+                                cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + strShidu + "','仪表采集','10016')";
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    Thread.Sleep(300000);
+                } catch (Exception ee) {
+                    log.Error(DateTime.Now.ToString() + ee.Message);
+                    Thread.Sleep(10000);
+                }
+            }
         }
 
         //统计每天尖峰平谷有功电量

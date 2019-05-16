@@ -26,3 +26,17 @@
 [Footer] [Header] 2019-05-14 14:25:08,630 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:25:08_start SBGH thread_sbgh9_1
 [Footer] [Header] 2019-05-14 14:28:36,404 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:28:36_start SBGH thread_sbgh9_1
 [Header] 2019-05-14 14:32:47,813 [1] INFO  testApp.Logging [(null)]  - 2019-05-14 14:32:47_start SBGH thread_sbgh9_1
+[Header] 2019-05-16 13:49:36,963 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 13:49:36_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:10:57,317 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:10:57_start SBGH thread_sbgh9_1
+[Header] 2019-05-16 14:14:35,411 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:14:35_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:17:59,246 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:17:59_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:21:50,419 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:21:50_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:25:31,805 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:25:31_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:40:13,141 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:40:13_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:43:32,059 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:43:32_start SBGH thread_sbgh9_1
+[Footer] [Header] 2019-05-16 14:48:21,167 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 14:48:21_start SBGH thread_sbgh9_1
+[Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] 2019-05-16 15:26:10,271 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:26:10_start GH thread.
+[Footer] [Header] 2019-05-16 15:27:33,251 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:27:33_start GH thread.
+[Header] 2019-05-16 15:29:01,587 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:29:01_start GH thread.
+[Footer] [Header] 2019-05-16 15:31:31,936 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:31:31_start GH thread.
+[Footer] 

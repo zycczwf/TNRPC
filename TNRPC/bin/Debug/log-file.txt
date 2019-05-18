@@ -61,4 +61,8 @@
 [Footer] [Header] 2019-05-18 13:32:47,564 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:32:47_start GuHua thread.
 [Header] 2019-05-18 13:38:38,044 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:38:38_start GuHua thread.
 [Footer] [Header] 2019-05-18 13:40:20,745 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:40:20_start GuHua thread.
-[Footer] 
+[Footer] [Header] 2019-05-18 16:06:02,306 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 16:06:02_start GuHua thread.
+[Footer] [Header] 2019-05-18 16:09:42,656 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 16:09:42_start GuHua thread.
+[Footer] [Header] 2019-05-18 16:09:51,135 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 16:09:51_start GuHua thread.
+[Footer] [Header] 2019-05-18 16:22:41,585 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 16:22:41_start GuHua thread.
+[Footer] [Header] 2019-05-18 16:38:53,631 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 16:38:53_start GuHua thread.

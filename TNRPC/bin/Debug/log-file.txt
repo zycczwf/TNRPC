@@ -39,4 +39,26 @@
 [Footer] [Header] 2019-05-16 15:27:33,251 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:27:33_start GH thread.
 [Header] 2019-05-16 15:29:01,587 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:29:01_start GH thread.
 [Footer] [Header] 2019-05-16 15:31:31,936 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:31:31_start GH thread.
+[Footer] [Header] 2019-05-16 15:48:41,400 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 15:48:41_start GH thread.
+[Footer] [Header] 2019-05-16 16:27:30,092 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 16:27:30_start GH thread.
+[Footer] [Header] 2019-05-16 16:32:22,456 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 16:32:22_start GH thread.
+[Footer] [Header] 2019-05-16 17:20:47,499 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 17:20:47_start GH thread.
+[Footer] [Header] 2019-05-16 17:24:49,928 [1] INFO  testApp.Logging [(null)]  - 2019-05-16 17:24:49_start GH thread.
+[Footer] [Header] 2019-05-18 10:11:30,245 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 10:11:30_start GH thread.
+[Footer] [Header] 2019-05-18 10:28:50,254 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 10:28:50_start GuHua thread.
+[Footer] [Header] 2019-05-18 12:42:29,067 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 12:42:29_start GuHua thread.
+[Footer] [Header] 2019-05-18 12:45:25,945 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 12:45:25_start GuHua thread.
+[Footer] [Header] 2019-05-18 12:46:15,171 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 12:46:15_start GuHua thread.
+[Footer] [Header] 2019-05-18 12:47:09,292 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 12:47:09_start GuHua thread.
+[Footer] [Header] 2019-05-18 13:09:54,719 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_CD_C_1
+2019-05-18 13:09:54,756 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_CD_C_2
+2019-05-18 13:09:54,757 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_CD_C_3
+2019-05-18 13:09:54,761 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_CD_C_4
+2019-05-18 13:09:54,762 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_CD_C_5
+2019-05-18 13:09:54,764 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start WenDu thread_ZP_11
+2019-05-18 13:09:54,766 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start DianDu thread_CDBQN
+2019-05-18 13:09:54,785 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:09:54_start GuHua thread.
+[Footer] [Header] 2019-05-18 13:32:47,564 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:32:47_start GuHua thread.
+[Header] 2019-05-18 13:38:38,044 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:38:38_start GuHua thread.
+[Footer] [Header] 2019-05-18 13:40:20,745 [1] INFO  testApp.Logging [(null)]  - 2019-05-18 13:40:20_start GuHua thread.
 [Footer] 

@@ -297,30 +297,30 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel22 = new System.Windows.Forms.Panel();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
             this.groupBox60 = new System.Windows.Forms.GroupBox();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label360001sd = new System.Windows.Forms.Label();
             this.label360001wd = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.label31 = new System.Windows.Forms.Label();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.label30 = new System.Windows.Forms.Label();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.label29 = new System.Windows.Forms.Label();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.label28 = new System.Windows.Forms.Label();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.label25 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.groupBox61.SuspendLayout();
@@ -400,6 +400,7 @@
             this.panel7.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel22.SuspendLayout();
+            this.groupBox60.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.panel19.SuspendLayout();
@@ -409,7 +410,6 @@
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox60.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -3058,9 +3058,9 @@
             this.groupBox59.Controls.Add(this.label370202p);
             this.groupBox59.Controls.Add(this.label370202f);
             this.groupBox59.Controls.Add(this.label370202j);
-            this.groupBox59.Location = new System.Drawing.Point(190, 3);
+            this.groupBox59.Location = new System.Drawing.Point(202, 3);
             this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(86, 86);
+            this.groupBox59.Size = new System.Drawing.Size(98, 86);
             this.groupBox59.TabIndex = 3;
             this.groupBox59.TabStop = false;
             this.groupBox59.Text = "2#低总";
@@ -3157,7 +3157,7 @@
             this.groupBox58.Controls.Add(this.label370201j);
             this.groupBox58.Location = new System.Drawing.Point(100, 3);
             this.groupBox58.Name = "groupBox58";
-            this.groupBox58.Size = new System.Drawing.Size(86, 86);
+            this.groupBox58.Size = new System.Drawing.Size(98, 86);
             this.groupBox58.TabIndex = 2;
             this.groupBox58.TabStop = false;
             this.groupBox58.Text = "1#低总";
@@ -3298,175 +3298,6 @@
             this.panel22.Size = new System.Drawing.Size(1118, 62);
             this.panel22.TabIndex = 1;
             // 
-            // panel21
-            // 
-            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel21.Controls.Add(this.label31);
-            this.panel21.Location = new System.Drawing.Point(20, 549);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(1118, 62);
-            this.panel21.TabIndex = 1;
-            // 
-            // panel20
-            // 
-            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel20.Controls.Add(this.label30);
-            this.panel20.Location = new System.Drawing.Point(20, 473);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(1118, 62);
-            this.panel20.TabIndex = 1;
-            // 
-            // panel19
-            // 
-            this.panel19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel19.Controls.Add(this.label29);
-            this.panel19.Location = new System.Drawing.Point(20, 397);
-            this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(1118, 62);
-            this.panel19.TabIndex = 1;
-            // 
-            // panel18
-            // 
-            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel18.Controls.Add(this.label28);
-            this.panel18.Location = new System.Drawing.Point(20, 321);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(1118, 62);
-            this.panel18.TabIndex = 1;
-            // 
-            // panel17
-            // 
-            this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel17.Controls.Add(this.label27);
-            this.panel17.Location = new System.Drawing.Point(20, 245);
-            this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(1118, 62);
-            this.panel17.TabIndex = 1;
-            // 
-            // panel16
-            // 
-            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel16.Controls.Add(this.label26);
-            this.panel16.Location = new System.Drawing.Point(20, 169);
-            this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(1118, 62);
-            this.panel16.TabIndex = 1;
-            // 
-            // panel15
-            // 
-            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel15.Controls.Add(this.label25);
-            this.panel15.Location = new System.Drawing.Point(20, 93);
-            this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(1118, 62);
-            this.panel15.TabIndex = 1;
-            // 
-            // panel14
-            // 
-            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel14.Controls.Add(this.label24);
-            this.panel14.Location = new System.Drawing.Point(20, 17);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(1118, 62);
-            this.panel14.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::TNRPC.Properties.Resources.dnxb;
-            this.pictureBox1.Location = new System.Drawing.Point(1182, 1);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 103);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(12, 21);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(59, 16);
-            this.label24.TabIndex = 0;
-            this.label24.Text = "一号线";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(12, 26);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(59, 16);
-            this.label25.TabIndex = 1;
-            this.label25.Text = "二号线";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(12, 27);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(59, 16);
-            this.label26.TabIndex = 2;
-            this.label26.Text = "三号线";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(12, 21);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(59, 16);
-            this.label27.TabIndex = 3;
-            this.label27.Text = "四号线";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(12, 25);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(59, 16);
-            this.label28.TabIndex = 4;
-            this.label28.Text = "五号线";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(12, 24);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(59, 16);
-            this.label29.TabIndex = 5;
-            this.label29.Text = "六号线";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(12, 28);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(59, 16);
-            this.label30.TabIndex = 6;
-            this.label30.Text = "七号线";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(12, 23);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(59, 16);
-            this.label31.TabIndex = 7;
-            this.label31.Text = "八号线";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(12, 24);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(59, 16);
-            this.label32.TabIndex = 8;
-            this.label32.Text = "九号线";
-            // 
             // groupBox60
             // 
             this.groupBox60.Controls.Add(this.label35);
@@ -3519,6 +3350,175 @@
             this.label360001wd.Size = new System.Drawing.Size(23, 12);
             this.label360001wd.TabIndex = 0;
             this.label360001wd.Text = "N/A";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(12, 24);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(59, 16);
+            this.label32.TabIndex = 8;
+            this.label32.Text = "九号线";
+            // 
+            // panel21
+            // 
+            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel21.Controls.Add(this.label31);
+            this.panel21.Location = new System.Drawing.Point(20, 549);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(1118, 62);
+            this.panel21.TabIndex = 1;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(12, 23);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(59, 16);
+            this.label31.TabIndex = 7;
+            this.label31.Text = "八号线";
+            // 
+            // panel20
+            // 
+            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel20.Controls.Add(this.label30);
+            this.panel20.Location = new System.Drawing.Point(20, 473);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(1118, 62);
+            this.panel20.TabIndex = 1;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(12, 28);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(59, 16);
+            this.label30.TabIndex = 6;
+            this.label30.Text = "七号线";
+            // 
+            // panel19
+            // 
+            this.panel19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel19.Controls.Add(this.label29);
+            this.panel19.Location = new System.Drawing.Point(20, 397);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(1118, 62);
+            this.panel19.TabIndex = 1;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(12, 24);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(59, 16);
+            this.label29.TabIndex = 5;
+            this.label29.Text = "六号线";
+            // 
+            // panel18
+            // 
+            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel18.Controls.Add(this.label28);
+            this.panel18.Location = new System.Drawing.Point(20, 321);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(1118, 62);
+            this.panel18.TabIndex = 1;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(12, 25);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(59, 16);
+            this.label28.TabIndex = 4;
+            this.label28.Text = "五号线";
+            // 
+            // panel17
+            // 
+            this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel17.Controls.Add(this.label27);
+            this.panel17.Location = new System.Drawing.Point(20, 245);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(1118, 62);
+            this.panel17.TabIndex = 1;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(12, 21);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(59, 16);
+            this.label27.TabIndex = 3;
+            this.label27.Text = "四号线";
+            // 
+            // panel16
+            // 
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel16.Controls.Add(this.label26);
+            this.panel16.Location = new System.Drawing.Point(20, 169);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(1118, 62);
+            this.panel16.TabIndex = 1;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(12, 27);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(59, 16);
+            this.label26.TabIndex = 2;
+            this.label26.Text = "三号线";
+            // 
+            // panel15
+            // 
+            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel15.Controls.Add(this.label25);
+            this.panel15.Location = new System.Drawing.Point(20, 93);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(1118, 62);
+            this.panel15.TabIndex = 1;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(12, 26);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(59, 16);
+            this.label25.TabIndex = 1;
+            this.label25.Text = "二号线";
+            // 
+            // panel14
+            // 
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel14.Controls.Add(this.label24);
+            this.panel14.Location = new System.Drawing.Point(20, 17);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(1118, 62);
+            this.panel14.TabIndex = 0;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(12, 21);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(59, 16);
+            this.label24.TabIndex = 0;
+            this.label24.Text = "一号线";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::TNRPC.Properties.Resources.dnxb;
+            this.pictureBox1.Location = new System.Drawing.Point(1182, 1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 103);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FormMain
             // 
@@ -3674,6 +3674,8 @@
             this.tabPage2.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
             this.panel22.PerformLayout();
+            this.groupBox60.ResumeLayout(false);
+            this.groupBox60.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel20.ResumeLayout(false);
@@ -3691,8 +3693,6 @@
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox60.ResumeLayout(false);
-            this.groupBox60.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -169,7 +169,7 @@ namespace TNRPC {
                                             if (jfpg[j] > 0 && jfpg[j] < 1000000.0) {
                                                 cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '" + paramCode[j] + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jfpg[j].ToString("0.0") + "', '仪表采集', '10012')";
                                                 cmd.ExecuteNonQuery();
-                                                SetText("label" + equipmentID + labelCode[j], jfpg[j].ToString("0.0")+"KWh");
+                                                SetText("label" + equipmentID + labelCode[j], jfpg[j].ToString("0"));
                                             } else {
                                                 SetText("label" + equipmentID + labelCode[j], "N/A");
                                             }

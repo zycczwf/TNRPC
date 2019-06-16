@@ -6,6 +6,7 @@ C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Google.Protobuf.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\HslCommunication.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\log4net.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\MySql.Data.dll
+C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\NDde.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Newtonsoft.Json.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\SharpNodeSettings.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Google.Protobuf.pdb
@@ -22,4 +23,3 @@ C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.csproj.CoreCompileI
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.csproj.CopyComplete
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.exe
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.pdb
-C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\NDde.dll

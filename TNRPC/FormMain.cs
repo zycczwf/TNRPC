@@ -136,7 +136,7 @@ namespace TNRPC {
                             int equipmentID = startNo + i;
                             string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
                             byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            for (int j = 0; j < 7; j++) {
+                            for (int j = 0; j < 3; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
                                 SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                                 Thread.Sleep(500);

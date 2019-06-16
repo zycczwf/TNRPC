@@ -604,6 +604,11 @@
             this.label24 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.groupBox24 = new System.Windows.Forms.GroupBox();
+            this.label370626g = new System.Windows.Forms.Label();
+            this.label370626p = new System.Windows.Forms.Label();
+            this.label370626f = new System.Windows.Forms.Label();
+            this.label370626j = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.groupBox61.SuspendLayout();
@@ -741,6 +746,7 @@
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox24.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -4140,6 +4146,7 @@
             // panel11
             // 
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel11.Controls.Add(this.groupBox24);
             this.panel11.Controls.Add(this.groupBox99);
             this.panel11.Controls.Add(this.groupBox101);
             this.panel11.Controls.Add(this.groupBox100);
@@ -4175,7 +4182,7 @@
             this.groupBox99.Controls.Add(this.label370625p);
             this.groupBox99.Controls.Add(this.label370625f);
             this.groupBox99.Controls.Add(this.label370625j);
-            this.groupBox99.Location = new System.Drawing.Point(1087, 3);
+            this.groupBox99.Location = new System.Drawing.Point(1032, 3);
             this.groupBox99.Name = "groupBox99";
             this.groupBox99.Size = new System.Drawing.Size(47, 100);
             this.groupBox99.TabIndex = 24;
@@ -4281,7 +4288,7 @@
             this.groupBox100.Controls.Add(this.label370623p);
             this.groupBox100.Controls.Add(this.label370623f);
             this.groupBox100.Controls.Add(this.label370623j);
-            this.groupBox100.Location = new System.Drawing.Point(981, 3);
+            this.groupBox100.Location = new System.Drawing.Point(926, 3);
             this.groupBox100.Name = "groupBox100";
             this.groupBox100.Size = new System.Drawing.Size(47, 100);
             this.groupBox100.TabIndex = 22;
@@ -4387,7 +4394,7 @@
             this.groupBox115.Controls.Add(this.label370624p);
             this.groupBox115.Controls.Add(this.label370624f);
             this.groupBox115.Controls.Add(this.label370624j);
-            this.groupBox115.Location = new System.Drawing.Point(1034, 3);
+            this.groupBox115.Location = new System.Drawing.Point(979, 3);
             this.groupBox115.Name = "groupBox115";
             this.groupBox115.Size = new System.Drawing.Size(47, 100);
             this.groupBox115.TabIndex = 23;
@@ -4493,7 +4500,7 @@
             this.groupBox116.Controls.Add(this.label370622p);
             this.groupBox116.Controls.Add(this.label370622f);
             this.groupBox116.Controls.Add(this.label370622j);
-            this.groupBox116.Location = new System.Drawing.Point(928, 3);
+            this.groupBox116.Location = new System.Drawing.Point(873, 3);
             this.groupBox116.Name = "groupBox116";
             this.groupBox116.Size = new System.Drawing.Size(47, 100);
             this.groupBox116.TabIndex = 21;
@@ -4599,7 +4606,7 @@
             this.groupBox117.Controls.Add(this.label370621p);
             this.groupBox117.Controls.Add(this.label370621f);
             this.groupBox117.Controls.Add(this.label370621j);
-            this.groupBox117.Location = new System.Drawing.Point(875, 3);
+            this.groupBox117.Location = new System.Drawing.Point(820, 3);
             this.groupBox117.Name = "groupBox117";
             this.groupBox117.Size = new System.Drawing.Size(47, 100);
             this.groupBox117.TabIndex = 20;
@@ -6912,6 +6919,59 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // groupBox24
+            // 
+            this.groupBox24.Controls.Add(this.label370626g);
+            this.groupBox24.Controls.Add(this.label370626p);
+            this.groupBox24.Controls.Add(this.label370626f);
+            this.groupBox24.Controls.Add(this.label370626j);
+            this.groupBox24.Location = new System.Drawing.Point(1085, 3);
+            this.groupBox24.Name = "groupBox24";
+            this.groupBox24.Size = new System.Drawing.Size(47, 100);
+            this.groupBox24.TabIndex = 25;
+            this.groupBox24.TabStop = false;
+            this.groupBox24.Text = "26";
+            // 
+            // label370626g
+            // 
+            this.label370626g.AutoSize = true;
+            this.label370626g.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370626g.Location = new System.Drawing.Point(5, 82);
+            this.label370626g.Name = "label370626g";
+            this.label370626g.Size = new System.Drawing.Size(23, 12);
+            this.label370626g.TabIndex = 3;
+            this.label370626g.Text = "N/A";
+            // 
+            // label370626p
+            // 
+            this.label370626p.AutoSize = true;
+            this.label370626p.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370626p.Location = new System.Drawing.Point(5, 62);
+            this.label370626p.Name = "label370626p";
+            this.label370626p.Size = new System.Drawing.Size(23, 12);
+            this.label370626p.TabIndex = 2;
+            this.label370626p.Text = "N/A";
+            // 
+            // label370626f
+            // 
+            this.label370626f.AutoSize = true;
+            this.label370626f.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370626f.Location = new System.Drawing.Point(5, 42);
+            this.label370626f.Name = "label370626f";
+            this.label370626f.Size = new System.Drawing.Size(23, 12);
+            this.label370626f.TabIndex = 1;
+            this.label370626f.Text = "N/A";
+            // 
+            // label370626j
+            // 
+            this.label370626j.AutoSize = true;
+            this.label370626j.Font = new System.Drawing.Font("仿宋", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label370626j.Location = new System.Drawing.Point(5, 22);
+            this.label370626j.Name = "label370626j";
+            this.label370626j.Size = new System.Drawing.Size(23, 12);
+            this.label370626j.TabIndex = 0;
+            this.label370626j.Text = "N/A";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -7191,6 +7251,8 @@
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox24.ResumeLayout(false);
+            this.groupBox24.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7771,5 +7833,10 @@
         private System.Windows.Forms.Label label193;
         private System.Windows.Forms.Label label271;
         private System.Windows.Forms.Label label270;
+        private System.Windows.Forms.GroupBox groupBox24;
+        private System.Windows.Forms.Label label370626g;
+        private System.Windows.Forms.Label label370626p;
+        private System.Windows.Forms.Label label370626f;
+        private System.Windows.Forms.Label label370626j;
     }
 }

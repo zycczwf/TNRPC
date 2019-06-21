@@ -54,7 +54,7 @@ namespace TNRPC {
             string equipmentTypeID = "4";
             string sendTextBox = "textBox14";
             string recvTextBox = "textBox13";
-            if ("COM104,COM105,COM106,COM107,COM108".Contains(parameters[0])) {
+            if ("COM100,COM101,COM102,COM103,COM104".Contains(parameters[0])) {
                 paramID = "50001";
                 equipmentTypeID = "3";
                 sendTextBox = "textBox16";
@@ -136,7 +136,7 @@ namespace TNRPC {
                             int equipmentID = startNo + i;
                             string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
                             byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            for (int j = 0; j < 3; j++) {
+                            for (int j = 0; j < 1; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
                                 SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                                 Thread.Sleep(500);
@@ -147,7 +147,7 @@ namespace TNRPC {
                                 }
                                 SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                                 if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
-                                    Thread.Sleep(10000);
+                                    Thread.Sleep(3000);
                                     continue;
                                 } else {
                                     ReverseBytesTransform transform = new ReverseBytesTransform();
@@ -178,7 +178,7 @@ namespace TNRPC {
                                 }
                             }
                         }
-                        Thread.Sleep(5000000);
+                        Thread.Sleep(100000);
                     } else {
                         Thread.Sleep(50000);
                     }

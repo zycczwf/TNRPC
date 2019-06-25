@@ -34,7 +34,7 @@ namespace TNRPC {
             if (used != null && used.Length > 0) {
                 string[] coms = used.Split(',');
                 foreach (string com in coms) {
-                    Thread worker = new Thread(new ParameterizedThreadStart(DianDu));
+                    Thread worker = new Thread(new ParameterizedThreadStart(CeShi));
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
                     log.Info(DateTime.Now.ToString() + "_start DianDu thread_" + com);
@@ -119,6 +119,41 @@ namespace TNRPC {
                 }
             }
         }
+
+        private void CeShi(Object com) {
+            string[] parameters = com.ToString().Split(',');
+            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
+            int startNo = Convert.ToInt32(parameters[5]);
+            int num = Convert.ToInt32(parameters[6]);
+            while (true) {
+                try {
+                    if (!serialPort.IsOpen) serialPort.Open();
+                    for (int i = 1; i <= num; i++) {
+                        int equipmentID = startNo + i;
+                        string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
+                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                        serialPort.Write(bufferS, 0, bufferS.Length);
+                        SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                        Thread.Sleep(500);
+                        byte[] bufferR = null;
+                        if (serialPort.BytesToRead > 0) {
+                            bufferR = new byte[serialPort.BytesToRead];
+                            serialPort.Read(bufferR, 0, bufferR.Length);
+                        }
+                        SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                        if (bufferR != null) {
+                            ReverseBytesTransform transform = new ReverseBytesTransform();
+                            transform.DataFormat = DataFormat.BADC;
+                            double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
+                            SetText("label" + equipmentID + "j", data.ToString("0"));
+                        }
+                    }
+                    Thread.Sleep(300000);
+                } catch (Exception e) {
+                    log.Error(DateTime.Now.ToString() + e.Message);
+                }
+            }
+        }
         private void DianDu(Object com) {
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
@@ -136,7 +171,7 @@ namespace TNRPC {
                             int equipmentID = startNo + i;
                             string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
                             byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            for (int j = 0; j < 1; j++) {
+                            for (int j = 0; j < 3; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
                                 SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                                 Thread.Sleep(500);
@@ -162,16 +197,21 @@ namespace TNRPC {
                                 string[] paramCode = { "60003", "60004", "60005", "60006" };
                                 string[] labelCode = { "j", "f", "p", "g" };
                                 queryData[5][i - 1] = queryData[0][i - 1];
+                                queryData[0][i - 1] = 0;
+                                queryData[1][i - 1] = 0;
+                                queryData[2][i - 1] = 0;
+                                queryData[3][i - 1] = 0;
+                                queryData[4][i - 1] = 0;
                                 using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                     conn.Open();
                                     using (MySqlCommand cmd = new MySqlCommand("", conn)) {
-                                        for (int j = 0; j <= 3; j++) {
-                                            if (jfpg[j] > 0 && jfpg[j] < 1000000.0) {
-                                                cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '" + paramCode[j] + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jfpg[j].ToString("0.0") + "', '仪表采集', '10012')";
+                                        for (int k = 0; k <= 3; k++) {
+                                            if (jfpg[k] >= 0 && jfpg[k] < 20000.0) {
+                                                cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '" + paramCode[k] + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jfpg[k].ToString("0.0") + "', '仪表采集', '10012')";
                                                 cmd.ExecuteNonQuery();
-                                                SetText("label" + equipmentID + labelCode[j], jfpg[j].ToString("0"));
+                                                SetText("label" + equipmentID + labelCode[k], jfpg[k].ToString("0"));
                                             } else {
-                                                SetText("label" + equipmentID + labelCode[j], "N/A");
+                                                SetText("label" + equipmentID + labelCode[k], "N/A");
                                             }
                                         }
                                     }

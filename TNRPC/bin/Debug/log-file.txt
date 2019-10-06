@@ -481,4 +481,16 @@
 2019-08-21 13:26:12,780 [1] INFO  testApp.Logging [(null)]  - 2019-08-21 13:26:12_start DianDu thread_dd_sb_qm
 2019-08-21 13:26:12,837 [1] INFO  testApp.Logging [(null)]  - 2019-08-21 13:26:12_start DianDu thread_dd_sb_cdbqn
 2019-08-21 13:26:12,848 [1] INFO  testApp.Logging [(null)]  - 2019-08-21 13:26:12_start DianDu thread_dd_sb_zp
-[Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] 
+[Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] [Footer] [Header] 2019-09-14 09:55:03,626 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:55:03_start sbzndb thread_jz
+2019-09-14 09:55:03,663 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:55:03_start sbzndb thread_qm
+2019-09-14 09:55:03,667 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:55:03_start GuHua thread.
+[Header] 2019-09-14 09:56:55,905 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:56:55_start sbzndb thread_jz
+2019-09-14 09:56:55,955 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:56:55_start sbzndb thread_qm
+2019-09-14 09:56:55,959 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:56:55_start GuHua thread.
+[Header] 2019-09-14 09:59:55,258 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:59:55_start sbzndb thread_jz
+2019-09-14 09:59:55,284 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:59:55_start sbzndb thread_qm
+2019-09-14 09:59:55,286 [1] INFO  testApp.Logging [(null)]  - 2019-09-14 9:59:55_start cs thread_zp
+[Footer] [Header] 2019-09-18 17:48:45,793 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start sbzndb thread_jz
+2019-09-18 17:48:45,828 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start sbzndb thread_qm
+2019-09-18 17:48:45,848 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start cs thread_zp
+[Footer] 

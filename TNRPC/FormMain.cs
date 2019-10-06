@@ -40,12 +40,23 @@ namespace TNRPC {
                     log.Info(DateTime.Now.ToString() + "_start sbzndb thread_" + com);
                 }
             }
-            used = ConfigurationManager.AppSettings["GUHUA"];
+            used = ConfigurationManager.AppSettings["sbgh"];
             if (used != null && used.Length > 0) {
-                Thread worker = new Thread(new ParameterizedThreadStart(GuHua));
+                Thread worker = new Thread(new ParameterizedThreadStart(sbgh));
                 worker.IsBackground = true;
                 worker.Start(used);
-                log.Info(DateTime.Now.ToString() + "_start GuHua thread.");
+                log.Info(DateTime.Now.ToString() + "_start ebgh thread.");
+            }
+
+            used = ConfigurationManager.AppSettings["cs"];
+            if (used != null && used.Length > 0) {
+                string[] coms = used.Split(',');
+                foreach (string com in coms) {
+                    Thread worker = new Thread(new ParameterizedThreadStart(cs));
+                    worker.IsBackground = true;
+                    worker.Start(ConfigurationManager.AppSettings[com]);
+                    log.Info(DateTime.Now.ToString() + "_start cs thread_" + com);
+                }
             }
         }
         private void sbcdsc(Object com) {
@@ -131,10 +142,10 @@ namespace TNRPC {
                             int equipmentID = startNo + i;
                             string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
                             byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                            for (int j = 0; j < 3; j++) {
+                            for (int j = 0; j < 2; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
                                 SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                                Thread.Sleep(500);
+                                Thread.Sleep(1000);
                                 byte[] bufferR = null;
                                 if (serialPort.BytesToRead > 0) {
                                     bufferR = new byte[serialPort.BytesToRead];
@@ -142,7 +153,7 @@ namespace TNRPC {
                                 }
                                 SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                                 if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
-                                    Thread.Sleep(3000);
+                                    Thread.Sleep(10000);
                                     continue;
                                 } else {
                                     ReverseBytesTransform transform = new ReverseBytesTransform();
@@ -178,9 +189,9 @@ namespace TNRPC {
                                 }
                             }
                         }
-                        Thread.Sleep(100000);
+                        Thread.Sleep(5000000);
                     } else {
-                        Thread.Sleep(50000);
+                        Thread.Sleep(40000);
                     }
                 } catch (Exception e) {
                     log.Error(DateTime.Now.ToString() + e.Message);
@@ -188,43 +199,8 @@ namespace TNRPC {
                 }
             }
         }
-        
-        private void CeShi(Object com) {
-            string[] parameters = com.ToString().Split(',');
-            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
-            int startNo = Convert.ToInt32(parameters[5]);
-            int num = Convert.ToInt32(parameters[6]);
-            while (true) {
-                try {
-                    if (!serialPort.IsOpen) serialPort.Open();
-                    for (int i = 1; i <= num; i++) {
-                        int equipmentID = startNo + i;
-                        string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
-                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                        serialPort.Write(bufferS, 0, bufferS.Length);
-                        SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                        Thread.Sleep(500);
-                        byte[] bufferR = null;
-                        if (serialPort.BytesToRead > 0) {
-                            bufferR = new byte[serialPort.BytesToRead];
-                            serialPort.Read(bufferR, 0, bufferR.Length);
-                        }
-                        SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                        if (bufferR != null) {
-                            ReverseBytesTransform transform = new ReverseBytesTransform();
-                            transform.DataFormat = DataFormat.BADC;
-                            double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
-                            SetText("label" + equipmentID + "j", data.ToString("0"));
-                        }
-                    }
-                    Thread.Sleep(300000);
-                } catch (Exception e) {
-                    log.Error(DateTime.Now.ToString() + e.Message);
-                }
-            }
-        }
 
-        private void GuHua(Object com) {
+        private void sbgh(Object com) {
             string[] plcs = com.ToString().Split(',');
             while (true) {
                 foreach (string plc in plcs) {
@@ -232,15 +208,15 @@ namespace TNRPC {
                         DdeClient client = new DdeClient("PROSERVR", plc + ".PLC1");
                         client.Connect();
                         string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
-                        SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                        SetText("textBox14", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
                         string strWendu = client.Request("wendu", 60000);
-                        SetText("textBox4", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+                        SetText("textBox14", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
                         string strShidu = client.Request("shidu", 60000);
                         double douWendu = Convert.ToDouble(strWendu.Substring(0, strWendu.IndexOf("\r"))) / 10.0;
-                        SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                        SetText("textBox13", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
                         SetText("label" + parameters[0] + "wd", douWendu.ToString("0.0") + "℃");
                         double douShidu = Convert.ToDouble(strShidu.Substring(0, strShidu.IndexOf("\r"))) / 10.0;
-                        SetText("textBox3", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
+                        SetText("textBox13", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
                         SetText("label" + parameters[0] + "sd", douShidu.ToString("0.0") + "%");
                         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                             conn.Open();
@@ -258,6 +234,42 @@ namespace TNRPC {
                 Thread.Sleep(300000);
             }
         }
+
+        private void cs(Object com) {
+            string[] parameters = com.ToString().Split(',');
+            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
+            int startNo = Convert.ToInt32(parameters[5]);
+            int num = Convert.ToInt32(parameters[6]);
+            while (true) {
+                try {
+                    if (!serialPort.IsOpen) serialPort.Open();
+                    for (int i = 1; i <= num; i++) {
+                        int equipmentID = startNo + i;
+                        string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
+                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                        serialPort.Write(bufferS, 0, bufferS.Length);
+                        SetText("textBox6", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                        Thread.Sleep(500);
+                        byte[] bufferR = null;
+                        if (serialPort.BytesToRead > 0) {
+                            bufferR = new byte[serialPort.BytesToRead];
+                            serialPort.Read(bufferR, 0, bufferR.Length);
+                        }
+                        SetText("textBox5", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                        if (bufferR != null) {
+                            ReverseBytesTransform transform = new ReverseBytesTransform();
+                            transform.DataFormat = DataFormat.BADC;
+                            double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
+                            SetText("label" + equipmentID + "j", data.ToString("0"));
+                        }
+                    }
+                    Thread.Sleep(30000);
+                } catch (Exception e) {
+                    log.Error(DateTime.Now.ToString() + e.Message);
+                }
+            }
+        }
+
         private delegate void SetTextCallback(string name, string text);
         private void SetText(string name, string text) {
             Control c = Controls.Find(name, true)[0];

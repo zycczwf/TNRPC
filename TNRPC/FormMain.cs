@@ -3,12 +3,15 @@ using System.Configuration;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO.Ports;
+using HslCommunication;
 using HslCommunication.Serial;
 using HslCommunication.BasicFramework;
 using HslCommunication.Core;
+using HslCommunication.Profinet.Siemens;
 using MySql.Data.MySqlClient;
 using log4net;
 using NDde.Client;
+
 namespace TNRPC {
     public partial class FormMain : Form {
         ILog log = log4net.LogManager.GetLogger("testApp.Logging");
@@ -45,9 +48,15 @@ namespace TNRPC {
                 Thread worker = new Thread(new ParameterizedThreadStart(sbgh));
                 worker.IsBackground = true;
                 worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start sbgh thread.");
+            }
+            used = ConfigurationManager.AppSettings["ebgh"];
+            if (used != null && used.Length > 0) {
+                Thread worker = new Thread(new ParameterizedThreadStart(ebgh));
+                worker.IsBackground = true;
+                worker.Start(used);
                 log.Info(DateTime.Now.ToString() + "_start ebgh thread.");
             }
-
             used = ConfigurationManager.AppSettings["cs"];
             if (used != null && used.Length > 0) {
                 string[] coms = used.Split(',');
@@ -61,10 +70,10 @@ namespace TNRPC {
         }
         private void sbcdsc(Object com) {
             string[] parameters = com.ToString().Split(',');
-            string   paramID = "50001";
-            string   equipmentTypeID = "3";
-            string   sendTextBox = "textBox16";
-            string   recvTextBox = "textBox15";
+            string paramID = "50001";
+            string equipmentTypeID = "3";
+            string sendTextBox = "textBox16";
+            string recvTextBox = "textBox15";
             SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
@@ -115,7 +124,7 @@ namespace TNRPC {
                                 }
                             }
                         }
-                        SetText("label" + equipmentID, showResult);
+                        SetText(recvTextBox, "返回数据:" + showResult + "\n");
                     }
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
@@ -144,14 +153,14 @@ namespace TNRPC {
                             byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
                             for (int j = 0; j < 2; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
-                                SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                SetText("textBox4", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                                 Thread.Sleep(1000);
                                 byte[] bufferR = null;
                                 if (serialPort.BytesToRead > 0) {
                                     bufferR = new byte[serialPort.BytesToRead];
                                     serialPort.Read(bufferR, 0, bufferR.Length);
                                 }
-                                SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                SetText("textBox3", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                                 if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
                                     Thread.Sleep(10000);
                                     continue;
@@ -160,6 +169,7 @@ namespace TNRPC {
                                     transform.DataFormat = DataFormat.BADC;
                                     double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
                                     queryData[index][i - 1] = data;
+                                    SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
                                     break;
                                 }
                             }
@@ -180,9 +190,6 @@ namespace TNRPC {
                                             if (jfpg[k] >= 0 && jfpg[k] < 20000.0) {
                                                 cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '" + paramCode[k] + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jfpg[k].ToString("0.0") + "', '仪表采集', '10012')";
                                                 cmd.ExecuteNonQuery();
-                                                SetText("label" + equipmentID + labelCode[k], jfpg[k].ToString("0"));
-                                            } else {
-                                                SetText("label" + equipmentID + labelCode[k], "N/A");
                                             }
                                         }
                                     }
@@ -214,10 +221,8 @@ namespace TNRPC {
                         string strShidu = client.Request("shidu", 60000);
                         double douWendu = Convert.ToDouble(strWendu.Substring(0, strWendu.IndexOf("\r"))) / 10.0;
                         SetText("textBox13", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
-                        SetText("label" + parameters[0] + "wd", douWendu.ToString("0.0") + "℃");
                         double douShidu = Convert.ToDouble(strShidu.Substring(0, strShidu.IndexOf("\r"))) / 10.0;
                         SetText("textBox13", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Correct Return.\n");
-                        SetText("label" + parameters[0] + "sd", douShidu.ToString("0.0") + "%");
                         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                             conn.Open();
                             using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWendu.ToString("0.0") + "','仪表采集','10016')", conn)) {
@@ -229,6 +234,43 @@ namespace TNRPC {
                     } catch (Exception ee) {
                         log.Error(DateTime.Now.ToString() + ee.Message);
                         Thread.Sleep(10000);
+                    }
+                }
+                Thread.Sleep(300000);
+            }
+        }
+
+        private void ebgh(Object com) {
+            string[] plcs = com.ToString().Split(',');
+            while (true) {
+                foreach (string plc in plcs) {
+                    try {
+                        string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+                        SiemensS7Net siemens = new SiemensS7Net(SiemensPLCS.S200, parameters[1]) {
+                            ConnectTimeOut = 5000
+                        };
+                        OperateResult connect = siemens.ConnectServer();
+                        if (connect.IsSuccess) {
+                            SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                            SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+                            double douWendu = siemens.ReadInt16("DB1.1200").Content / 10.0;
+                            SetText("textBox9", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回温度:" + douWendu.ToString("0.0") + "℃.\n");
+                            double douShidu = siemens.ReadInt16("DB1.1204").Content / 10.0;
+                            SetText("textBox9", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回湿度:" + douShidu.ToString("0.0") + "%.\n");
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWendu.ToString("0.0") + "','仪表采集','10016')", conn)) {
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douShidu.ToString("0.0") + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        } else {
+                            SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>无法连接" + parameters[1] + ".\n");
+                        }
+                        siemens.ConnectClose();
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
                     }
                 }
                 Thread.Sleep(300000);
@@ -248,19 +290,19 @@ namespace TNRPC {
                         string orderWithoutCrc = string.Format("{0:X2}", i) + "03004a0002";
                         byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
                         serialPort.Write(bufferS, 0, bufferS.Length);
-                        SetText("textBox6", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                        SetText("textBox1", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
                         Thread.Sleep(500);
                         byte[] bufferR = null;
                         if (serialPort.BytesToRead > 0) {
                             bufferR = new byte[serialPort.BytesToRead];
                             serialPort.Read(bufferR, 0, bufferR.Length);
                         }
-                        SetText("textBox5", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                        SetText("textBox2", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                         if (bufferR != null) {
                             ReverseBytesTransform transform = new ReverseBytesTransform();
                             transform.DataFormat = DataFormat.BADC;
                             double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
-                            SetText("label" + equipmentID + "j", data.ToString("0"));
+                            SetText("textBox2", "返回数据:" + data.ToString("0") + "\n");
                         }
                     }
                     Thread.Sleep(30000);
@@ -279,7 +321,7 @@ namespace TNRPC {
             } else {
                 if (c is TextBox) {
                     TextBox textBox = (TextBox)c;
-                    if (textBox.TextLength > 5000) {
+                    if (textBox.TextLength > 10000) {
                         textBox.Clear();
                     }
                     textBox.AppendText(text);

@@ -493,4 +493,86 @@
 [Footer] [Header] 2019-09-18 17:48:45,793 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start sbzndb thread_jz
 2019-09-18 17:48:45,828 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start sbzndb thread_qm
 2019-09-18 17:48:45,848 [1] INFO  testApp.Logging [(null)]  - 2019-09-18 17:48:45_start cs thread_zp
+[Footer] [Header] 2019-10-06 15:58:49,020 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start sbcdsc thread_c1
+2019-10-06 15:58:49,059 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start sbcdsc thread_c2
+2019-10-06 15:58:49,061 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start sbcdsc thread_c3
+2019-10-06 15:58:49,064 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start sbzndb thread_jz
+2019-10-06 15:58:49,076 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start sbzndb thread_qm
+2019-10-06 15:58:49,079 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:58:49_start cs thread_zp
+[Footer] [Header] 2019-10-06 15:59:16,959 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:16_start sbcdsc thread_c1
+2019-10-06 15:59:16,998 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:16_start sbcdsc thread_c2
+2019-10-06 15:59:17,010 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:17_start sbcdsc thread_c3
+2019-10-06 15:59:17,025 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:17_start sbzndb thread_jz
+2019-10-06 15:59:17,026 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:17_start sbzndb thread_qm
+2019-10-06 15:59:17,028 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:17_start cs thread_zp
+[Footer] [Header] 2019-10-06 15:59:43,466 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start sbcdsc thread_c1
+2019-10-06 15:59:43,512 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start sbcdsc thread_c2
+2019-10-06 15:59:43,535 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start sbcdsc thread_c3
+2019-10-06 15:59:43,538 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start sbzndb thread_jz
+2019-10-06 15:59:43,539 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start sbzndb thread_qm
+2019-10-06 15:59:43,540 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 15:59:43_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:00:06,310 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start sbcdsc thread_c1
+2019-10-06 16:00:06,349 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start sbcdsc thread_c2
+2019-10-06 16:00:06,353 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start sbcdsc thread_c3
+2019-10-06 16:00:06,358 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start sbzndb thread_jz
+2019-10-06 16:00:06,360 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start sbzndb thread_qm
+2019-10-06 16:00:06,361 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:06_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:00:20,620 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start sbcdsc thread_c1
+2019-10-06 16:00:20,648 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start sbcdsc thread_c2
+2019-10-06 16:00:20,674 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start sbcdsc thread_c3
+2019-10-06 16:00:20,680 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start sbzndb thread_jz
+2019-10-06 16:00:20,706 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start sbzndb thread_qm
+2019-10-06 16:00:20,714 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:00:20_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:02:55,557 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start sbcdsc thread_c1
+2019-10-06 16:02:55,594 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start sbcdsc thread_c2
+2019-10-06 16:02:55,610 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start sbcdsc thread_c3
+2019-10-06 16:02:55,618 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start sbzndb thread_jz
+2019-10-06 16:02:55,620 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start sbzndb thread_qm
+2019-10-06 16:02:55,647 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:02:55_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:04:56,963 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:56_start sbcdsc thread_c1
+2019-10-06 16:04:57,014 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:57_start sbcdsc thread_c2
+2019-10-06 16:04:57,019 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:57_start sbcdsc thread_c3
+2019-10-06 16:04:57,024 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:57_start sbzndb thread_jz
+2019-10-06 16:04:57,026 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:57_start sbzndb thread_qm
+2019-10-06 16:04:57,029 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:04:57_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:05:53,869 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start sbcdsc thread_c1
+2019-10-06 16:05:53,921 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start sbcdsc thread_c2
+2019-10-06 16:05:53,925 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start sbcdsc thread_c3
+2019-10-06 16:05:53,934 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start sbzndb thread_jz
+2019-10-06 16:05:53,939 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start sbzndb thread_qm
+2019-10-06 16:05:53,941 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:05:53_start cs thread_zp
+[Footer] [Header] 2019-10-06 16:37:24,546 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start sbcdsc thread_c1
+2019-10-06 16:37:24,567 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start sbcdsc thread_c2
+2019-10-06 16:37:24,568 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start sbcdsc thread_c3
+2019-10-06 16:37:24,576 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start sbzndb thread_jz
+2019-10-06 16:37:24,603 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start sbzndb thread_qm
+2019-10-06 16:37:24,652 [1] INFO  testApp.Logging [(null)]  - 2019-10-06 16:37:24_start cs thread_zp
+[Footer] [Header] 2019-10-19 11:30:35,382 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start sbcdsc thread_c1
+2019-10-19 11:30:35,402 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start sbcdsc thread_c2
+2019-10-19 11:30:35,406 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start sbcdsc thread_c3
+2019-10-19 11:30:35,425 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start sbzndb thread_jz
+2019-10-19 11:30:35,471 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start sbzndb thread_qm
+2019-10-19 11:30:35,487 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start ebgh thread.
+2019-10-19 11:30:35,497 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 11:30:35_start cs thread_zp
+[Header] 2019-10-19 14:00:14,827 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start sbcdsc thread_c1
+2019-10-19 14:00:14,848 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start sbcdsc thread_c2
+2019-10-19 14:00:14,857 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start sbcdsc thread_c3
+2019-10-19 14:00:14,858 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start sbzndb thread_jz
+2019-10-19 14:00:14,867 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start sbzndb thread_qm
+2019-10-19 14:00:14,889 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start ebgh thread.
+2019-10-19 14:00:14,942 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:00:14_start cs thread_zp
+[Header] 2019-10-19 14:03:11,460 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start sbcdsc thread_c1
+2019-10-19 14:03:11,490 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start sbcdsc thread_c2
+2019-10-19 14:03:11,514 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start sbcdsc thread_c3
+2019-10-19 14:03:11,517 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start sbzndb thread_jz
+2019-10-19 14:03:11,517 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start sbzndb thread_qm
+2019-10-19 14:03:11,577 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start ebgh thread.
+2019-10-19 14:03:11,590 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:03:11_start cs thread_zp
+[Header] 2019-10-19 14:20:59,584 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbcdsc thread_c1
+2019-10-19 14:20:59,606 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbcdsc thread_c2
+2019-10-19 14:20:59,608 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbcdsc thread_c3
+2019-10-19 14:20:59,609 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbzndb thread_jz
+2019-10-19 14:20:59,611 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbzndb thread_qm
+2019-10-19 14:20:59,666 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start ebgh thread.
+2019-10-19 14:20:59,683 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start cs thread_zp
 [Footer] 

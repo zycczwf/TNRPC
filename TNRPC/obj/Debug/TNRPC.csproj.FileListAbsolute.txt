@@ -8,6 +8,7 @@ C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\log4net.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\MySql.Data.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\NDde.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Newtonsoft.Json.dll
+C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Renci.SshNet.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\SharpNodeSettings.dll
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Google.Protobuf.pdb
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Google.Protobuf.xml
@@ -15,6 +16,7 @@ C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\HslCommunication.xml
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\log4net.xml
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\MySql.Data.xml
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Newtonsoft.Json.xml
+C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\Renci.SshNet.xml
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\bin\Debug\SharpNodeSettings.xml
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.FormMain.resources
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.Properties.Resources.resources

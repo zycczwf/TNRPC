@@ -57,6 +57,13 @@ namespace TNRPC {
                 worker.Start(used);
                 log.Info(DateTime.Now.ToString() + "_start ebgh thread.");
             }
+            used = ConfigurationManager.AppSettings["ebhg"];
+            if (used != null && used.Length > 0) {
+                Thread worker = new Thread(new ParameterizedThreadStart(ebhg));
+                worker.IsBackground = true;
+                worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start ebhg thread.");
+            }
             used = ConfigurationManager.AppSettings["cs"];
             if (used != null && used.Length > 0) {
                 string[] coms = used.Split(',');
@@ -271,6 +278,43 @@ namespace TNRPC {
                             }
                         } else {
                             SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>无法连接" + parameters[1] + ".\n");
+                        }
+                        siemens.ConnectClose();
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
+                    }
+                }
+                Thread.Sleep(300000);
+            }
+        }
+
+        private void ebhg(Object com) {
+            string[] plcs = com.ToString().Split(',');
+            while (true) {
+                foreach (string plc in plcs) {
+                    try {
+                        string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+                        SiemensS7Net siemens = new SiemensS7Net(SiemensPLCS.S200, parameters[1]) {
+                            ConnectTimeOut = 5000
+                        };
+                        OperateResult connect = siemens.ConnectServer();
+                        if (connect.IsSuccess) {
+                            SetText("textBox8", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                            double douWendu = siemens.ReadInt16("DB1.2204").Content / 10.0;
+                            SetText("textBox7", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=合膏温度:" + douWendu.ToString("0.0") + "℃.\n");
+                            double douShidu = siemens.ReadInt16("DB1.2216").Content / 10.0;
+                            SetText("textBox8", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Water Temp.\n");
+                            SetText("textBox7", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=冷水水温:" + douShidu.ToString("0.0") + "℃.\n");
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10017 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','30002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWendu.ToString("0.0") + "','仪表采集','10017')", conn)) {
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10017 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','30003','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douShidu.ToString("0.0") + "','仪表采集','10017')";
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        } else {
+                            SetText("textBox8", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>无法连接" + parameters[1] + ".\n");
                         }
                         siemens.ConnectClose();
                     } catch (Exception ee) {

@@ -280,6 +280,9 @@ namespace TNRPC {
                             SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Second.\n");
                             int intSecond = siemens.ReadInt32("DB1.330").Content;
                             SetText("textBox9", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回固化秒:" + intSecond + ".\n");
+                            SetText("textBox10", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Equipment Status.\n");
+                            int intStatus = siemens.ReadInt16("DB1.220").Content;
+                            SetText("textBox9", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Return Status:" + intStatus + ".\n");
                             using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                 conn.Open();
                                 using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWendu.ToString("0.0") + "','仪表采集','10016')", conn)) {
@@ -297,6 +300,8 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70006','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intMinute + "','仪表采集','10016')";
                                     cmd.ExecuteNonQuery();
                                     cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70007','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intSecond + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70008','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intStatus + "','仪表采集','10016')";
                                     cmd.ExecuteNonQuery();
                                 }
                             }

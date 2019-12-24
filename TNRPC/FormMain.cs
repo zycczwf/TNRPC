@@ -74,6 +74,14 @@ namespace TNRPC {
                     log.Info(DateTime.Now.ToString() + "_start cs thread_" + com);
                 }
             }
+            used = ConfigurationManager.AppSettings["ybgh"];
+            if (used != null && used.Length > 0) {
+                Thread worker = new Thread(new ParameterizedThreadStart(ybgh));
+                worker.IsBackground = true;
+                worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start ybgh thread.");
+            }
+
         }
         private void sbcdsc(Object com) {
             string[] parameters = com.ToString().Split(',');
@@ -423,6 +431,79 @@ namespace TNRPC {
                 } catch (Exception e) {
                     log.Error(DateTime.Now.ToString() + e.Message);
                 }
+            }
+        }
+
+        private void ybgh(Object com) {
+            string[] plcs = com.ToString().Split(',');
+            while (true) {
+                foreach (string plc in plcs) {
+                    SiemensS7Net siemens = null;
+                    try {
+                        string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+                        siemens = new SiemensS7Net(SiemensPLCS.S200, parameters[1]) { ConnectTimeOut = 5000 };
+                        OperateResult connect = siemens.ConnectServer();
+                        if (connect.IsSuccess) {
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Temperat.\n");
+                            double douWendu = siemens.ReadInt16("DB1.1200").Content / 10.0;
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query TempSet.\n");
+                            double douWenduSet = siemens.ReadInt16("DB1.1202").Content / 10.0;
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回温度:" + douWendu.ToString("0.0") + "℃.\n");
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回设置温度:" + douWenduSet.ToString("0.0") + "℃.\n");
+                            double douShidu = siemens.ReadInt16("DB1.1204").Content / 10.0;
+                            double douShiduSet = siemens.ReadInt16("DB1.1206").Content / 10.0;
+                            if (!plc.Contains("_3")) {
+                                SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Humidity.\n");
+                                SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回湿度:" + douShidu.ToString("0.0") + "%.\n");
+                                SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query HumiSet.\n");
+                                SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回设置湿度:" + douShiduSet.ToString("0.0") + "%.\n");
+                            }
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Hour.\n");
+                            int intHour = siemens.ReadInt32("DB1.322").Content;
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回固化小时:" + intHour + ".\n");
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Minute.\n");
+                            int intMinute = siemens.ReadInt32("DB1.326").Content;
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回固化分钟:" + intMinute + ".\n");
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Second.\n");
+                            int intSecond = siemens.ReadInt32("DB1.330").Content;
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=返回固化秒:" + intSecond + ".\n");
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Equipment Status.\n");
+                            int intStatus = siemens.ReadInt16("DB1.220").Content;
+                            SetText("textBox21", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=Return Status:" + intStatus + ".\n");
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand("insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWendu.ToString("0.0") + "','仪表采集','10016')", conn)) {
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70002','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douWenduSet.ToString("0.0") + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                    if (!plc.Contains("_3")) {
+                                        cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70003','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douShidu.ToString("0.0") + "','仪表采集','10016')";
+                                        cmd.ExecuteNonQuery();
+                                        cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70004','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + douShiduSet.ToString("0.0") + "','仪表采集','10016')";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70005','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intHour + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70006','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intMinute + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70007','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intSecond + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                    cmd.CommandText = "insert into tb_equipmentparamrecord_10016 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','70008','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + intStatus + "','仪表采集','10016')";
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        } else {
+                            SetText("textBox22", plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>无法连接" + parameters[1] + ".\n");
+                        }
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
+                    } finally {
+                        if (siemens != null) {
+                            siemens.ConnectClose();
+                        }
+                    }
+                }
+                Thread.Sleep(300000);
             }
         }
 

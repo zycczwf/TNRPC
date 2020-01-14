@@ -43,6 +43,16 @@ namespace TNRPC {
                     log.Info(DateTime.Now.ToString() + "_start sbzndb thread_" + com);
                 }
             }
+            used = ConfigurationManager.AppSettings["sbzndb2"];
+            if (used != null && used.Length > 0) {
+                string[] coms = used.Split(',');
+                foreach (string com in coms) {
+                    Thread worker = new Thread(new ParameterizedThreadStart(sbzndb2));
+                    worker.IsBackground = true;
+                    worker.Start(ConfigurationManager.AppSettings[com]);
+                    log.Info(DateTime.Now.ToString() + "_start sbzndb2 thread_" + com);
+                }
+            }
             used = ConfigurationManager.AppSettings["sbgh"];
             if (used != null && used.Length > 0) {
                 Thread worker = new Thread(new ParameterizedThreadStart(sbgh));
@@ -183,6 +193,79 @@ namespace TNRPC {
                                     ReverseBytesTransform transform = new ReverseBytesTransform();
                                     transform.DataFormat = DataFormat.BADC;
                                     double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
+                                    queryData[index][i - 1] = data;
+                                    SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
+                                    break;
+                                }
+                            }
+                            if (index == 0) {
+                                double[] jfpg = { queryData[4][i - 1] - queryData[3][i - 1], queryData[2][i - 1] - queryData[1][i - 1], queryData[3][i - 1] - queryData[2][i - 1] + queryData[0][i - 1] - queryData[4][i - 1], queryData[1][i - 1] - queryData[5][i - 1] };
+                                string[] paramCode = { "60003", "60004", "60005", "60006" };
+                                string[] labelCode = { "j", "f", "p", "g" };
+                                queryData[5][i - 1] = queryData[0][i - 1];
+                                queryData[0][i - 1] = 0;
+                                queryData[1][i - 1] = 0;
+                                queryData[2][i - 1] = 0;
+                                queryData[3][i - 1] = 0;
+                                queryData[4][i - 1] = 0;
+                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                    conn.Open();
+                                    using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                        for (int k = 0; k <= 3; k++) {
+                                            if (jfpg[k] >= 0 && jfpg[k] < 20000.0) {
+                                                cmd.CommandText = "insert into tb_equipmentparamrecord_10012 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID) values('" + Guid.NewGuid().ToString("N") + "', '" + equipmentID + "', '" + paramCode[k] + "', '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + jfpg[k].ToString("0.0") + "', '仪表采集', '10012')";
+                                                cmd.ExecuteNonQuery();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Thread.Sleep(5000000);
+                    } else {
+                        Thread.Sleep(40000);
+                    }
+                } catch (Exception e) {
+                    log.Error(DateTime.Now.ToString() + e.Message);
+                    Thread.Sleep(10000);
+                }
+            }
+        }
+
+        private void sbzndb2(Object com) {
+            string[] parameters = com.ToString().Split(',');
+            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
+            int startNo = Convert.ToInt32(parameters[5]);
+            int num = Convert.ToInt32(parameters[6]);
+            string[] queryTimes = { "0:00", "8:00", "12:00", "18:00", "22:00" };
+            double[][] queryData = { new double[num], new double[num], new double[num], new double[num], new double[num], new double[num] };
+            while (true) {
+                try {
+                    if (!serialPort.IsOpen) serialPort.Open();
+                    string now = DateTime.Now.ToShortTimeString();
+                    int index = Array.IndexOf(queryTimes, now);
+                    if (index > -1) {
+                        for (int i = 1; i <= num; i++) {
+                            int equipmentID = startNo + i;
+                            string orderWithoutCrc = string.Format("{0:X2}", i) + "030000000E";
+                            byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                            for (int j = 0; j < 2; j++) {
+                                serialPort.Write(bufferS, 0, bufferS.Length);
+                                SetText("textBox4", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                Thread.Sleep(1000);
+                                byte[] bufferR = null;
+                                if (serialPort.BytesToRead > 0) {
+                                    bufferR = new byte[serialPort.BytesToRead];
+                                    serialPort.Read(bufferR, 0, bufferR.Length);
+                                }
+                                SetText("textBox3", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
+                                    Thread.Sleep(10000);
+                                    continue;
+                                } else {
+                                    ReverseBytesTransform transform = new ReverseBytesTransform();
+                                    transform.DataFormat = DataFormat.ABCD;
+                                    double data = (double)transform.TransUInt16(bufferR, 21) / (double)100.0;
                                     queryData[index][i - 1] = data;
                                     SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
                                     break;

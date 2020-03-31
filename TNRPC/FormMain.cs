@@ -203,7 +203,7 @@ namespace TNRPC {
                                     transform.DataFormat = DataFormat.BADC;
                                     double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
                                     queryData[index][i - 1] = data;
-                                    SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
+                                    SetText("textBox3", "返回数据:" + data.ToString("0") + "\n");
                                     break;
                                 }
                             }
@@ -287,7 +287,7 @@ namespace TNRPC {
                                     ReverseBytesTransform transform = new ReverseBytesTransform();
                                     transform.DataFormat = DataFormat.BADC;
                                     double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
-                                    SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
+                                    SetText("textBox3", "返回数据:" + data.ToString("0") + "\n");
                                     using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                         conn.Open();
                                         using (MySqlCommand cmd = new MySqlCommand("", conn)) {
@@ -345,7 +345,7 @@ namespace TNRPC {
                                     transform.DataFormat = DataFormat.ABCD;
                                     double data = (double)transform.TransUInt16(bufferR, 21) / (double)100.0;
                                     queryData[index][i - 1] = data;
-                                    SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
+                                    SetText("textBox3", "返回数据:" + data.ToString("0") + "\n");
                                     break;
                                 }
                             }
@@ -902,8 +902,8 @@ namespace TNRPC {
                                 }
                                 SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
                                 byte[] bufferData = new byte[4] { (byte)(bufferR[17] - 51), (byte)(bufferR[16] - 51), (byte)(bufferR[15] - 51), (byte)(bufferR[14] - 51) };
-                                int data= Convert.ToInt32("0x" + SoftBasic.ByteToHexString(bufferData), 16);
-                                SetText("textBox13", "返回数据:" + "(0x" + SoftBasic.ByteToHexString(bufferData) + ")" + data + ".\n");
+                                double data= (double) Convert.ToInt32(SoftBasic.ByteToHexString(bufferData), 10)/(double)100.00;
+                                SetText("textBox13", "返回数据:" + data + "\n");
                                 using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                     conn.Open();
                                     using (MySqlCommand cmd = new MySqlCommand("", conn)) {

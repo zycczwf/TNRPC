@@ -247,7 +247,7 @@ namespace TNRPC {
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
             string[] queryTimes = { "0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00" };
-            string[] columnNames = { "zero","one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree"};
+            string[] columnNames = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree" };
             while (true) {
                 try {
                     if (!serialPort.IsOpen) serialPort.Open();
@@ -291,7 +291,7 @@ namespace TNRPC {
                                     using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                         conn.Open();
                                         using (MySqlCommand cmd = new MySqlCommand("", conn)) {
-                                            cmd.CommandText = "update tb_electricitymeterparametersacquisition_1003 set " + columnNames[index] + "=" + data.ToString("0") + " where equipmentid='"+ equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd")+"'";
+                                            cmd.CommandText = "update tb_electricitymeterparametersacquisition_1003 set " + columnNames[index] + "=" + data.ToString("0") + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
                                             cmd.ExecuteNonQuery();
                                         }
                                     }
@@ -887,7 +887,9 @@ namespace TNRPC {
                         }
                         for (int i = 1; i <= num; i++) {
                             int equipmentID = startNo + i;
-                            string order = "68" + string.Format("{0:X2}", i + 4) + "0000000000"+ "68" + "11" + "04" + "33333433" + "7D" + "16";
+                            string orderUnCheck = "68" + string.Format("{0:X2}", i + 4) + "0000000000" + "68" + "11" + "04" + "33333333";
+                            string checkCode = (i == 1 ? "B6" : "B7");
+                            string order = orderUnCheck + checkCode + "16";
                             byte[] bufferS = SoftBasic.HexStringToBytes(order);
                             for (int j = 0; j <= 2; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
@@ -899,18 +901,17 @@ namespace TNRPC {
                                     serialPort.Read(bufferR, 0, bufferR.Length);
                                 }
                                 SetText("textBox13", parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                               //ReverseBytesTransform transform = new ReverseBytesTransform();
-                               //transform.DataFormat = DataFormat.BADC;
-                                //double data = (double)transform.TransUInt32(bufferR, 3) / (double)10.0;
-                                //SetText("textBox3", "返回数据:" + data.ToString("0") + ".\n");
-                                //using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
-                                  //  conn.Open();
-                                    //using (MySqlCommand cmd = new MySqlCommand("", conn)) {
-                                      //  cmd.CommandText = "update tb_electricitymeterparametersacquisition_3003 set " + columnNames[index] + "=" + data.ToString("0") + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
-                                        //cmd.ExecuteNonQuery();
-                                    //}
-                                //}
-                                //break;
+                                byte[] bufferData = new byte[4] { (byte)(bufferR[17] - 51), (byte)(bufferR[16] - 51), (byte)(bufferR[15] - 51), (byte)(bufferR[14] - 51) };
+                                int data= Convert.ToInt32("0x" + SoftBasic.ByteToHexString(bufferData), 16);
+                                SetText("textBox13", "返回数据:" + "(0x" + SoftBasic.ByteToHexString(bufferData) + ")" + data + ".\n");
+                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                    conn.Open();
+                                    using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                        cmd.CommandText = "update tb_electricitymeterparametersacquisition_3003 set " + columnNames[index] + "=" + data + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                                break;
                             }
                         }
                         Thread.Sleep(2000000);

@@ -129,7 +129,7 @@
             this.groupBox5.Size = new System.Drawing.Size(558, 331);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "一部智能电表";
+            this.groupBox5.Text = "三部球磨";
             // 
             // textBox17
             // 
@@ -160,7 +160,7 @@
             this.groupBox6.Size = new System.Drawing.Size(558, 328);
             this.groupBox6.TabIndex = 25;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "一部和膏";
+            this.groupBox6.Text = "三部和膏";
             // 
             // textBox19
             // 
@@ -222,7 +222,7 @@
             this.groupBox8.Size = new System.Drawing.Size(558, 328);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "一部球磨";
+            this.groupBox8.Text = "三部固化室";
             // 
             // textBox23
             // 

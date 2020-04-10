@@ -72,6 +72,19 @@
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.textBox28 = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.textBox29 = new System.Windows.Forms.TextBox();
+            this.textBox30 = new System.Windows.Forms.TextBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.textBox32 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -89,6 +102,11 @@
             this.groupBox57.SuspendLayout();
             this.groupBox63.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -117,7 +135,7 @@
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(1156, 707);
             this.tabPage1.TabIndex = 11;
-            this.tabPage1.Text = "数据窗口一";
+            this.tabPage1.Text = "电池一部";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox5
@@ -129,7 +147,7 @@
             this.groupBox5.Size = new System.Drawing.Size(558, 331);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "三部球磨";
+            this.groupBox5.Text = "一部充电";
             // 
             // textBox17
             // 
@@ -160,7 +178,7 @@
             this.groupBox6.Size = new System.Drawing.Size(558, 328);
             this.groupBox6.TabIndex = 25;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "三部和膏";
+            this.groupBox6.Text = "一部和膏";
             // 
             // textBox19
             // 
@@ -191,7 +209,7 @@
             this.groupBox7.Size = new System.Drawing.Size(558, 331);
             this.groupBox7.TabIndex = 23;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "一部固化室";
+            this.groupBox7.Text = "一部固化";
             // 
             // textBox21
             // 
@@ -222,7 +240,7 @@
             this.groupBox8.Size = new System.Drawing.Size(558, 328);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "三部固化室";
+            this.groupBox8.Text = "一部球磨";
             // 
             // textBox23
             // 
@@ -255,7 +273,7 @@
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage8.Size = new System.Drawing.Size(1156, 707);
             this.tabPage8.TabIndex = 9;
-            this.tabPage8.Text = "数据窗口二";
+            this.tabPage8.Text = "电池二部";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // groupBox1
@@ -267,7 +285,7 @@
             this.groupBox1.Size = new System.Drawing.Size(558, 331);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "二部智能电表";
+            this.groupBox1.Text = "二部充电";
             // 
             // textBox5
             // 
@@ -329,7 +347,7 @@
             this.groupBox3.Size = new System.Drawing.Size(558, 331);
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "二部固化室";
+            this.groupBox3.Text = "二部固化";
             // 
             // textBox9
             // 
@@ -393,19 +411,19 @@
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage9.Size = new System.Drawing.Size(1156, 707);
             this.tabPage9.TabIndex = 10;
-            this.tabPage9.Text = "数据窗口三";
+            this.tabPage9.Text = "电池三部";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // groupBox61
             // 
             this.groupBox61.Controls.Add(this.textBox3);
             this.groupBox61.Controls.Add(this.textBox4);
-            this.groupBox61.Location = new System.Drawing.Point(583, 360);
+            this.groupBox61.Location = new System.Drawing.Point(585, 364);
             this.groupBox61.Name = "groupBox61";
             this.groupBox61.Size = new System.Drawing.Size(558, 331);
             this.groupBox61.TabIndex = 18;
             this.groupBox61.TabStop = false;
-            this.groupBox61.Text = "三部智能电表";
+            this.groupBox61.Text = "三部充电";
             // 
             // textBox3
             // 
@@ -431,12 +449,12 @@
             // 
             this.groupBox56.Controls.Add(this.textBox2);
             this.groupBox56.Controls.Add(this.textBox1);
-            this.groupBox56.Location = new System.Drawing.Point(583, 8);
+            this.groupBox56.Location = new System.Drawing.Point(585, 12);
             this.groupBox56.Name = "groupBox56";
             this.groupBox56.Size = new System.Drawing.Size(558, 328);
             this.groupBox56.TabIndex = 2;
             this.groupBox56.TabStop = false;
-            this.groupBox56.Text = "程序调试";
+            this.groupBox56.Text = "三部和膏";
             // 
             // textBox2
             // 
@@ -462,12 +480,12 @@
             // 
             this.groupBox57.Controls.Add(this.textBox13);
             this.groupBox57.Controls.Add(this.textBox14);
-            this.groupBox57.Location = new System.Drawing.Point(12, 360);
+            this.groupBox57.Location = new System.Drawing.Point(14, 364);
             this.groupBox57.Name = "groupBox57";
             this.groupBox57.Size = new System.Drawing.Size(558, 331);
             this.groupBox57.TabIndex = 1;
             this.groupBox57.TabStop = false;
-            this.groupBox57.Text = "高压变电站";
+            this.groupBox57.Text = "三部固化";
             // 
             // textBox13
             // 
@@ -493,12 +511,12 @@
             // 
             this.groupBox63.Controls.Add(this.textBox15);
             this.groupBox63.Controls.Add(this.textBox16);
-            this.groupBox63.Location = new System.Drawing.Point(12, 8);
+            this.groupBox63.Location = new System.Drawing.Point(14, 12);
             this.groupBox63.Name = "groupBox63";
             this.groupBox63.Size = new System.Drawing.Size(558, 328);
             this.groupBox63.TabIndex = 1;
             this.groupBox63.TabStop = false;
-            this.groupBox63.Text = "三部充电水槽";
+            this.groupBox63.Text = "三部球磨";
             // 
             // textBox15
             // 
@@ -525,12 +543,150 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1164, 737);
             this.tabControl1.TabIndex = 1;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBox9);
+            this.tabPage2.Controls.Add(this.groupBox10);
+            this.tabPage2.Controls.Add(this.groupBox11);
+            this.tabPage2.Controls.Add(this.groupBox12);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(1156, 707);
+            this.tabPage2.TabIndex = 12;
+            this.tabPage2.Text = "供电系统";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.textBox25);
+            this.groupBox9.Controls.Add(this.textBox26);
+            this.groupBox9.Location = new System.Drawing.Point(585, 364);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(558, 331);
+            this.groupBox9.TabIndex = 30;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "三部电表";
+            // 
+            // textBox25
+            // 
+            this.textBox25.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox25.Location = new System.Drawing.Point(284, 29);
+            this.textBox25.Multiline = true;
+            this.textBox25.Name = "textBox25";
+            this.textBox25.ReadOnly = true;
+            this.textBox25.Size = new System.Drawing.Size(267, 287);
+            this.textBox25.TabIndex = 17;
+            // 
+            // textBox26
+            // 
+            this.textBox26.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox26.Location = new System.Drawing.Point(6, 29);
+            this.textBox26.Multiline = true;
+            this.textBox26.Name = "textBox26";
+            this.textBox26.ReadOnly = true;
+            this.textBox26.Size = new System.Drawing.Size(267, 287);
+            this.textBox26.TabIndex = 16;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.textBox27);
+            this.groupBox10.Controls.Add(this.textBox28);
+            this.groupBox10.Location = new System.Drawing.Point(585, 12);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(558, 328);
+            this.groupBox10.TabIndex = 29;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "一部电表";
+            // 
+            // textBox27
+            // 
+            this.textBox27.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox27.Location = new System.Drawing.Point(284, 29);
+            this.textBox27.Multiline = true;
+            this.textBox27.Name = "textBox27";
+            this.textBox27.ReadOnly = true;
+            this.textBox27.Size = new System.Drawing.Size(267, 287);
+            this.textBox27.TabIndex = 17;
+            // 
+            // textBox28
+            // 
+            this.textBox28.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox28.Location = new System.Drawing.Point(6, 29);
+            this.textBox28.Multiline = true;
+            this.textBox28.Name = "textBox28";
+            this.textBox28.ReadOnly = true;
+            this.textBox28.Size = new System.Drawing.Size(267, 287);
+            this.textBox28.TabIndex = 16;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.textBox29);
+            this.groupBox11.Controls.Add(this.textBox30);
+            this.groupBox11.Location = new System.Drawing.Point(14, 364);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(558, 331);
+            this.groupBox11.TabIndex = 27;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "二部电表";
+            // 
+            // textBox29
+            // 
+            this.textBox29.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox29.Location = new System.Drawing.Point(284, 29);
+            this.textBox29.Multiline = true;
+            this.textBox29.Name = "textBox29";
+            this.textBox29.ReadOnly = true;
+            this.textBox29.Size = new System.Drawing.Size(267, 287);
+            this.textBox29.TabIndex = 15;
+            // 
+            // textBox30
+            // 
+            this.textBox30.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox30.Location = new System.Drawing.Point(6, 29);
+            this.textBox30.Multiline = true;
+            this.textBox30.Name = "textBox30";
+            this.textBox30.ReadOnly = true;
+            this.textBox30.Size = new System.Drawing.Size(267, 287);
+            this.textBox30.TabIndex = 14;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.textBox31);
+            this.groupBox12.Controls.Add(this.textBox32);
+            this.groupBox12.Location = new System.Drawing.Point(14, 12);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(558, 328);
+            this.groupBox12.TabIndex = 28;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "高压变电站";
+            // 
+            // textBox31
+            // 
+            this.textBox31.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox31.Location = new System.Drawing.Point(285, 29);
+            this.textBox31.Multiline = true;
+            this.textBox31.Name = "textBox31";
+            this.textBox31.ReadOnly = true;
+            this.textBox31.Size = new System.Drawing.Size(267, 287);
+            this.textBox31.TabIndex = 17;
+            // 
+            // textBox32
+            // 
+            this.textBox32.Font = new System.Drawing.Font("仿宋", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox32.Location = new System.Drawing.Point(6, 29);
+            this.textBox32.Multiline = true;
+            this.textBox32.Name = "textBox32";
+            this.textBox32.ReadOnly = true;
+            this.textBox32.Size = new System.Drawing.Size(267, 287);
+            this.textBox32.TabIndex = 16;
             // 
             // FormMain
             // 
@@ -576,6 +732,15 @@
             this.groupBox63.ResumeLayout(false);
             this.groupBox63.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -623,5 +788,18 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox textBox11;
         private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox textBox26;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.TextBox textBox27;
+        private System.Windows.Forms.TextBox textBox28;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.TextBox textBox29;
+        private System.Windows.Forms.TextBox textBox30;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.TextBox textBox31;
+        private System.Windows.Forms.TextBox textBox32;
     }
 }

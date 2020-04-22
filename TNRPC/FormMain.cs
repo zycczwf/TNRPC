@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO.Ports;
 using HslCommunication;
-using HslCommunication.Serial;
+using HslCommunication.Serial;  
 using HslCommunication.BasicFramework;
 using HslCommunication.Core;
 using HslCommunication.Profinet.Siemens;
+using HslCommunication.Profinet.Melsec;
 using MySql.Data.MySqlClient;
 using log4net;
 
@@ -65,6 +66,13 @@ namespace TNRPC {
                 worker.IsBackground = true;
                 worker.Start(used);
                 log.Info(DateTime.Now.ToString() + "_start sbhg thread.");
+            }
+            used = ConfigurationManager.AppSettings["sbqm"];
+            if (used != null && used.Length > 0) {
+                Thread worker = new Thread(new ParameterizedThreadStart(sbqm));
+                worker.IsBackground = true;
+                worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start sbqm thread.");
             }
             used = ConfigurationManager.AppSettings["ebgh"];
             if (used != null && used.Length > 0) {
@@ -396,6 +404,98 @@ namespace TNRPC {
                     } finally {
                         if (siemens != null) {
                             siemens.ConnectClose();
+                        }
+                    }
+                }
+                Thread.Sleep(300000);
+            }
+        }
+
+        private void sbqm(Object com) {
+            string sendTextBox = "textBox16";
+            string recvTextBox = "textBox15";
+            string[] plcs = com.ToString().Split(',');
+            while (true) {
+                foreach (string plc in plcs) {
+                    MelsecA1ENet melsec = null;
+                    try {
+                        string[] parameters = ConfigurationManager.AppSettings[plc].Split(',');
+                        melsec = new MelsecA1ENet(parameters[1], 5551) { ConnectTimeOut = 5000 };
+                        OperateResult connect = melsec.ConnectServer();
+                        if (connect.IsSuccess) {
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter1\n");
+                            double zjqt = melsec.ReadInt16("D40").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机启停:" + zjqt.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter2\n");
+                            double zjglsd = melsec.ReadInt16("D230").Content / 10.0;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机功率设定:" + zjglsd.ToString("0.0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter3\n");
+                            double zjglfk = melsec.ReadInt16("D108").Content / 10.0;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机功率反馈:" + zjglfk.ToString("0.0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter4\n");
+                            double jql = melsec.ReadInt16("D113").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=进球量:" + jql.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter5\n");
+                            double zjqdwdfk = melsec.ReadInt16("D100").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机前段温度反馈:" + zjqdwdfk.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter6\n");
+                            double zjzdwdfk = melsec.ReadInt16("D101").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机中端温度反馈:" + zjzdwdfk.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter7\n");
+                            double zjhdwdfk = melsec.ReadInt16("D102").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=主机后端温度反馈:" + zjhdwdfk.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter8\n");
+                            double bdyc = melsec.ReadInt16("D110").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=布袋压差:" + bdyc.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter9\n");
+                            double bdwd = melsec.ReadInt16("D103").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=布袋温度:" + bdwd.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter10\n");
+                            double gxyc = melsec.ReadInt16("D111").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=高效压差:" + gxyc.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter11\n");
+                            double fyfmycfk = melsec.ReadInt16("D112").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=负压风门压差反馈:" + fyfmycfk.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter12\n");
+                            double zyfmycfk = melsec.ReadInt16("D109").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=正压风门压差反馈:" + zyfmycfk.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter13\n");
+                            double qdzcwd = melsec.ReadInt16("D104").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=前端轴承温度:" + qdzcwd.ToString("0") + "\n");
+
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter14\n");
+                            double hdzcwd = melsec.ReadInt16("D105").Content;
+                            SetText(recvTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=后端轴承温度:" + hdzcwd.ToString("0") + "\n");
+
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand()) {
+                                    cmd.Connection = conn;
+                                    cmd.CommandText = "insert into tb_qmjparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,zjqt,zjglsd,zjglfk,jql,zjqdwdfk,zjzdwdfk,zjhdwdfk,bdyc,bdwd,gxyc,fyfmycfk,zyfmycfk,qdzcwd,hdzcwd) values('"
+                                        + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + zjqt.ToString("0") + "','" + zjglsd.ToString("0.0") + "','" + zjglfk.ToString("0.0") + "','" + jql.ToString("0") + "','" + zjqdwdfk.ToString("0") + "','" + zjzdwdfk.ToString("0") + "','" + zjhdwdfk.ToString("0") + "','" + bdyc.ToString("0") + "','" + bdwd.ToString("0") + "','" + gxyc.ToString("0") + "','" + fyfmycfk.ToString("0") + "','" + zyfmycfk.ToString("0.0") + "','" + qdzcwd.ToString("0") + "','" + hdzcwd.ToString("0") + "')";
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        } else {
+                            SetText(sendTextBox, plc + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>N/A(" + parameters[1] + ")\n");
+                        }
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
+                    } finally {
+                        if (melsec != null) {
+                            melsec.ConnectClose();
                         }
                     }
                 }

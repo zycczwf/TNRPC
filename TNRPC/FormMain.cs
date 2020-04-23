@@ -244,38 +244,71 @@ namespace TNRPC {
         }
 
         private void sbzndb2(Object com) {
-            string sendTextBox = "textBox26";
-            string recvTextBox = "textBox25";
+            string sendTextBox = "textBox28";
+            string recvTextBox = "textBox27";
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
+            string[] queryTimes = { "0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00" };
+            string[] columnNames = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree" };
             while (true) {
                 try {
                     if (!serialPort.IsOpen) serialPort.Open();
-                    for (int i = 1; i <= num; i++) {
-                        int equipmentID = startNo + i;
-                        string orderWithoutCrc = string.Format("{0:X2}", i) + "030000000E";
-                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                        serialPort.Write(bufferS, 0, bufferS.Length);
-                        SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                        Thread.Sleep(500);
-                        byte[] bufferR = null;
-                        if (serialPort.BytesToRead > 0) {
-                            bufferR = new byte[serialPort.BytesToRead];
-                            serialPort.Read(bufferR, 0, bufferR.Length);
+                    string now = DateTime.Now.ToShortTimeString();
+                    int index = Array.IndexOf(queryTimes, now);
+                    if (index > -1) {
+                        if (index == 0) {
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                    for (int i = 1; i <= num; i++) {
+                                        int equipmentID = startNo + i;
+                                        cmd.CommandText = "insert into tb_electricitymeterparametersacquisition_1003 (id,equipmentid,dayTime,remark,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','仪表采集','1')";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
                         }
-                        SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                        if (bufferR != null) {
-                            ReverseBytesTransform transform = new ReverseBytesTransform();
-                            transform.DataFormat = DataFormat.ABCD;
-                            double data = (double)transform.TransUInt16(bufferR, 21) / (double)100.0;
-                            SetText(recvTextBox, "返回数据:" + data.ToString("0") + "\n");
+                        for (int i = 1; i <= num; i++) {
+                            int equipmentID = startNo + i;
+                            string orderWithoutCrc = string.Format("{0:X2}", i) + "0400000002";
+                            byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
+                            for (int j = 0; j <= 2; j++) {
+                                serialPort.Write(bufferS, 0, bufferS.Length);
+                                SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                Thread.Sleep(1000);
+                                byte[] bufferR = null;
+                                if (serialPort.BytesToRead > 0) {
+                                    bufferR = new byte[serialPort.BytesToRead];
+                                    serialPort.Read(bufferR, 0, bufferR.Length);
+                                }
+                                SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                if (bufferR is null || !SoftCRC16.CheckCRC16(bufferR)) {
+                                    Thread.Sleep(10000);
+                                    continue;
+                                } else {
+                                    ReverseBytesTransform transform = new ReverseBytesTransform();
+                                    double data = (double)transform.TransUInt32(bufferR, 3) / (double)100.0;
+                                    SetText(recvTextBox, "返回数据:" + data.ToString("0") + "\n");
+                                    using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                        conn.Open();
+                                        using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                            cmd.CommandText = "update tb_electricitymeterparametersacquisition_1003 set " + columnNames[index] + "=" + data.ToString("0") + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
                         }
+                        Thread.Sleep(2000000);
+                    } else {
+                        Thread.Sleep(40000);
                     }
-                    Thread.Sleep(30000);
                 } catch (Exception e) {
                     log.Error(DateTime.Now.ToString() + e.Message);
+                    Thread.Sleep(10000);
                 }
             }
         }

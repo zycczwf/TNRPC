@@ -244,8 +244,8 @@ namespace TNRPC {
         }
 
         private void sbzndb2(Object com) {
-            string sendTextBox = "textBox28";
-            string recvTextBox = "textBox27";
+            string sendTextBox = "textBox26";
+            string recvTextBox = "textBox25";
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
             int startNo = Convert.ToInt32(parameters[5]);
@@ -290,11 +290,11 @@ namespace TNRPC {
                                 } else {
                                     ReverseBytesTransform transform = new ReverseBytesTransform();
                                     double data = (double)transform.TransUInt32(bufferR, 3) / (double)100.0;
-                                    SetText(recvTextBox, "返回数据:" + data.ToString("0") + "\n");
+                                    SetText(recvTextBox, "返回数据:" + data.ToString() + "\n");
                                     using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                                         conn.Open();
                                         using (MySqlCommand cmd = new MySqlCommand("", conn)) {
-                                            cmd.CommandText = "update tb_electricitymeterparametersacquisition_1003 set " + columnNames[index] + "=" + data.ToString("0") + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
+                                            cmd.CommandText = "update tb_electricitymeterparametersacquisition_1003 set " + columnNames[index] + "=" + data.ToString() + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
                                             cmd.ExecuteNonQuery();
                                         }
                                     }

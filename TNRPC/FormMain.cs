@@ -3,8 +3,9 @@ using System.Configuration;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO.Ports;
+using System.Globalization;
 using HslCommunication;
-using HslCommunication.Serial;  
+using HslCommunication.Serial;
 using HslCommunication.BasicFramework;
 using HslCommunication.Core;
 using HslCommunication.Profinet.Siemens;
@@ -739,7 +740,6 @@ namespace TNRPC {
             string recvTextBox = "textBox31";
             string[] parameters = com.ToString().Split(',');
             SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
-            int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
             string[] queryTimes = { "0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00" };
             string[] columnNames = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree" };
@@ -754,7 +754,8 @@ namespace TNRPC {
                                 conn.Open();
                                 using (MySqlCommand cmd = new MySqlCommand("", conn)) {
                                     for (int i = 1; i <= num; i++) {
-                                        int equipmentID = startNo + i;
+                                        string equipment = ConfigurationManager.AppSettings[parameters[6 + i]];
+                                        string equipmentID = equipment.Split(',')[0];
                                         cmd.CommandText = "insert into tb_electricitymeterparametersacquisition_3003 (id,equipmentid,dayTime,remark,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','仪表采集','1')";
                                         cmd.ExecuteNonQuery();
                                     }
@@ -762,10 +763,11 @@ namespace TNRPC {
                             }
                         }
                         for (int i = 1; i <= num; i++) {
-                            int equipmentID = startNo + i;
-                            string orderUnCheck = "68" + string.Format("{0:X2}", i + 4) + "0000000000" + "68" + "11" + "04" + "33333333";
-                            string checkCode = (i == 1 ? "B6" : "B7");
-                            string order = orderUnCheck + checkCode + "16";
+                            string equipment = ConfigurationManager.AppSettings[parameters[6 + i]];
+                            string equipmentID = equipment.Split(',')[0];
+                            string equipmentAdd = equipment.Split(',')[1];
+                            string orderNoCheck = "68" + equipmentAdd + "68110433333333";
+                            string order = addCheckCode(orderNoCheck);
                             byte[] bufferS = SoftBasic.HexStringToBytes(order);
                             for (int j = 0; j <= 2; j++) {
                                 serialPort.Write(bufferS, 0, bufferS.Length);
@@ -775,8 +777,12 @@ namespace TNRPC {
                                 if (serialPort.BytesToRead > 0) {
                                     bufferR = new byte[serialPort.BytesToRead];
                                     serialPort.Read(bufferR, 0, bufferR.Length);
+                                } else {
+                                    SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=N/A\n");
+                                    Thread.Sleep(20000);
+                                    continue;
                                 }
-                                SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
+                                SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + SoftBasic.ByteToHexString(bufferR) + "\n");
                                 byte[] bufferData = new byte[4] { (byte)(bufferR[17] - 51), (byte)(bufferR[16] - 51), (byte)(bufferR[15] - 51), (byte)(bufferR[14] - 51) };
                                 double data = (double)Convert.ToInt32(SoftBasic.ByteToHexString(bufferData), 10) / (double)100.00;
                                 SetText(recvTextBox, "返回数据:" + data + "\n");
@@ -799,6 +805,17 @@ namespace TNRPC {
                     Thread.Sleep(10000);
                 }
             }
+        }
+
+        private string addCheckCode(string source) {
+            int total = 0;
+            int len = source.Length;
+            for (int i = 0; i < len; i += 2) {
+                string part = source.Substring(i, 2);
+                total += int.Parse(part, NumberStyles.HexNumber);
+            }
+            string checkCode = total.ToString("X");
+            return source + checkCode.Substring(checkCode.Length - 2, 2) + "16";
         }
 
         private delegate void SetTextCallback(string name, string text);

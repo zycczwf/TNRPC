@@ -96,11 +96,21 @@ namespace TNRPC {
                 worker.Start(used);
                 log.Info(DateTime.Now.ToString() + "_start ybgh thread.");
             }
-            used = ConfigurationManager.AppSettings["gybdz"];
+            used = ConfigurationManager.AppSettings["gybdz97"];
             if (used != null && used.Length > 0) {
                 string[] coms = used.Split(',');
                 foreach (string com in coms) {
-                    Thread worker = new Thread(new ParameterizedThreadStart(gybdz));
+                    Thread worker = new Thread(new ParameterizedThreadStart(gybdz97));
+                    worker.IsBackground = true;
+                    worker.Start(ConfigurationManager.AppSettings[com]);
+                    log.Info(DateTime.Now.ToString() + "_start gybdz thread." + com);
+                }
+            }
+            used = ConfigurationManager.AppSettings["gybdz07"];
+            if (used != null && used.Length > 0) {
+                string[] coms = used.Split(',');
+                foreach (string com in coms) {
+                    Thread worker = new Thread(new ParameterizedThreadStart(gybdz07));
                     worker.IsBackground = true;
                     worker.Start(ConfigurationManager.AppSettings[com]);
                     log.Info(DateTime.Now.ToString() + "_start gybdz thread." + com);
@@ -735,7 +745,79 @@ namespace TNRPC {
             }
         }
 
-        private void gybdz(Object com) {
+        private void gybdz97(Object com) {
+            string sendTextBox = "textBox32";
+            string recvTextBox = "textBox31";
+            string[] parameters = com.ToString().Split(',');
+            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
+            int num = Convert.ToInt32(parameters[6]);
+            string[] queryTimes = { "0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00" };
+            string[] columnNames = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree" };
+            while (true) {
+                try {
+                    if (!serialPort.IsOpen) serialPort.Open();
+                    string now = DateTime.Now.ToShortTimeString();
+                    int index = Array.IndexOf(queryTimes, now);
+                    if (index > -1) {
+                        if (index == 0) {
+                            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                conn.Open();
+                                using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                    for (int i = 1; i <= num; i++) {
+                                        string equipment = ConfigurationManager.AppSettings[parameters[6 + i]];
+                                        string equipmentID = equipment.Split(',')[0];
+                                        cmd.CommandText = "insert into tb_electricitymeterparametersacquisition_3003 (id,equipmentid,dayTime,remark,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','仪表采集','1')";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+                        for (int i = 1; i <= num; i++) {
+                            string equipment = ConfigurationManager.AppSettings[parameters[6 + i]];
+                            string equipmentID = equipment.Split(',')[0];
+                            string equipmentAdd = equipment.Split(',')[1];
+                            string orderNoCheck = "68" + equipmentAdd + "68010243C3";
+                            string order = addCheckCode(orderNoCheck);
+                            byte[] bufferS = SoftBasic.HexStringToBytes(order);
+                            for (int j = 0; j <= 2; j++) {
+                                serialPort.Write(bufferS, 0, bufferS.Length);
+                                SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
+                                Thread.Sleep(1000);
+                                byte[] bufferR = null;
+                                if (serialPort.BytesToRead > 0) {
+                                    bufferR = new byte[serialPort.BytesToRead];
+                                    serialPort.Read(bufferR, 0, bufferR.Length);
+                                } else {
+                                    SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=N/A\n");
+                                    Thread.Sleep(20000);
+                                    continue;
+                                }
+                                SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + SoftBasic.ByteToHexString(bufferR) + "\n");
+                                byte[] bufferData = new byte[4] { (byte)(bufferR[15] - 51), (byte)(bufferR[14] - 51), (byte)(bufferR[13] - 51), (byte)(bufferR[12] - 51) };
+                                double data = (double)Convert.ToInt32(SoftBasic.ByteToHexString(bufferData), 10) / (double)100.00;
+                                SetText(recvTextBox, "返回数据:" + data + "\n");
+                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                                    conn.Open();
+                                    using (MySqlCommand cmd = new MySqlCommand("", conn)) {
+                                        cmd.CommandText = "update tb_electricitymeterparametersacquisition_3003 set " + columnNames[index] + "=" + data + " where equipmentid='" + equipmentID + "' and  dayTime='" + DateTime.Now.ToString("yyyy-MM-dd") + "'";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        Thread.Sleep(2000000);
+                    } else {
+                        Thread.Sleep(40000);
+                    }
+                } catch (Exception e) {
+                    log.Error(DateTime.Now.ToString() + e.Message);
+                    Thread.Sleep(10000);
+                }
+            }
+        }
+
+        private void gybdz07(Object com) {
             string sendTextBox = "textBox32";
             string recvTextBox = "textBox31";
             string[] parameters = com.ToString().Split(',');

@@ -147,7 +147,7 @@
             this.groupBox5.Size = new System.Drawing.Size(558, 331);
             this.groupBox5.TabIndex = 26;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "一部充电";
+            this.groupBox5.Text = "充电";
             // 
             // textBox17
             // 
@@ -178,7 +178,7 @@
             this.groupBox6.Size = new System.Drawing.Size(558, 328);
             this.groupBox6.TabIndex = 25;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "一部和膏";
+            this.groupBox6.Text = "和膏";
             // 
             // textBox19
             // 
@@ -209,7 +209,7 @@
             this.groupBox7.Size = new System.Drawing.Size(558, 331);
             this.groupBox7.TabIndex = 23;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "一部固化";
+            this.groupBox7.Text = "固化";
             // 
             // textBox21
             // 
@@ -240,7 +240,7 @@
             this.groupBox8.Size = new System.Drawing.Size(558, 328);
             this.groupBox8.TabIndex = 24;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "一部球磨";
+            this.groupBox8.Text = "球磨";
             // 
             // textBox23
             // 
@@ -285,7 +285,7 @@
             this.groupBox1.Size = new System.Drawing.Size(558, 331);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "二部充电";
+            this.groupBox1.Text = "充电";
             // 
             // textBox5
             // 
@@ -316,7 +316,7 @@
             this.groupBox2.Size = new System.Drawing.Size(558, 328);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "二部和膏";
+            this.groupBox2.Text = "和膏";
             // 
             // textBox7
             // 
@@ -347,7 +347,7 @@
             this.groupBox3.Size = new System.Drawing.Size(558, 331);
             this.groupBox3.TabIndex = 19;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "二部固化";
+            this.groupBox3.Text = "固化";
             // 
             // textBox9
             // 
@@ -378,7 +378,7 @@
             this.groupBox4.Size = new System.Drawing.Size(558, 328);
             this.groupBox4.TabIndex = 20;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "二部球磨";
+            this.groupBox4.Text = "球磨";
             // 
             // textBox11
             // 
@@ -423,7 +423,7 @@
             this.groupBox61.Size = new System.Drawing.Size(558, 331);
             this.groupBox61.TabIndex = 18;
             this.groupBox61.TabStop = false;
-            this.groupBox61.Text = "三部充电";
+            this.groupBox61.Text = "充电";
             // 
             // textBox3
             // 
@@ -454,7 +454,7 @@
             this.groupBox56.Size = new System.Drawing.Size(558, 328);
             this.groupBox56.TabIndex = 2;
             this.groupBox56.TabStop = false;
-            this.groupBox56.Text = "三部和膏";
+            this.groupBox56.Text = "和膏";
             // 
             // textBox2
             // 
@@ -485,7 +485,7 @@
             this.groupBox57.Size = new System.Drawing.Size(558, 331);
             this.groupBox57.TabIndex = 1;
             this.groupBox57.TabStop = false;
-            this.groupBox57.Text = "三部固化";
+            this.groupBox57.Text = "固化";
             // 
             // textBox13
             // 
@@ -516,7 +516,7 @@
             this.groupBox63.Size = new System.Drawing.Size(558, 328);
             this.groupBox63.TabIndex = 1;
             this.groupBox63.TabStop = false;
-            this.groupBox63.Text = "三部球磨";
+            this.groupBox63.Text = "球磨";
             // 
             // textBox15
             // 
@@ -561,7 +561,7 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(1156, 707);
             this.tabPage2.TabIndex = 12;
-            this.tabPage2.Text = "供电系统";
+            this.tabPage2.Text = "能源供应";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox9
@@ -573,7 +573,7 @@
             this.groupBox9.Size = new System.Drawing.Size(558, 331);
             this.groupBox9.TabIndex = 30;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "三部电表";
+            this.groupBox9.Text = "配电室";
             // 
             // textBox25
             // 
@@ -604,7 +604,7 @@
             this.groupBox10.Size = new System.Drawing.Size(558, 328);
             this.groupBox10.TabIndex = 29;
             this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "一部电表";
+            this.groupBox10.Text = "天然气";
             // 
             // textBox27
             // 
@@ -635,7 +635,7 @@
             this.groupBox11.Size = new System.Drawing.Size(558, 331);
             this.groupBox11.TabIndex = 27;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "二部电表";
+            this.groupBox11.Text = "水蒸汽";
             // 
             // textBox29
             // 
@@ -666,7 +666,7 @@
             this.groupBox12.Size = new System.Drawing.Size(558, 328);
             this.groupBox12.TabIndex = 28;
             this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "高压变电站";
+            this.groupBox12.Text = "变电站";
             // 
             // textBox31
             // 

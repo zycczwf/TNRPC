@@ -575,4 +575,20 @@
 2019-10-19 14:20:59,611 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start sbzndb thread_qm
 2019-10-19 14:20:59,666 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start ebgh thread.
 2019-10-19 14:20:59,683 [1] INFO  testApp.Logging [(null)]  - 2019-10-19 14:20:59_start cs thread_zp
+[Footer] [Header] 2020-05-17 17:08:54,707 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbcdsc thread_c1
+2020-05-17 17:08:54,739 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbcdsc thread_c2
+2020-05-17 17:08:54,761 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb thread_jz
+2020-05-17 17:08:54,784 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb thread_qm
+2020-05-17 17:08:54,816 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb thread_zp
+2020-05-17 17:08:54,820 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb thread_cda
+2020-05-17 17:08:54,834 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb thread_cdc
+2020-05-17 17:08:54,865 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbzndb2 thread_cdb
+2020-05-17 17:08:54,922 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbgh thread.
+2020-05-17 17:08:54,923 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbhg thread.
+2020-05-17 17:08:54,926 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start sbqm thread.
+2020-05-17 17:08:54,939 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start ebgh thread.
+2020-05-17 17:08:54,959 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start ebhg thread.
+2020-05-17 17:08:54,981 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:54_start ybgh thread.
+2020-05-17 17:08:55,007 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:55_start gybdz97 thread.1x
+2020-05-17 17:08:55,032 [1] INFO  testApp.Logging [(null)]  - 2020-05-17 17:08:55_start gybdz07 thread.2x
 [Footer] 

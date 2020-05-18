@@ -16,6 +16,7 @@ using log4net;
 namespace TNRPC {
     public partial class FormMain : Form {
         ILog log = log4net.LogManager.GetLogger("testApp.Logging");
+        Warn warn = new Warn();
         Random rm = new Random();
         public FormMain() {
             InitializeComponent();
@@ -325,7 +326,6 @@ namespace TNRPC {
         }
 
         private void sbgh(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox14";
             string recvTextBox = "textBox13";
             string[] plcs = com.ToString().Split(',');
@@ -375,7 +375,11 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-                                    warn.ghWarn(null);
+                                    if (warn.maxValue.ContainsKey("70001") && douWendu > warn.maxValue["70001"] && warn.notificationType.ContainsKey("70001")) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime) values('"
+                                                + Guid.NewGuid().ToString("N") +"','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','固化温度超标。','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+"')";
+                                            cmd.ExecuteNonQuery();
+                                    }
                                 }
                             }
                         } else {
@@ -394,7 +398,6 @@ namespace TNRPC {
         }
 
         private void sbhg(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox1";
             string recvTextBox = "textBox2";
             string[] plcs = com.ToString().Split(',');
@@ -441,7 +444,7 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
-                                    warn.hgWarn(null);
+
                                 }
                             }
                         } else {
@@ -460,7 +463,6 @@ namespace TNRPC {
         }
 
         private void sbqm(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox16";
             string recvTextBox = "textBox15";
             string[] plcs = com.ToString().Split(',');
@@ -535,7 +537,7 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_qmjparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,zjqt,zjglsd,zjglfk,jql,zjqdwdfk,zjzdwdfk,zjhdwdfk,bdyc,bdwd,gxyc,fyfmycfk,zyfmycfk,qdzcwd,hdzcwd) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + zjqt.ToString("0") + "','" + zjglsd.ToString("0.0") + "','" + zjglfk.ToString("0.0") + "','" + jql.ToString("0") + "','" + zjqdwdfk.ToString("0") + "','" + zjzdwdfk.ToString("0") + "','" + zjhdwdfk.ToString("0") + "','" + bdyc.ToString("0") + "','" + bdwd.ToString("0") + "','" + gxyc.ToString("0") + "','" + fyfmycfk.ToString("0") + "','" + zyfmycfk.ToString("0.0") + "','" + qdzcwd.ToString("0") + "','" + hdzcwd.ToString("0") + "')";
                                     cmd.ExecuteNonQuery();
-                                    warn.qmWarn(null);
+
                                 }
                             }
                         } else {
@@ -554,7 +556,6 @@ namespace TNRPC {
         }
 
         private void ebgh(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox10";
             string recvTextBox = "textBox9";
             string[] plcs = com.ToString().Split(',');
@@ -604,7 +605,7 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-                                    warn.ghWarn(null);
+
                                 }
                             }
                         } else {
@@ -623,7 +624,6 @@ namespace TNRPC {
         }
 
         private void ebhg(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox8";
             string recvTextBox = "textBox7";
             string[] plcs = com.ToString().Split(',');
@@ -670,7 +670,7 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1002 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
-                                    warn.hgWarn(null);
+                                   
                                 }
                             }
                         } else {
@@ -689,7 +689,6 @@ namespace TNRPC {
         }
 
         private void ybgh(Object com) {
-            Warn warn = new Warn();
             string sendTextBox = "textBox22";
             string recvTextBox = "textBox21";
             string[] plcs = com.ToString().Split(',');
@@ -739,7 +738,7 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-                                    warn.ghWarn(null);
+
                                 }
                             }
                         } else {

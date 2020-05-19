@@ -561,7 +561,7 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(1156, 707);
             this.tabPage2.TabIndex = 12;
-            this.tabPage2.Text = "能源供应";
+            this.tabPage2.Text = "节能环保";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox9
@@ -635,7 +635,7 @@
             this.groupBox11.Size = new System.Drawing.Size(558, 331);
             this.groupBox11.TabIndex = 27;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "水蒸汽";
+            this.groupBox11.Text = "风机";
             // 
             // textBox29
             // 
@@ -666,7 +666,7 @@
             this.groupBox12.Size = new System.Drawing.Size(558, 328);
             this.groupBox12.TabIndex = 28;
             this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "变电站";
+            this.groupBox12.Text = "高压站";
             // 
             // textBox31
             // 

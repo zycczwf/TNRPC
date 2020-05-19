@@ -444,7 +444,6 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
-
                                 }
                             }
                         } else {
@@ -537,7 +536,6 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_qmjparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,zjqt,zjglsd,zjglfk,jql,zjqdwdfk,zjzdwdfk,zjhdwdfk,bdyc,bdwd,gxyc,fyfmycfk,zyfmycfk,qdzcwd,hdzcwd) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + zjqt.ToString("0") + "','" + zjglsd.ToString("0.0") + "','" + zjglfk.ToString("0.0") + "','" + jql.ToString("0") + "','" + zjqdwdfk.ToString("0") + "','" + zjzdwdfk.ToString("0") + "','" + zjhdwdfk.ToString("0") + "','" + bdyc.ToString("0") + "','" + bdwd.ToString("0") + "','" + gxyc.ToString("0") + "','" + fyfmycfk.ToString("0") + "','" + zyfmycfk.ToString("0.0") + "','" + qdzcwd.ToString("0") + "','" + hdzcwd.ToString("0") + "')";
                                     cmd.ExecuteNonQuery();
-
                                 }
                             }
                         } else {
@@ -605,7 +603,6 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-
                                 }
                             }
                         } else {
@@ -670,7 +667,6 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1002 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
-                                   
                                 }
                             }
                         } else {
@@ -738,7 +734,6 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-
                                 }
                             }
                         } else {

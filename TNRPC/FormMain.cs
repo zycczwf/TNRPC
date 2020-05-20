@@ -12,6 +12,7 @@ using HslCommunication.Profinet.Siemens;
 using HslCommunication.Profinet.Melsec;
 using MySql.Data.MySqlClient;
 using log4net;
+using HslCommunication.ModBus;
 
 namespace TNRPC {
     public partial class FormMain : Form {
@@ -116,6 +117,13 @@ namespace TNRPC {
                     worker.Start(ConfigurationManager.AppSettings[com]);
                     log.Info(DateTime.Now.ToString() + "_start gybdz07 thread." + com);
                 }
+            }
+            used = ConfigurationManager.AppSettings["hbfj"];
+            if (used != null && used.Length > 0) {
+                Thread worker = new Thread(new ParameterizedThreadStart(hbfj));
+                worker.IsBackground = true;
+                worker.Start(used);
+                log.Info(DateTime.Now.ToString() + "_start hbfj thread.");
             }
         }
         private void sbcdsc(Object com) {
@@ -376,9 +384,9 @@ namespace TNRPC {
                                     }
                                     cmd.ExecuteNonQuery();
                                     if (warn.maxValue.ContainsKey("70001") && douWendu > warn.maxValue["70001"] && warn.notificationType.ContainsKey("70001")) {
-                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime) values('"
-                                                + Guid.NewGuid().ToString("N") +"','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','固化温度超标。','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+"')";
-                                            cmd.ExecuteNonQuery();
+                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime) values('"
+                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','固化温度超标。','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                                        cmd.ExecuteNonQuery();
                                     }
                                 }
                             }
@@ -892,6 +900,64 @@ namespace TNRPC {
                     log.Error(DateTime.Now.ToString() + e.Message);
                     Thread.Sleep(10000);
                 }
+            }
+        }
+
+        private void hbfj(Object com) {
+            string sendTextBox = "textBox30";
+            string recvTextBox = "textBox29";
+            string[] kzgs = com.ToString().Split(',');
+            while (true) {
+                foreach (string kzg in kzgs) {
+                    ModbusTcpNet modbus = null;
+                    try {
+                        string[] parameters = ConfigurationManager.AppSettings[kzg].Split(',');
+                        modbus = new ModbusTcpNet(parameters[0]);
+                        OperateResult connect = modbus.ConnectServer();
+                        if (connect.IsSuccess) {
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter1\n");
+                            double zdpl = modbus.ReadFloat("x=4;0").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[1].Substring(4) + "号振动频率:" + zdpl.ToString("0.00") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter2\n");
+                            double zdplsx = modbus.ReadFloat("x=4;4").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[1].Substring(4) + "号振动频率上限:" + zdplsx.ToString("0") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter3\n");
+                            double bjyssj = modbus.ReadFloat("x=4;8").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[1].Substring(4) + "号报警延时时间:" + bjyssj.ToString("0") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter4\n");
+                            double bjcx = modbus.ReadFloat("x=4;12").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[1].Substring(4) + "号报警次数:" + bjcx.ToString("0") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter1\n");
+                            double zdpl2 = modbus.ReadFloat("x=4;2").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[2].Substring(4) + "号振动频率:" + zdpl2.ToString("0.00") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter2\n");
+                            double zdplsx2 = modbus.ReadFloat("x=4;6").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[2].Substring(4) + "号振动频率上限:" + zdplsx2.ToString("0") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter3\n");
+                            double bjyssj2 = modbus.ReadFloat("x=4;10").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[2].Substring(4) + "号报警延时时间:" + bjyssj2.ToString("0") + "\n");
+
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>Query Parameter4\n");
+                            double bjcx2 = modbus.ReadFloat("x=4;14").Content;
+                            SetText(recvTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + parameters[2].Substring(4) + "号报警次数:" + bjcx2.ToString("0") + "\n");
+                        } else {
+                            SetText(sendTextBox, kzg + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>N/A(" + parameters[0] + ")\n");
+                        }
+                    } catch (Exception ee) {
+                        log.Error(DateTime.Now.ToString() + ee.Message);
+                    } finally {
+                        if (modbus != null) {
+                            modbus.ConnectClose();
+                        }
+                    }
+                }
+                Thread.Sleep(300000);
             }
         }
 

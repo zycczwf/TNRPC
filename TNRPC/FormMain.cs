@@ -18,7 +18,6 @@ namespace TNRPC {
     public partial class FormMain : Form {
         ILog log = log4net.LogManager.GetLogger("testApp.Logging");
         Warn warn = new Warn();
-        Random rm = new Random();
         public FormMain() {
             InitializeComponent();
         }
@@ -127,25 +126,21 @@ namespace TNRPC {
             }
         }
         private void sbcdsc(Object com) {
-            string[] parameters = com.ToString().Split(',');
-            string paramID = "50001";
-            string equipmentTypeID = "3";
             string sendTextBox = "textBox4";
             string recvTextBox = "textBox3";
+            string[] parameters = com.ToString().Split(',');
             ModbusRtu rtu = new ModbusRtu();
             rtu.SerialPortInni(parameters[0], Convert.ToInt32(parameters[1]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]), (Parity)Convert.ToInt32(parameters[3]));
-            int startNo = Convert.ToInt32(parameters[5]);
-            int num = Convert.ToInt32(parameters[6]);
             while (true) {
                 try {
                     if (!rtu.IsOpen()) {
                         rtu.Open();
                     }
-                    for (int i = 1; i <= num; i++) {
-                        int equipmentID = startNo + i;
+                    for (int i = 1; i <= Convert.ToInt32(parameters[6]); i++) {
+                        int equipmentID = Convert.ToInt32(parameters[5]) + i;
                         SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>查询" + equipmentID + "温度\n");
                         double data = rtu.ReadInt16("s=" + i + ";4097").Content / 10.0;
-                        if(data>100 || data < 0) {
+                        if (data >= 100 || data <= 0) {
                             SetText(recvTextBox, equipmentID + "<=返回温度:ERROR!\n");
                             continue;
                         }
@@ -153,7 +148,7 @@ namespace TNRPC {
                         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                             conn.Open();
                             string status = "2";
-                            using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn)) {
+                            using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '50001'", conn)) {
                                 using (MySqlDataReader reader = cmd.ExecuteReader()) {
                                     if (reader.Read()) {
                                         if (data > reader.GetFloat("max")) {
@@ -163,12 +158,12 @@ namespace TNRPC {
                                         }
                                     }
                                 }
-                                cmd.CommandText = "insert into tb_equipmentparamrecord_3 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
+                                cmd.CommandText = "insert into tb_equipmentparamrecord_3 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','50001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','3','" + status + "')"; 
                                 cmd.ExecuteNonQuery();
                             }
                         }
                     }
-                    Thread.Sleep(270000 + rm.Next(60000));
+                    Thread.Sleep(3600000);
                 } catch (Exception e) {
                     rtu.Close();
                     log.Error(DateTime.Now.ToString() + e.Message);

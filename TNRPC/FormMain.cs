@@ -5,14 +5,14 @@ using System.Threading;
 using System.IO.Ports;
 using System.Globalization;
 using HslCommunication;
-using HslCommunication.Serial;
-using HslCommunication.BasicFramework;
 using HslCommunication.Core;
+using HslCommunication.BasicFramework;
+using HslCommunication.Serial;
+using HslCommunication.ModBus;
 using HslCommunication.Profinet.Siemens;
 using HslCommunication.Profinet.Melsec;
 using MySql.Data.MySqlClient;
 using log4net;
-using HslCommunication.ModBus;
 
 namespace TNRPC {
     public partial class FormMain : Form {
@@ -132,60 +132,45 @@ namespace TNRPC {
             string equipmentTypeID = "3";
             string sendTextBox = "textBox4";
             string recvTextBox = "textBox3";
-            SerialPort serialPort = new SerialPort(parameters[0], Convert.ToInt32(parameters[1]), (Parity)Convert.ToInt32(parameters[3]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]));
+            ModbusRtu rtu = new ModbusRtu();
+            rtu.SerialPortInni(parameters[0], Convert.ToInt32(parameters[1]), Convert.ToInt32(parameters[2]), (StopBits)Convert.ToInt32(parameters[4]), (Parity)Convert.ToInt32(parameters[3]));
             int startNo = Convert.ToInt32(parameters[5]);
             int num = Convert.ToInt32(parameters[6]);
             while (true) {
                 try {
-                    if (!serialPort.IsOpen) serialPort.Open();
+                    if (!rtu.IsOpen()) {
+                        rtu.Open();
+                    }
                     for (int i = 1; i <= num; i++) {
                         int equipmentID = startNo + i;
-                        string orderWithoutCrc = string.Format("{0:X2}", i) + "0310010001";
-                        byte[] bufferS = SoftCRC16.CRC16(SoftBasic.HexStringToBytes(orderWithoutCrc));
-                        serialPort.Write(bufferS, 0, bufferS.Length);
-                        SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>" + SoftBasic.ByteToHexString(bufferS) + "\n");
-                        Thread.Sleep(500);
-                        byte[] bufferR = null;
-                        if (serialPort.BytesToRead > 0) {
-                            bufferR = new byte[serialPort.BytesToRead];
-                            serialPort.Read(bufferR, 0, bufferR.Length);
+                        SetText(sendTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "=>查询" + equipmentID + "温度\n");
+                        double data = rtu.ReadInt16("s=" + i + ";4097").Content / 10.0;
+                        if(data>100 || data < 0) {
+                            SetText(recvTextBox, equipmentID + "<=返回温度:ERROR!\n");
+                            continue;
                         }
-                        SetText(recvTextBox, parameters[0] + "/" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "<=" + ((bufferR is null) ? "N/A" : SoftBasic.ByteToHexString(bufferR)) + "\n");
-                        string showResult = null;
-                        if (bufferR is null) {
-                            showResult = "N/A";
-                        } else if (!SoftCRC16.CheckCRC16(bufferR)) {
-                            showResult = "ERROR";
-                        } else {
-                            ReverseBytesTransform transform = new ReverseBytesTransform();
-                            float data = (float)transform.TransInt16(bufferR, 3) / 10;
-                            if (data > 100 || data < 0) {
-                                showResult = "ERROR";
-                            } else {
-                                showResult = data.ToString("f1") + "℃";
-                                using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
-                                    conn.Open();
-                                    string status = "2";
-                                    using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn)) {
-                                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
-                                            if (reader.Read()) {
-                                                if (data > reader.GetFloat("max")) {
-                                                    status = "3";
-                                                } else if (data < reader.GetFloat("min")) {
-                                                    status = "1";
-                                                }
-                                            }
+                        SetText(recvTextBox, equipmentID + "<=返回温度:" + data.ToString("0.0") + "℃\n");
+                        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
+                            conn.Open();
+                            string status = "2";
+                            using (MySqlCommand cmd = new MySqlCommand("select max, min FROM tb_parameterinfo where id = '" + paramID + "'", conn)) {
+                                using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                                    if (reader.Read()) {
+                                        if (data > reader.GetFloat("max")) {
+                                            status = "3";
+                                        } else if (data < reader.GetFloat("min")) {
+                                            status = "1";
                                         }
-                                        cmd.CommandText = "insert into tb_equipmentparamrecord (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
-                                        cmd.ExecuteNonQuery();
                                     }
                                 }
+                                cmd.CommandText = "insert into tb_equipmentparamrecord_3 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','" + paramID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','" + equipmentTypeID + "','" + status + "')"; ;
+                                cmd.ExecuteNonQuery();
                             }
                         }
-                        SetText(recvTextBox, "返回数据:" + showResult + "\n");
                     }
                     Thread.Sleep(270000 + rm.Next(60000));
                 } catch (Exception e) {
+                    rtu.Close();
                     log.Error(DateTime.Now.ToString() + e.Message);
                     Thread.Sleep(10000);
                 }

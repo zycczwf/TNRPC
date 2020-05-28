@@ -1,3 +1,5 @@
+"+warn.equipmentInfo[parameters[0]] +"
+
 [Header] 2020-05-18 10:04:16,774 [1] INFO  testApp.Logging [(null)]  - 2020-05-18 10:04:16_start sbcdsc thread_c1
 2020-05-18 10:04:16,806 [1] INFO  testApp.Logging [(null)]  - 2020-05-18 10:04:16_start sbcdsc thread_c2
 2020-05-18 10:04:16,808 [1] INFO  testApp.Logging [(null)]  - 2020-05-18 10:04:16_start sbzndb thread_jz

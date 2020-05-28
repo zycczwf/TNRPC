@@ -364,8 +364,13 @@ namespace TNRPC {
                                     }
                                     cmd.ExecuteNonQuery();
                                     if (warn.maxValue.ContainsKey("70001") && douWendu > warn.maxValue["70001"] && warn.notificationType.ContainsKey("70001")) {
-                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime) values('"
-                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','固化温度超标。','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + "温度超高:" + douWendu.ToString("0.0") + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    if (warn.minValue.ContainsKey("70001") && douWendu < warn.minValue["70001"] && warn.notificationType.ContainsKey("70001")) {
+                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + "温度超低:" + douWendu.ToString("0.0") + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
                                         cmd.ExecuteNonQuery();
                                     }
                                 }

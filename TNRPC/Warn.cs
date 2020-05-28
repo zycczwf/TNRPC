@@ -8,11 +8,13 @@ namespace TNRPC {
         public Dictionary<string, double> maxValue;
         public Dictionary<string, double> minValue;
         public Dictionary<string, string> notificationType;
+        public Dictionary<string, string> equipmentInfo;
         public Warn() {
             if (maxValue == null) {
                 maxValue = new Dictionary<string, double>();
                 minValue = new Dictionary<string, double>();
                 notificationType = new Dictionary<string, string>();
+                equipmentInfo = new Dictionary<string, string>();
                 using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                     conn.Open();
                     using (MySqlCommand cmd = new MySqlCommand()) {
@@ -35,6 +37,12 @@ namespace TNRPC {
                                 notificationType.Add(data.GetString("paraminfoid"), data.GetString("notificationtypedetailid"));
                             }
                         }
+                        cmd.CommandText = "select id,name from tb_equipmentinfo where typeid in('10016','10017','10018')";
+                        using (MySqlDataReader data = cmd.ExecuteReader()) {
+                            while (data.Read()) {
+                                equipmentInfo.Add(data.GetString("id"), data.GetString("name"));
+                            }
+                        }
                     }
                 }
             }
@@ -47,6 +55,9 @@ namespace TNRPC {
             }
             foreach (string key in notificationType.Keys) {
                 log.Info(key + ".TYPE=" + notificationType[key]);
+            }
+            foreach (string key in equipmentInfo.Keys) {
+                log.Info(key + ".NAME=" + equipmentInfo[key]);
             }
         }
     }

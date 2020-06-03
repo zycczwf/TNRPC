@@ -9,26 +9,28 @@ namespace TNRPC {
         public Dictionary<string, double> minValue;
         public Dictionary<string, string> notificationType;
         public Dictionary<string, string> equipmentInfo;
+        public Dictionary<string, string> parameterInfo; 
         public Warn() {
             if (maxValue == null) {
                 maxValue = new Dictionary<string, double>();
                 minValue = new Dictionary<string, double>();
                 notificationType = new Dictionary<string, string>();
                 equipmentInfo = new Dictionary<string, string>();
+                parameterInfo = new Dictionary<string, string>();
                 using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MYSQL"].ConnectionString)) {
                     conn.Open();
                     using (MySqlCommand cmd = new MySqlCommand()) {
                         cmd.Connection = conn;
-                        cmd.CommandText = "select id,max from tb_parameterinfo where max is not null";
+                        cmd.CommandText = "select equipmentid,parameterid,maxlimit from tb_equipmentparameterlimit where maxlimit is not null";
                         using (MySqlDataReader data = cmd.ExecuteReader()) {
                             while (data.Read()) {
-                                maxValue.Add(data.GetString("id"), data.GetDouble("max"));
+                                maxValue.Add(data.GetString("equipmentid") + "_" + data.GetString("parameterid"), data.GetDouble("maxlimit"));
                             }
                         }
-                        cmd.CommandText = "select id,min from tb_parameterinfo where min is not null";
+                        cmd.CommandText = "select equipmentid,parameterid,minlimit from tb_equipmentparameterlimit where minlimit is not null";
                         using (MySqlDataReader data = cmd.ExecuteReader()) {
                             while (data.Read()) {
-                                minValue.Add(data.GetString("id"), data.GetDouble("min"));
+                                minValue.Add(data.GetString("equipmentid") + "_" + data.GetString("parameterid"), data.GetDouble("minlimit"));
                             }
                         }
                         cmd.CommandText = "select paraminfoid,notificationtypedetailid from tb_notificationtypeparaminfo where status=1";
@@ -41,6 +43,12 @@ namespace TNRPC {
                         using (MySqlDataReader data = cmd.ExecuteReader()) {
                             while (data.Read()) {
                                 equipmentInfo.Add(data.GetString("id"), data.GetString("name"));
+                            }
+                        }
+                        cmd.CommandText = "select id,name from tb_parameterinfo";
+                        using (MySqlDataReader data = cmd.ExecuteReader()) {
+                            while (data.Read()) {
+                                parameterInfo.Add(data.GetString("id"), data.GetString("name"));
                             }
                         }
                     }
@@ -58,6 +66,9 @@ namespace TNRPC {
             }
             foreach (string key in equipmentInfo.Keys) {
                 log.Info(key + ".NAME=" + equipmentInfo[key]);
+            }
+            foreach (string key in parameterInfo.Keys) {
+                log.Info(key + ".NAME=" + parameterInfo[key]);
             }
         }
     }

@@ -158,7 +158,7 @@ namespace TNRPC {
                                         }
                                     }
                                 }
-                                cmd.CommandText = "insert into tb_equipmentparamrecord_3 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','50001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','3','" + status + "')"; 
+                                cmd.CommandText = "insert into tb_equipmentparamrecord_3 (id,equipmentid,paramID,recordTime,value,recorder,equipmentTypeID,status) values('" + Guid.NewGuid().ToString("N") + "','" + equipmentID + "','50001','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','" + data + "','仪表采集','3','" + status + "')";
                                 cmd.ExecuteNonQuery();
                             }
                         }
@@ -363,15 +363,21 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
-                                    if (warn.maxValue.ContainsKey("70001") && douWendu > warn.maxValue["70001"] && warn.notificationType.ContainsKey("70001")) {
-                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
-                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + "温度超高:" + douWendu.ToString("0.0") + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
-                                        cmd.ExecuteNonQuery();
-                                    }
-                                    if (warn.minValue.ContainsKey("70001") && douWendu < warn.minValue["70001"] && warn.notificationType.ContainsKey("70001")) {
-                                        cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
-                                            + Guid.NewGuid().ToString("N") + "','" + warn.notificationType["70001"] + "','70001','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + "温度超低:" + douWendu.ToString("0.0") + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
-                                        cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "70001", "70002", "70003", "70004", "70005", "70006", "70007", "70008" };
+                                    double[] parameterValues = { douWendu, douWenduSet, douShidu, douShiduSet, intHour, intMinute, intSecond, intStatus };
+                                    for (int i = 0; i < 8; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
                                     }
                                 }
                             }
@@ -437,6 +443,22 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "30001", "30002", "30003", "30004", "30005", "30006", "30007" };
+                                    double[] parameterValues = { douSZL, douSHZL, intQFZL, douLSJKWD, douLSCKWD, douQY, douCGWD };
+                                    for (int i = 0; i < 7; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1002','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1002','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -529,6 +551,22 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_qmjparametersacquisition_1003 (id,equipmentID,acquisitionTime,remark,status,zjqt,zjglsd,zjglfk,jql,zjqdwdfk,zjzdwdfk,zjhdwdfk,bdyc,bdwd,gxyc,fyfmycfk,zyfmycfk,qdzcwd,hdzcwd) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + zjqt.ToString("0") + "','" + zjglsd.ToString("0.0") + "','" + zjglfk.ToString("0.0") + "','" + jql.ToString("0") + "','" + zjqdwdfk.ToString("0") + "','" + zjzdwdfk.ToString("0") + "','" + zjhdwdfk.ToString("0") + "','" + bdyc.ToString("0") + "','" + bdwd.ToString("0") + "','" + gxyc.ToString("0") + "','" + fyfmycfk.ToString("0") + "','" + zyfmycfk.ToString("0.0") + "','" + qdzcwd.ToString("0") + "','" + hdzcwd.ToString("0") + "')";
                                     cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "10010", "10011", "10012", "10013", "10014", "10015", "10016", "10017", "10018", "10019", "10020", "10021", "10022", "10023" };
+                                    double[] parameterValues = { zjqt, zjglsd, zjglfk, jql, zjqdwdfk, zjzdwdfk, zjhdwdfk, bdyc, bdwd, gxyc, fyfmycfk, zyfmycfk, qdzcwd, hdzcwd };
+                                    for (int i = 0; i < 14; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1001','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1003','1001','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -596,6 +634,22 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "70001", "70002", "70003", "70004", "70005", "70006", "70007", "70008" };
+                                    double[] parameterValues = { douWendu, douWenduSet, douShidu, douShiduSet, intHour, intMinute, intSecond, intStatus };
+                                    for (int i = 0; i < 8; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1002','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1002','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -660,6 +714,22 @@ namespace TNRPC {
                                     cmd.CommandText = "insert into tb_blenderoperatingparametersacquisition_1002 (id,equipmentID,acquisitionTime,remark,status,vitriolWeight,WaterWeight,leadPowderWeight,waterInTemperature,waterOutTemperature,atmosphericPressure,leadPasteOutTemperature) values('"
                                         + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douSZL.ToString("0.0") + "','" + douSHZL.ToString("0.0") + "','" + intQFZL + "','" + douLSJKWD.ToString("0.0") + "','" + douLSCKWD.ToString("0.0") + "','" + douQY.ToString("0.0") + "','" + douCGWD.ToString("0.0") + "')";
                                     cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "30001", "30002", "30003", "30004", "30005", "30006", "30007" };
+                                    double[] parameterValues = { douSZL, douSHZL, intQFZL, douLSJKWD, douLSCKWD, douQY, douCGWD };
+                                    for (int i = 0; i < 7; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1002','1002','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1002','1002','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -727,6 +797,22 @@ namespace TNRPC {
                                             + Guid.NewGuid().ToString("N") + "','" + parameters[0] + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','仪表采集',1,'" + douWendu.ToString("0.0") + "','" + douWenduSet.ToString("0.0") + "','" + intHour + "','" + intMinute + "','" + intSecond + "','" + intStatus + "')";
                                     }
                                     cmd.ExecuteNonQuery();
+                                    string[] parameterIds = { "70001", "70002", "70003", "70004", "70005", "70006", "70007", "70008" };
+                                    double[] parameterValues = { douWendu, douWenduSet, douShidu, douShiduSet, intHour, intMinute, intSecond, intStatus };
+                                    for (int i = 0; i < 8; i++) {
+                                        string parameterId = parameterIds[i];
+                                        double parameterValue = parameterValues[i];
+                                        if (warn.maxValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue > warn.maxValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1001','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超高:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        if (warn.minValue.ContainsKey(parameters[0] + "_" + parameterId) && parameterValue < warn.minValue[parameters[0] + "_" + parameterId] && warn.notificationType.ContainsKey(parameterId)) {
+                                            cmd.CommandText = "insert into tb_warningmessagerecord(id,notificationtypeid,paramid,equipmentid,plantid,processid,status,message,updatetime,updater) values('"
+                                                + Guid.NewGuid().ToString("N") + "','" + warn.notificationType[parameterId] + "','" + parameterId + "','" + parameters[0] + "','1001','1004','1','" + warn.equipmentInfo[parameters[0]] + warn.parameterInfo[parameterId] + "超低:" + parameterValue + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "','采集程序')";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
                                 }
                             }
                         } else {

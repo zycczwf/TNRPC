@@ -16,8 +16,8 @@ using log4net;
 
 namespace TNRPC {
     public partial class FormMain : Form {
-        ILog log = log4net.LogManager.GetLogger("testApp.Logging");
-        Warn warn = new Warn();
+        ILog log = log4net.LogManager.GetLogger("TNRPC.Logging");
+        Warn warn = Warn.getInstance();
         public FormMain() {
             InitializeComponent();
         }

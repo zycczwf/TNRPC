@@ -25,3 +25,4 @@ C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.csproj.CoreCompileI
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.csproj.CopyComplete
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.exe
 C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.pdb
+C:\Users\2018122006\source\repos\TNRPC\TNRPC\obj\Debug\TNRPC.csprojAssemblyReference.cache
